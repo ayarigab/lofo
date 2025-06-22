@@ -25,7 +25,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @fluxAppearance
-    <!-- Google tag (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7Z3EJJM1P"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -34,10 +34,8 @@
 
       gtag('config', 'G-S7Z3EJJM1P');
     </script>
-    <!-- Matomo -->
     <script>
         var _paq = window._paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
@@ -48,7 +46,6 @@
           g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
         })();
     </script>
-    <!-- End Matomo Code -->
 
     <link rel="stylesheet" href="{{ asset('libs/cookieconsent/cookieconsent.css') }}">
     <style>
