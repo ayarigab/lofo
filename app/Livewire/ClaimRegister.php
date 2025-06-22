@@ -1,18 +1,26 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Claimer;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Hash;
 
-class ClaimerRegister extends Component
+class ClaimRegister extends Component
 {
+    use WithFileUploads;
+
     public $email;
     public $full_name;
     public $phone;
+    public $location;
+    public $dob;
     public $password;
     public $password_confirmation;
+    public $avatar;
+
+    public $previewAvatar;
 
     protected $rules = [
         'email'     => 'required|email|unique:claimers',
@@ -21,17 +29,25 @@ class ClaimerRegister extends Component
         'location'  => 'required|string|max:255',
         'dob'       => 'required|date',
         'password'  => 'required|confirmed|min:8',
-        'avatar'    => 'nullable|string',
+        'avatar'    => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
     ];
 
     public function render()
     {
-        return view('livewire.claimer-register');
+        return view('livewire.claim-register');
+    }
+
+    public function updatedImage()
+    {
+        $this->validateOnly('avatar');
+        $this->previewAvatar = $this->avatar->temporaryUrl();
     }
 
     public function register()
     {
         $this->validate();
+
+        $avatarPath = $this->avatar->store('users', 'public');
 
         Claimer::create([
             'email' => $this->email,
@@ -40,6 +56,7 @@ class ClaimerRegister extends Component
             'password' => Hash::make($this->password),
             'location' => $this->phone,
             'dob' => $this->phone,
+            'avatar' => $avatarPath,
         ]);
 
         $this->dispatch(
