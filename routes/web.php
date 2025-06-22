@@ -14,16 +14,19 @@ Route::get('lost-items', [LostFoundController::class, 'index'])->name('lost-item
 Route::get('lost-items/{id}', [LostFoundController::class, 'show'])->name('lost-items.show');
 
 Route::prefix('claimer')->group(function () {
-    Route::get('/login', function () {
-        return view('claimer.login');
-    });
+    Route::get('/signin', function () {
+        return view('frontend.signin');
+    })->name('claimer-login');
+    Route::get('/signup', function () {
+        return view('frontend.signup');
+    })->name('claimer-register');
 
-    Route::post('/logout', [ClaimerAuthController::class, 'logout'])->name('claimer.logout');
+    Route::post('/logout', [ClaimerAuthController::class, 'logout'])->name('claimer-logout');
 
     Route::middleware('auth:claimer')->group(function () {
         Route::get('/dashboard', function () {
-            return view('claimer.dashboard');
-        });
+            return view('frontend.dashboard');
+        })->name('claimer-dashboard');
     });
 });
 
@@ -44,13 +47,13 @@ Route::middleware(['auth'])->group(function () {
 })->prefix('admin')->as('admin.');
 
 Route::get('/about', function () {
-    return view('frontend/about-us');
+    return view('frontend.about-us');
 })->name('about-us');
 Route::get('/contact', function () {
-    return view('frontend/contact-us');
+    return view('frontend.contact-us');
 })->name('contact-us');
-Route::get('/signup', function () {
-    return view('frontend/signup');
-})->name('signup');
+// Route::get('/signup', function () {
+//     return view('frontend/signup');
+// })->name('signup');
 
 require __DIR__.'/auth.php';

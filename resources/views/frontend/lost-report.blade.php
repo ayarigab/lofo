@@ -13,7 +13,6 @@
                 <p class="mb-8 text-lg text-gray-600">Lets join hands together in helping the community solve our most common problem. Post your item to help get it back to it's rightful owner.</p>
 
                 <div class="space-y-6">
-                    <!-- Your contact info blocks remain the same -->
                 </div>
             </div>
             @livewire('post-lost-form')

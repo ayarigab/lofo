@@ -22,14 +22,6 @@ class ClaimerRegister extends Component
         'dob'       => 'required|date',
         'password'  => 'required|confirmed|min:8',
         'avatar'    => 'nullable|string',
-
-        'email',
-        'full_name',
-        'location',
-        'dob',
-        'phone',
-        'password',
-        'avatar'
     ];
 
     public function render()
@@ -46,6 +38,8 @@ class ClaimerRegister extends Component
             'full_name' => $this->full_name,
             'phone' => $this->phone,
             'password' => Hash::make($this->password),
+            'location' => $this->phone,
+            'dob' => $this->phone,
         ]);
 
         $this->dispatch(
@@ -55,6 +49,6 @@ class ClaimerRegister extends Component
             description: 'Your lost item report has been successfully submitted'
         );
 
-        return redirect()->route('claimer.login')->with('success', 'Registration successful!');
+        return redirect()->route('claimer-login')->with('success', 'Registration successful!');
     }
 }

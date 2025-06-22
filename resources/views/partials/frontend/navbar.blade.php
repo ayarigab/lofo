@@ -111,7 +111,7 @@
                 <a wire:navigate href="/signin"
                     class="w-full px-6 py-2 mr-0 text-gray-700 md:px-6 md:mr-2 lg:mr-3 md:w-auto rounded-full border transition-all duration-300 hover:text-[#3B82F6] hover-scale">Sign
                     In</a>
-                <a wire:navigate href="{{ route('signup') }}"
+                <a wire:navigate href="{{ route('claimer-register') }}"
                     class="relative inline-flex items-center overflow-hidden w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-gradient-to-br from-teal-300 to-[#3B82F6] md:w-auto md:rounded-full hover:bg-[#3B82F6] focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-300 hover-scale">
                     Sign Up
                 </a>
