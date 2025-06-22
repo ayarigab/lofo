@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'claimer' => [
+            'driver' => 'session',
+            'provider' => 'claimers',
+        ],
     ],
 
     /*
@@ -63,6 +67,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        'claimers' => [
+            'driver' => 'eloquent',
+            'model' => env('CLAIMER_MODEL',App\Models\Claimer::class),
         ],
 
         // 'users' => [

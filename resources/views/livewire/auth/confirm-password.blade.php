@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-6 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-lg">
     <x-auth-header
         :title="__('Confirm password')"
         :description="__('This is a secure area of the application. Please confirm your password before continuing.')"
@@ -10,7 +10,7 @@
     <form wire:submit="confirmPassword" class="flex flex-col gap-6">
         <!-- Password -->
         <flux:input
-            wire:model="password"
+            wire:model.live="password"
             :label="__('Password')"
             type="password"
             required
@@ -19,6 +19,6 @@
             viewable
         />
 
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Confirm') }}</flux:button>
+        <flux:button type="submit" class="w-full">{{ __('Confirm') }}</flux:button>
     </form>
 </div>

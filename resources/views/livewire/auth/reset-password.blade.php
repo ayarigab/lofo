@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-6 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-lg">
     <x-auth-header :title="__('Reset password')" :description="__('Please enter your new password below')" />
 
     <!-- Session Status -->
@@ -37,7 +37,7 @@
         />
 
         <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
+            <flux:button type="submit" class="w-full">
                 {{ __('Reset password') }}
             </flux:button>
         </div>

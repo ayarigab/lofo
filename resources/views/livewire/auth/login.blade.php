@@ -1,30 +1,29 @@
-<div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
+<div class="flex flex-col gap-6 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-lg">
+    <x-auth-header :title="__('Login to dashboard')" :description="__('Enter your email and password below to log in')" />
 
-    <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
 
     <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
         <flux:input
             wire:model="email"
             :label="__('Email address')"
             type="email"
+            icon="circle-user-round"
             required
             autofocus
             autocomplete="email"
-            placeholder="email@example.com"
+            placeholder="Enter your email"
         />
 
-        <!-- Password -->
         <div class="relative">
             <flux:input
                 wire:model="password"
                 :label="__('Password')"
                 type="password"
+                icon="lock"
                 required
                 autocomplete="current-password"
-                :placeholder="__('Password')"
+                :placeholder="__('Enter your password')"
                 viewable
             />
 
@@ -35,11 +34,10 @@
             @endif
         </div>
 
-        <!-- Remember Me -->
         <flux:checkbox wire:model="remember" :label="__('Remember me')" />
 
         <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
+            <flux:button  variant="primary" color="green" icon="log-in" type="submit" class="w-full hover:cursor-ointer">{{ __('Log in') }}</flux:button>
         </div>
     </form>
 

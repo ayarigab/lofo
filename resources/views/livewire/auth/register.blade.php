@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-6 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-lg">
     <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
 
     <!-- Session Status -->
@@ -7,30 +7,33 @@
     <form wire:submit="register" class="flex flex-col gap-6">
         <!-- Name -->
         <flux:input
-            wire:model="name"
+            wire:model.live="name"
             :label="__('Name')"
             type="text"
+            icon="circle-user-round"
             required
             autofocus
             autocomplete="name"
-            :placeholder="__('Full name')"
+            :placeholder="__('Enter your full name')"
         />
 
         <!-- Email Address -->
         <flux:input
-            wire:model="email"
+            wire:model.live="email"
             :label="__('Email address')"
             type="email"
+            icon="mail"
             required
             autocomplete="email"
-            placeholder="email@example.com"
+            placeholder="Enter email address"
         />
 
         <!-- Password -->
         <flux:input
-            wire:model="password"
-            :label="__('Password')"
+            wire:model.live="password"
+            :label="__('Enter new password')"
             type="password"
+            icon="lock"
             required
             autocomplete="new-password"
             :placeholder="__('Password')"
@@ -39,17 +42,18 @@
 
         <!-- Confirm Password -->
         <flux:input
-            wire:model="password_confirmation"
+            wire:model.live="password_confirmation"
             :label="__('Confirm password')"
             type="password"
+            icon="lock"
             required
             autocomplete="new-password"
-            :placeholder="__('Confirm password')"
+            :placeholder="__('Confirm your password')"
             viewable
         />
 
         <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
+            <flux:button variant="primary" color="green" icon="user-round-plus" type="submit" class="w-full">
                 {{ __('Create account') }}
             </flux:button>
         </div>
