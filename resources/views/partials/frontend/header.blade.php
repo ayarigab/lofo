@@ -25,6 +25,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @fluxAppearance
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7Z3EJJM1P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S7Z3EJJM1P');
+    </script>
 
     <link rel="stylesheet" href="{{ asset('libs/cookieconsent/cookieconsent.css') }}">
     <style>
