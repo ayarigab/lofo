@@ -14,13 +14,15 @@ Route::get('lost-items', [LostFoundController::class, 'index'])->name('lost-item
 Route::get('lost-items/{id}', [LostFoundController::class, 'show'])->name('lost-items.show');
 
 Route::prefix('claimer')->group(function () {
-    Route::get('/signin', function () {
-        return view('frontend.signin');
-    })->name('claimer-login');
+    Route::middleware(['claimer.guest'])->group(function () {
+        Route::get('/signin', function () {
+            return view('frontend.signin');
+        })->name('claimer-login');
 
-    Route::get('/signup', function () {
-        return view('frontend.signup');
-    })->name('claimer-register');
+        Route::get('/signup', function () {
+            return view('frontend.signup');
+        })->name('claimer-register');
+    });
 
     Route::post('/logout', [ClaimerAuthController::class, 'logout'])
         ->name('claimer-logout');

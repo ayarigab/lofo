@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Claimer;
 
 class ClaimLogin extends Component
 {
@@ -26,22 +28,31 @@ class ClaimLogin extends Component
 
 
         try {
-            if (Auth::guard('claimer')->attempt([
-                'email' => $this->email,
-                'password' => $this->password,
-            ], $this->remember)) {
-                return redirect()->intended('/claimer/dashboard')->with('toast', [
-                    'type' => 'success',
-                    'message' => 'Sign in success!',
-                    'description' => 'Your login was successful, Welcome back.'
-                ]);
+            $claimer = Claimer::where('email', $this->email)->first();
+
+            if (!$claimer) {
+                $this->addError('email', 'Invalid credentials');
+                return;
             }
+
+            if (!Hash::check($this->password, $claimer->password)) {
+                $this->addError('email', 'Invalid credentials');
+                return;
+            }
+
+            Auth::guard('claimer')->login($claimer, $this->remember);
+
+            return redirect()->intended('/claimer/dashboard')->with('toast', [
+                'type' => 'success',
+                'message' => 'Login successful',
+                'description' => 'Welcome back!'
+            ]);
         } catch (\Throwable $th) {
             $this->dispatch('toast-show', [
                 'data' => [
                     'type' => 'danger',
-                    'message' => 'Oops! Login error',
-                    'description' => 'Invalid credentials. Check your credentials and try again.'
+                    'message' => 'Login failed',
+                    'description' => 'The provided credentials are incorrect.'
                 ]
             ]);
         }

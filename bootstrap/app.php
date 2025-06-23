@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'claimer' => \App\Http\Middleware\RedirectIfNotClaimer::class,
+            'claimer.guest' => \App\Http\Middleware\RedirectIfClaimer::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
