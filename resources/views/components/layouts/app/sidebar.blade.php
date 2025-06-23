@@ -237,6 +237,8 @@
                     <flux:navlist.item icon="chat-bubble-oval-left-ellipsis" :href="route('messages')" :current="request()->routeIs('messages')" wire:navigate>{{ __('Messages') }}</flux:navlist.item>
                     <flux:navlist.item icon="tag" :href="route('categories')" :current="request()->routeIs('categories')" wire:navigate>{{ __('Categories') }}</flux:navlist.item>
                     <flux:navlist.item icon="scan-search" :href="route('lost-report')" :current="request()->routeIs('lost-report')" wire:navigate>{{ __('Reported Lost') }}</flux:navlist.item>
+                    <flux:navlist.item icon="user" :href="route('lost-report')" :current="request()->routeIs('lost-report')" wire:navigate>{{ __('All users') }}</flux:navlist.item>
+                    <flux:navlist.item icon="heart-handshake" :href="route('lost-report')" :current="request()->routeIs('lost-report')" wire:navigate>{{ __('Claimed Items') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
             <flux:spacer />

@@ -19,7 +19,6 @@ class ClaimRegister extends Component
     public $password;
     public $password_confirmation;
     public $avatar;
-
     public $previewAvatar;
 
     protected $rules = [
@@ -29,7 +28,7 @@ class ClaimRegister extends Component
         'location'  => 'required|string|max:255',
         'dob'       => 'required|date',
         'password'  => 'required|confirmed|min:8',
-        'avatar'    => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
+        'avatar'    => 'required|image|max:2048',
     ];
 
     public function render()
@@ -37,7 +36,7 @@ class ClaimRegister extends Component
         return view('livewire.claim-register');
     }
 
-    public function updatedImage()
+    public function updatedAvatar()
     {
         $this->validateOnly('avatar');
         $this->previewAvatar = $this->avatar->temporaryUrl();
@@ -47,25 +46,21 @@ class ClaimRegister extends Component
     {
         $this->validate();
 
-        $avatarPath = $this->avatar->store('users', 'public');
+        $avatarPath = $this->avatar->store('avatars', 'public');
 
         Claimer::create([
             'email' => $this->email,
             'full_name' => $this->full_name,
             'phone' => $this->phone,
             'password' => Hash::make($this->password),
-            'location' => $this->phone,
-            'dob' => $this->phone,
+            'location' => $this->location,
+            'dob' => $this->dob,
             'avatar' => $avatarPath,
         ]);
-
-        $this->dispatch(
-            'toast-show',
-            type: 'success',
-            message: 'Report Submitted',
-            description: 'Your lost item report has been successfully submitted'
-        );
-
-        return redirect()->route('claimer-login')->with('success', 'Registration successful!');
+        return redirect()->route('claimer-login')->with('toast', [
+            'type' => 'success',
+            'message' => 'Registration successful',
+            'description' => 'Please login now to access your dashboard.'
+        ]);
     }
 }

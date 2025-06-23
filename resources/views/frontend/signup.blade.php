@@ -9,7 +9,7 @@
             class="absolute inset-0 object-cover w-full h-full z-10">
         <div class="max-w-3xl px-20 mx-auto relative z-20">
             <div>
-                <h2 class="mb-6 text-3xl font-bold text-sky-900 sm:text-4xl">Create a new account</h2>
+                <h1 class="mb-6 text-3xl font-bold text-sky-900 sm:text-4xl">Create a new account</h1>
                 <p class="mb-8 text-lg text-gray-600">Join the community to showcase more lost items or claim yours for free. Please
                     fill in your details to register below.</p>
 

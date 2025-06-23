@@ -28,6 +28,62 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+                @php
+                    $toast = session('toast');
+                @endphp
+                @if($toast)
+                    window.dispatchEvent(new CustomEvent('toast-show', {
+                        detail: {
+                            type: '{{ $toast['type'] }}',
+                            message: '{{ $toast['message'] }}',
+                            description: '{{ $toast['description'] }}'
+                        }
+                    }));
+                @endif
+
+                @if(session('error'))
+                    window.dispatchEvent(new CustomEvent('toast-show', {
+                        detail: {
+                            type: 'danger',
+                            message: 'Error!',
+                            description: '{{ session('error') }}'
+                        }
+                    }));
+                @endif
+
+                @if(session('success'))
+                    window.dispatchEvent(new CustomEvent('toast-show', {
+                        detail: {
+                            type: 'success',
+                            message: 'Success!',
+                            description: '{{ session('success') }}'
+                        }
+                    }));
+                @endif
+
+                @if(session('warning'))
+                    window.dispatchEvent(new CustomEvent('toast-show', {
+                        detail: {
+                            type: 'warning',
+                            message: 'Warning!',
+                            description: '{{ session('warning') }}'
+                        }
+                    }));
+                @endif
+
+                @if(session('info'))
+                    window.dispatchEvent(new CustomEvent('toast-show', {
+                        detail: {
+                            type: 'info',
+                            message: 'Info!',
+                            description: '{{ session('info') }}'
+                        }
+                    }));
+                @endif
+            });
+        </script>
 
     <template x-teleport="body">
         <ul x-data="{
@@ -138,16 +194,12 @@
                     }
                 }" @toast-show.window="
                 event.stopPropagation();
-
                 let detail = event.detail;
-
                 if (Array.isArray(event.detail) && event.detail[0]?.data) {
                     detail = event.detail[0].data;
-                }
-                else if (event.detail?.data) {
+                } else if (event.detail?.data) {
                     detail = event.detail.data;
                 }
-
                 toasts.unshift({
                     id: 'toast-' + Math.random().toString(16).slice(2),
                     show: false,
@@ -155,7 +207,8 @@
                     description: detail.description || '',
                     type: detail.type || 'info'
                 });
-                stackToasts();" @mouseenter="toastsHovered=true;" @mouseleave="toastsHovered=false" x-init="
+                stackToasts();
+                " @mouseenter="toastsHovered=true;" @mouseleave="toastsHovered=false" x-init="
                     stackToasts();
                     $watch('toastsHovered', function(value){
                         if(value){
@@ -365,7 +418,7 @@
             </div>
 
             <div class="flex flex-col items-start justify-end w-full pt-4 md:items-center md:w-1/3 md:flex-row md:py-0">
-                <a wire:navigate href="/signin"
+                <a wire:navigate href="{{ route('claimer-login') }}"
                     class="w-full px-6 py-2 mr-0 text-gray-700 md:px-6 md:mr-2 lg:mr-3 md:w-auto rounded-full border transition-all duration-300 hover:text-[#3B82F6] hover-scale">Sign
                     In</a>
                 <a wire:navigate href="{{ route('claimer-register') }}"

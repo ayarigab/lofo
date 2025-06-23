@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-class ClaimerLogin extends Component
+class ClaimLogin extends Component
 {
     public $email;
     public $password;
@@ -15,10 +15,9 @@ class ClaimerLogin extends Component
         'email' => 'required|email',
         'password' => 'required',
     ];
-
     public function render()
     {
-        return view('livewire.claimer-login');
+        return view('livewire.claim-login');
     }
 
     public function login()
@@ -48,6 +47,5 @@ class ClaimerLogin extends Component
         }
 
         $this->addError('email', 'Invalid credentials');
-
     }
 }

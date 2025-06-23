@@ -54,18 +54,26 @@
         <div class="mb-6">
             <label class="block mb-1 text-sm font-medium text-gray-700">User Photo (*required)</label>
             <div class="flex items-center space-x-4">
-                <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center">
+                <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                     @if($previewAvatar)
-                    <img src="{{ $previewAvatar }}" class="w-24 h-24 object-cover rounded-lg">
+                    <img src="{{ $previewAvatar }}" class="w-full h-full object-cover">
                     @else
-                    <flux:icon name="image" class="w-10 h-10 text-gray-400 inline-block" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
                     @endif
                 </div>
                 <div class="flex-1">
                     <input type="file" id="avatar" wire:model="avatar" accept="image/*" class="hidden">
                     <label for="avatar"
-                        class="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-full text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover-scale">
-                        <flux:icon name="image-up" class="w-5 h-5 inline-block mr-2 text-gray-500" />
+                        class="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-full text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
                         Choose File
                     </label>
                     @error('avatar') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror

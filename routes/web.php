@@ -17,13 +17,15 @@ Route::prefix('claimer')->group(function () {
     Route::get('/signin', function () {
         return view('frontend.signin');
     })->name('claimer-login');
+
     Route::get('/signup', function () {
         return view('frontend.signup');
     })->name('claimer-register');
 
-    Route::post('/logout', [ClaimerAuthController::class, 'logout'])->name('claimer-logout');
+    Route::post('/logout', [ClaimerAuthController::class, 'logout'])
+        ->name('claimer-logout');
 
-    Route::middleware('auth:claimer')->group(function () {
+    Route::middleware(['claimer'])->group(function () {
         Route::get('/dashboard', function () {
             return view('frontend.dashboard');
         })->name('claimer-dashboard');

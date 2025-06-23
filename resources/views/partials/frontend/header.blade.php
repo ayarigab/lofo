@@ -57,13 +57,11 @@
     <link rel="stylesheet" href="{{ asset('libs/cookieconsent/cookieconsent.css') }}">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
         * {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
@@ -72,23 +70,18 @@
             text-rendering: optimizeLegibility;
             font-weight: 300;
         }
-
-        button,
-        a {
+        button,a {
             cursor: pointer;
         }
-
         .particles-js {
             position: relative;
             overflow: hidden;
             background-color: #FDFDFC;
         }
-
         .pjs-ontop {
             position: relative;
             z-index: 1;
         }
-
         .particles-js-canvas-el {
             position: absolute;
             top: 0;
@@ -96,27 +89,22 @@
             width: 100%;
             z-index: 0;
         }
-
         .gradient-text {
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
-
         .transition-all {
             transition-property: all;
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             transition-duration: 300ms;
         }
-
         .hover-scale {
             transition: transform 0.3s ease;
         }
-
         .hover-scale:hover {
             transform: scale(1.02);
         }
-
         .gradient-text {
             animation: gradientShift 8s linear infinite;
             background-size: 200% auto;
@@ -126,14 +114,23 @@
             -webkit-text-fill-color: transparent;
             transition: background-position 0.5s ease-in-out;
         }
-
+        .kenburns-slide {
+            animation: kenburns-zoom 12s ease-in-out forwards;
+        }
         @keyframes gradientShift {
             from {
                 -webkit-filter: hue-rotate(0deg);
             }
-
             to {
                 -webkit-filter: hue-rotate(-360deg);
+            }
+        }
+        @keyframes kenburns-zoom {
+            0% {
+                transform: scale(1.1) translate(0, 0);
+            }
+            100% {
+                transform: scale(1.2) translate(-2%, -2%);
             }
         }
     </style>

@@ -7,9 +7,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ClaimerAuthController extends Controller
 {
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::guard('claimer')->logout();
-        return redirect('/claimer/login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('claimer-login')->with('toast', [
+            'type' => 'info',
+            'message' => 'Logged out successfully.',
+            'description' => 'You are logged out succefully. To access dashboard, you have to login again'
+        ]);
     }
 }
