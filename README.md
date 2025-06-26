@@ -2,13 +2,13 @@
 
 ![1750957963592](image/README/1750957963592.png)
 
-**Tagline: ***Lost it, found it.*
+# ***Lost it, found it.***
 
 ---
 
 ## 🔍 Overview
 
- **LoFo ** (short for  **Lost & Found ** ) is a modern, elegant, and fully responsive web application designed to help users report lost items and find missing belongings within their community. Built with the power of  **Laravel ** ,  **Livewire ** ,  **Alpine.js ** , and  **Tailwind CSS ** , LoFo offers a seamless experience for individuals to connect and reunite lost items with their rightful owners.
+ ****LoFo **** (short for  **Lost Found ** ) is a modern, elegant, and fully responsive web application designed to help users report lost items and find missing belongings within their community. Built with the power of  **Laravel ** ,  **Livewire ** ,  **Alpine.js ** , and  **Tailwind CSS ** , LoFo offers a seamless experience for individuals to connect and reunite lost items with their rightful owners.
 
 This system is ideal for campuses, offices, communities, or public spaces where people frequently lose or find items and want an organized way to report and track them.
 
