@@ -30,6 +30,8 @@ class LostFound extends Model
         'founder_phone',
         'founder_address',
         'image',
+        'image2',
+        'image3',
         'status',
     ];
 
@@ -73,25 +75,45 @@ class LostFound extends Model
         return asset('storage/' . $this->image);
     }
 
+    public function getImage2UrlAttribute()
+    {
+        return $this->image2 ? asset('storage/' . $this->image2) : null;
+    }
+
+    public function getImage3UrlAttribute()
+    {
+        return $this->image3 ? asset('storage/' . $this->image3) : null;
+    }
+
     public function isClaimed()
     {
         return $this->status === 'claimed';
     }
+
     public function isApproved()
     {
         return $this->status === 'approved';
     }
+
     public function isPending()
     {
         return $this->status === 'pending';
     }
+
     public function isArchived()
     {
         return $this->status === 'archived';
     }
+
     public function deleteWithImage()
     {
         Storage::disk('public')->delete($this->image);
+        if ($this->image2) {
+            Storage::disk('public')->delete($this->image2);
+        }
+        if ($this->image3) {
+            Storage::disk('public')->delete($this->image3);
+        }
         return $this->delete();
     }
 

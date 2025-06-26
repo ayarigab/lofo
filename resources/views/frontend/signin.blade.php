@@ -22,42 +22,6 @@
                             </template>
                             <div class="absolute inset-0 z-20 w-full h-full opacity-70 bg-gradient-to-t from-black rounded-b-3xl"></div>
                         </div>
-
-                        <script>
-                            document.addEventListener('alpine:init', () => {
-                                Alpine.data('kenBurnsSlider', () => ({
-                                    currentSlide: 0,
-                                    slides: [
-                                        'https://wallpapers.com/images/high/vibrant-pine-branches-jpg-4ixpboo24b48qlra.webp',
-                                        'https://wallpapers.com/images/high/adidas-brand-logo-on-smoke-bic7qfie10mhjg4h.webp',
-                                        'https://wallpapers.com/images/hd/technology-drone-on-armchair-ra6wt9otz2n56g1g.jpg'
-                                    ],
-                                    interval: null,
-
-                                    init() {
-                                        this.startSlider();
-
-                                        this.$el.addEventListener('mouseenter', () => {
-                                            clearInterval(this.interval);
-                                        });
-
-                                        this.$el.addEventListener('mouseleave', () => {
-                                            this.startSlider();
-                                        });
-                                    },
-
-                                    startSlider() {
-                                        this.interval = setInterval(() => {
-                                            this.nextSlide();
-                                        }, 8000);
-                                    },
-
-                                    nextSlide() {
-                                        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
-                                    }
-                                }));
-                            });
-                        </script>
                     </div>
                 </div>
             </div>

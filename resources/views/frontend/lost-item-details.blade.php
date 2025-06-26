@@ -5,27 +5,18 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="max-w-4xl mx-auto">
-            <!-- Enhanced Breadcrumb -->
             <nav class="flex mb-6" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
                         <a wire:navigate href="{{ route('home') }}"
-                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                            </svg>
+                            class="inline-flex  text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                            <flux:icon name="house" class="h-5 w-5 mr-1" />
                             Home
                         </a>
                     </li>
                     <li>
                         <div class="flex items-center">
-                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <flux:icon name="chevron-right" class="h-5 w-5 text-gray-300" />
                             <a wire:navigate href="{{ route('lost-items') }}"
                                 class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors md:ml-2">
                                 Lost Items
@@ -34,11 +25,7 @@
                     </li>
                     <li aria-current="page">
                         <div class="flex items-center">
-                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <flux:icon name="chevron-right" class="h-5 w-5 text-gray-300" />
                             <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 truncate max-w-xs">{{
                                 $item->title }}</span>
                         </div>
@@ -46,47 +33,145 @@
                 </ol>
             </nav>
 
-            <!-- Item Card -->
-            <div class="bg-white shadow-xl rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
-                <!-- Image Gallery -->
+            <div class="bg-white shadow-sm rounded-3xl overflow-hidden">
                 <div class="relative">
-                    <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
-                        class="w-full h-96 object-cover rounded-t-2xl transition-transform duration-500 hover:scale-105">
+                    <div x-data="{
+                                        imageGalleryOpened: false,
+                                        imageGalleryActiveUrl: null,
+                                        imageGalleryImageIndex: null,
+                                        imageGalleryDirection: 'right',
+                                        imageGallery: [
+                                            @foreach ([$item->image_url, $item->image2_url, $item->image3_url] as $index => $imageUrl)
+                                                @if ($imageUrl)
+                                                    {
+                                                        'photo': '{{ $imageUrl }}',
+                                                        'alt': '{{ $item->title }} Image {{ $index + 1 }}'
+                                                    },
+                                                @endif
+                                            @endforeach
+                                        ],
+                                        imageGalleryOpen(event) {
+                                            this.imageGalleryImageIndex = parseInt(event.target.dataset.index);
+                                            this.imageGalleryActiveUrl = this.imageGallery[this.imageGalleryImageIndex-1].photo;
+                                            this.imageGalleryOpened = true;
+                                        },
+                                        imageGalleryClose() {
+                                            this.imageGalleryOpened = false;
+                                            setTimeout(() => this.imageGalleryActiveUrl = null, 300);
+                                        },
+                                        imageGalleryNext(){
+                                            this.imageGalleryDirection = 'right';
+                                            this.imageGalleryImageIndex = (this.imageGalleryImageIndex == this.imageGallery.length) ? 1 : (this.imageGalleryImageIndex + 1);
+                                            this.imageGalleryActiveUrl = this.imageGallery[this.imageGalleryImageIndex-1].photo;
+                                        },
+                                        imageGalleryPrev() {
+                                            this.imageGalleryDirection = 'left';
+                                            this.imageGalleryImageIndex = (this.imageGalleryImageIndex == 1) ? this.imageGallery.length : (this.imageGalleryImageIndex - 1);
+                                            this.imageGalleryActiveUrl = this.imageGallery[this.imageGalleryImageIndex-1].photo;
+                                        }
+                                    }" @keyup.right.window="imageGalleryNext();" @keyup.left.window="imageGalleryPrev();"
+                        class="w-full h-full select-none">
 
-                    <!-- Status Badge -->
-                    <div class="absolute top-4 right-4 flex items-center bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold shadow-sm
-                        {{ $item->status === 'pending' ? 'text-yellow-800 bg-yellow-100' :
-                           ($item->status === 'claimed' ? 'text-green-800 bg-green-100' :
-                           'text-red-800 bg-red-100') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            @if($item->status === 'pending')
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            @elseif($item->status === 'claimed')
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            @else
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        <div class="relative overflow-hidden">
+                            @if($item->image_url)
+                            <img x-on:click="imageGallery.length > 0 ? imageGalleryOpen($event) : null" src="{{ $item->image_url }}"
+                                alt="{{ $item->title }}" data-index="1"
+                                class="w-full h-full object-cover rounded-t-2xl transition-transform duration-500 hover:scale-105 cursor-pointer"
+                                :class="{'cursor-zoom-in': imageGallery.length > 0, 'cursor-default': imageGallery.length === 0}">
                             @endif
-                        </svg>
+
+                            @if($item->image2_url || $item->image3_url)
+                            <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 px-4 -mt-8">
+                                <div class="flex gap-2 items-center justify-center p-2">
+                                    @foreach([$item->image_url, $item->image2_url, $item->image3_url] as $index => $imageUrl)
+                                    @if($imageUrl)
+                                    <img x-on:click="imageGalleryOpen" src="{{ $imageUrl }}" alt="Thumbnail {{ $index + 1 }}"
+                                        data-index="{{ $index + 1 }}"
+                                        class="w-16 h-16 object-cover rounded-md cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all duration-200">
+                                    @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+
+                        <template x-teleport="body">
+                            <div x-show="imageGalleryOpened" x-transition:enter="transition ease-in-out duration-300"
+                                x-transition:enter-start="opacity-0" x-transition:leave="transition ease-in-out duration-300"
+                                x-transition:leave-end="opacity-0" @click="imageGalleryClose" @keydown.window.escape="imageGalleryClose"
+                                x-trap.inert.noscroll="imageGalleryOpened"
+                                class="fixed inset-0 z-[99] flex items-center justify-center bg-white/10 backdrop-blur-sm bg-opacity-70 transition-opacity select-none cursor-zoom-out"
+                                x-cloak>
+                                <div class="relative flex items-center justify-center w-11/12 xl:w-4/5 h-4/5">
+                                    <div class="relative w-full h-full overflow-hidden">
+                                        <template x-for="(image, index) in imageGallery" :key="index">
+                                            <img x-show="imageGalleryImageIndex === index + 1"
+                                                x-transition:enter="transition ease duration-300"
+                                                x-transition:enter-start="opacity-0 transform translate-y-10"
+                                                x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                x-transition:leave="transition ease duration-300"
+                                                x-transition:leave-start="opacity-100 transform scale-0"
+                                                x-transition:leave-end="opacity-0 transition scale-90" :class="{
+                                                                    'absolute inset-0': true,
+                                                                    'scale-90': imageGalleryDirection === 'right' && imageGalleryImageIndex !== index + 1,
+                                                                    'scale-90': imageGalleryDirection === 'left' && imageGalleryImageIndex !== index + 1
+                                                                }"
+                                                class="object-contain object-center w-full h-full select-none rounded-lg"
+                                                :src="image.photo" :alt="image.alt">
+                                        </template>
+                                    </div>
+
+                                    <button x-show="imageGallery.length > 1" @click.stop="imageGalleryPrev()" @keydown.window.next="imageGalleryPrev()"
+                                        class="absolute left-0 flex items-center justify-center text-black rounded-full cursor-pointer bg-black/10 w-14 h-14 hover:bg-black/20 active:scale-110 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all">
+                                        <flux:icon name="chevron-left" class="w-6 h-6" />
+                                    </button>
+
+                                    <button x-show="imageGallery.length > 1" @click.stop="imageGalleryNext()"
+                                        class="absolute right-0 flex items-center justify-center text-black rounded-full cursor-pointer bg-black/10 w-14 h-14 hover:bg-black/20 active:scale-110 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all">
+                                        <flux:icon name="chevron-right" class="w-6 h-6" />
+                                    </button>
+
+                                    <button @click.stop="imageGalleryClose"
+                                        class="absolute top-4 right-4 p-2 text-white rounded-full bg-black/50 hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 hover-scale">
+                                        <flux:icon name="x" class="w-6 h-6" />
+                                    </button>
+
+                                    <div x-show="imageGallery.length > 1"
+                                        class="absolute bottom-4 invert left-0 right-0 mx-auto text-center text-black text-sm bg-white/10 backdrop-blur-sm rounded-full shadow-sm w-12 px-2">
+                                        <span x-text="imageGalleryImageIndex"></span> / <span x-text="imageGallery.length"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="absolute top-4 right-4 flex items-center bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold shadow-sm
+                                                {{ $item->status === 'pending' ? 'text-red-800 bg-red-100' :
+                                                    ($item->status === 'archived' ? 'text-yellow-800 bg-yellow-100' :
+                                                   ($item->status === 'claimed' ? 'text-purple-800 bg-purple-100' :
+                                                   'text-green-800 bg-green-100')) }}">
+                        @if($item->status === 'pending')
+                        <flux:icon name="clock" class="h-4 w-4 mr-1" />
+                        @elseif($item->status === 'archived')
+                        <flux:icon name="trash" class="h-4 w-4 mr-1" />
+                        @elseif($item->status === 'claimed')
+                        <flux:icon name="heart-handshake" class="h-4 w-4 mr-1" />
+                        @else
+                        <flux:icon name="circle-check-big" class="h-4 w-4 mr-1" />
+                        @endif
                         {{ ucfirst($item->status) }}
                     </div>
                 </div>
 
                 <div class="px-8 py-6">
-                    <!-- Header Section -->
                     <div class="flex justify-between items-start">
                         <div>
                             <h1 class="text-3xl font-bold text-gray-900">{{ $item->title }}</h1>
                             <div class="mt-2 flex items-center space-x-2">
                                 <span
                                     class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                    </svg>
+                                    <flux:icon name="tag" class="h-4 w-4 mr-1" />
                                     {{ $item->category->name ?? 'Uncategorized' }}
                                 </span>
                             </div>
@@ -101,9 +186,7 @@
                         </div>
                     </div>
 
-                    <!-- Details Grid -->
                     <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Description -->
                         <div>
                             <div class="flex items-center mb-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 mr-2" fill="none"
@@ -117,7 +200,6 @@
                             </p>
                         </div>
 
-                        <!-- Item Details -->
                         <div class="bg-gray-50 p-6 rounded-2xl">
                             <div class="flex items-center mb-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 mr-2" fill="none"
@@ -203,7 +285,6 @@
                         </div>
                     </div>
 
-                    <!-- Founder Information -->
                     <div class="mt-10 border-t border-gray-200 pt-8">
                         <div class="flex items-center mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 mr-2" fill="none"
@@ -237,15 +318,33 @@
                         </div>
                     </div>
 
-                    <!-- Claim Button -->
-                    <div class="mt-10 border-t border-gray-200 pt-8 text-center">
+                    <div
+                    x-data="{
+                        claimItem() {
+                            @auth('claimer')
+                                window.dispatchEvent(new CustomEvent('toast-show', {
+                                    detail: {
+                                        type: 'success',
+                                        message: 'Success!',
+                                        description: 'Item has been successfully reported.'
+                                    }
+                                }));
+                            @else
+                                window.dispatchEvent(new CustomEvent('toast-show', {
+                                    detail: {
+                                        type: 'danger',
+                                        message: 'Login to claim Item',
+                                        description: 'To claim {{ $item->title }} you need to login now.'
+                                    }
+                                }));
+                            @endauth
+                        }
+                    }"
+                    class="mt-10 border-t border-gray-200 pt-8 text-center">
                         <button
-                            class="inline-flex items-center px-8 py-3 bg-green-600 text-white rounded-full shadow-lg text-base font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all transform hover:-translate-y-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
+                            @click="claimItem"
+                            class="inline-flex items-center px-8 py-3 bg-green-600 text-white rounded-full shadow-lg text-base font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-all transform hover-scale">
+                            <flux:icon name="gift" />
                             Claim This Item
                         </button>
                     </div>

@@ -8,63 +8,63 @@
             <div class="px-6 py-24 mx-auto max-w-7xl sm:px-10">
                 <div class="w-full mx-auto text-left md:text-center">
                     <div x-data="{
-                                            text: 'Reuniting Lost Items with Their Owners',
-                                            textArray: ['Reuniting lost items with their rightful owners', 'Helping You Find What Matters', 'Connecting people to their Lost Treasures'],
-                                            textIndex: 0,
-                                            charIndex: 0,
-                                            typeSpeed: 100,
-                                            deleteSpeed: 80,
-                                            cursorSpeed: 550,
-                                            pauseBetween: 1000,
-                                            pauseAfter: 1500,
-                                            direction: 'forward',
-                                            isTyping: true,
-                                            currentGradient: 0,
-                                            gradients: [
-                                                'bg-gradient-to-r from-purple-600 to-pink-500',
-                                                'bg-gradient-to-r from-teal-500 to-blue-600',
-                                                'bg-gradient-to-r from-orange-500 to-yellow-400'
-                                            ],
-                                            animateGradient() {
-                                                this.currentGradient = (this.currentGradient + 1) % this.gradients.length;
-                                                setTimeout(() => this.animateGradient(), 3000);
-                                            }
-                                        }" x-init="() => {
-                                            animateGradient();
+                            text: 'Reuniting Lost Items with Their Owners',
+                            textArray: ['Reuniting lost items with their rightful owners', 'Helping You Find What Matters', 'Connecting people to their Lost Treasures'],
+                            textIndex: 0,
+                            charIndex: 0,
+                            typeSpeed: 100,
+                            deleteSpeed: 80,
+                            cursorSpeed: 550,
+                            pauseBetween: 1000,
+                            pauseAfter: 1500,
+                            direction: 'forward',
+                            isTyping: true,
+                            currentGradient: 0,
+                            gradients: [
+                                'bg-gradient-to-r from-purple-600 to-pink-500',
+                                'bg-gradient-to-r from-teal-500 to-blue-600',
+                                'bg-gradient-to-r from-orange-500 to-yellow-400'
+                            ],
+                            animateGradient() {
+                                this.currentGradient = (this.currentGradient + 1) % this.gradients.length;
+                                setTimeout(() => this.animateGradient(), 3000);
+                            }
+                        }" x-init="() => {
+                            animateGradient();
 
-                                            let typingInterval;
+                            let typingInterval;
 
-                                            function startTyping() {
-                                                let current = $data.textArray[$data.textIndex];
+                            function startTyping() {
+                                let current = $data.textArray[$data.textIndex];
 
-                                                if ($data.direction === 'forward') {
-                                                    if ($data.charIndex <= current.length) {
-                                                        $data.text = current.substring(0, $data.charIndex);
-                                                        $data.charIndex += 1;
-                                                    } else {
-                                                        $data.direction = 'backward';
-                                                        clearInterval(typingInterval);
-                                                        setTimeout(() => {
-                                                            typingInterval = setInterval(startTyping, $data.deleteSpeed);
-                                                        }, $data.pauseAfter);
-                                                    }
-                                                } else {
-                                                    if ($data.charIndex > 0) {
-                                                        $data.text = current.substring(0, $data.charIndex);
-                                                        $data.charIndex -= 1;
-                                                    } else {
-                                                        $data.direction = 'forward';
-                                                        $data.textIndex = ($data.textIndex + 1) % $data.textArray.length;
-                                                        clearInterval(typingInterval);
-                                                        setTimeout(() => {
-                                                            typingInterval = setInterval(startTyping, $data.typeSpeed);
-                                                        }, $data.pauseBetween);
-                                                    }
-                                                }
-                                            }
-
+                                if ($data.direction === 'forward') {
+                                    if ($data.charIndex <= current.length) {
+                                        $data.text = current.substring(0, $data.charIndex);
+                                        $data.charIndex += 1;
+                                    } else {
+                                        $data.direction = 'backward';
+                                        clearInterval(typingInterval);
+                                        setTimeout(() => {
+                                            typingInterval = setInterval(startTyping, $data.deleteSpeed);
+                                        }, $data.pauseAfter);
+                                    }
+                                } else {
+                                    if ($data.charIndex > 0) {
+                                        $data.text = current.substring(0, $data.charIndex);
+                                        $data.charIndex -= 1;
+                                    } else {
+                                        $data.direction = 'forward';
+                                        $data.textIndex = ($data.textIndex + 1) % $data.textArray.length;
+                                        clearInterval(typingInterval);
+                                        setTimeout(() => {
                                             typingInterval = setInterval(startTyping, $data.typeSpeed);
-                                        }" class="flex items-center justify-center mx-auto text-center max-w-7xl">
+                                        }, $data.pauseBetween);
+                                    }
+                                }
+                            }
+
+                            typingInterval = setInterval(startTyping, $data.typeSpeed);
+                        }" class="flex items-center justify-center mx-auto text-center max-w-7xl">
                         <div class="relative flex items-center justify-center h-24">
                             <h1 class="mb-6 text-4xl font-extrabold tracking-normal text-gray-900 sm:text-5xl md:text-6xl lg:text-6xl md:tracking-tight leading-tight gradient-text"
                                 :class="gradients[currentGradient]" x-text="text" style="min-width: 1rem;">
@@ -290,7 +290,7 @@
                 lost
                 belongings.</p>
             <div class="flex flex-col justify-center gap-4 sm:flex-row sm:gap-6">
-                <a wire:navigate href="/signup"
+                <a wire:navigate href="{{ route('claimer-register') }}"
                     class="px-8 py-4 text-base font-medium text-black bg-white/60 backdrop-blur-sm rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600 transition-all hover-scale">
                     Get Started Now
                 </a>

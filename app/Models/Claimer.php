@@ -12,6 +12,12 @@ class Claimer extends Authenticatable
 
     protected $guard = 'claimer';
 
+    protected $dates = ['dob'];
+    protected $appends = ['image_url'];
+    protected $casts = [
+        'dob' => 'datetime',
+    ];
+
     protected $fillable = [
         'email',
         'full_name',
@@ -32,6 +38,11 @@ class Claimer extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return asset("storage/$this->avatar");
     }
 
     public function initials(): string

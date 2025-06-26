@@ -117,6 +117,28 @@
         .kenburns-slide {
             animation: kenburns-zoom 12s ease-in-out forwards;
         }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(0.9);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+        @keyframes squeeze {
+            0%, 100% {
+                transform: scaleX(1) scaleY(1);
+            }
+            30% {
+                transform: scaleX(1.2) scaleY(0.8);
+            }
+            60% {
+                transform: scaleX(0.9) scaleY(1.1);
+            }
+        }
         @keyframes gradientShift {
             from {
                 -webkit-filter: hue-rotate(0deg);
@@ -133,5 +155,96 @@
                 transform: scale(1.2) translate(-2%, -2%);
             }
         }
+
+        .shimmer-animation {
+            animation: shimmer 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        .animate-opacity {
+            animation: fadeIn 0.3s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        [wire\:loading].grid {
+            animation: contentFade 0.3s ease-out;
+        }
+        [wire\:loading\.remove].grid {
+            animation: contentFade 0.3s ease-out;
+        }
+        @keyframes contentFade {
+            from {
+                opacity: 0.5;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .item-enter-active,
+        .item-leave-active {
+            transition: all 0.3s ease;
+        }
+        .item-enter-from,
+        .item-leave-to {
+            opacity: 0;
+            transform: translateY(10px);
+        }
     </style>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('kenBurnsSlider', () => ({
+                currentSlide: 0,
+                slides: [
+                    'https://wallpapers.com/images/high/vibrant-pine-branches-jpg-4ixpboo24b48qlra.webp',
+                    'https://wallpapers.com/images/high/adidas-brand-logo-on-smoke-bic7qfie10mhjg4h.webp',
+                    'https://wallpapers.com/images/hd/technology-drone-on-armchair-ra6wt9otz2n56g1g.jpg'
+                ],
+                interval: null,
+                init() {
+                    this.startSlider();
+                    this.$el.addEventListener('mouseenter', () => {
+                        clearInterval(this.interval);
+                    });
+                    this.$el.addEventListener('mouseleave', () => {
+                        this.startSlider();
+                    });
+                },
+                startSlider() {
+                    this.interval = setInterval(() => {
+                        this.nextSlide();
+                    }, 8000);
+                },
+                nextSlide() {
+                    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+                }
+            }));
+        });
+    </script>
 </head>
