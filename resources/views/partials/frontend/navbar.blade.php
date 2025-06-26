@@ -443,7 +443,6 @@
                             <path fill="currentColor"
                                 d="M11.663 3.2a7 7 0 1 0 2.528 12.407l5.102 5.101a1 1 0 0 0 1.414-1.414l-5.1-5.1A6.97 6.97 0 0 0 17 10v-.048a1.5 1.5 0 0 1-.54.097c-.659-.002-1.347-.427-1.56-1.05v-.003q.099.488.1 1.004a5 5 0 1 1-3.852-4.868A1.6 1.6 0 0 1 11 4.47c.001-.517.257-.983.664-1.27"
                                 :class="{
-                                    'motion-safe:animate-[squeeze_0.6s_ease-in-out]': spin,
                                     'motion-safe:animate-[squeeze_0.6s_ease-in-out]': !spin
                                 }" style="transform-origin: center" />
                         </svg>
@@ -461,7 +460,7 @@
                     class="w-full px-6 py-2 mr-0 text-gray-700 md:px-6 md:mr-2 lg:mr-3 md:w-auto rounded-full border transition-all duration-300 hover:text-[#3B82F6] hover-scale">Sign
                     In</a>
                 <a wire:navigate href="{{ route('claimer-register') }}"
-                    class="relative inline-flex items-center overflow-hidden w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-gradient-to-br from-teal-300 to-[#3B82F6] md:w-auto md:rounded-full hover:bg-[#3B82F6] focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-300 hover-scale">
+                    class="relative inline-flex items-center overflow-hidden w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-gradient-to-r from-blue-400  to-green-400 md:w-auto md:rounded-full hover:bg-[#3B82F6] focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-300 hover-scale">
                     Sign Up
                 </a>
             </div>
