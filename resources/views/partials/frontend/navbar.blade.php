@@ -350,13 +350,13 @@
     <div
         class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
         <div class="flex items-center justify-start w-1/4 h-full pr-4">
-            <a wire:navigate href="/" class="flex items-center py-4 space-x-2 font-extrabold text-gray-900 md:py-0 group">
+            <a wire:navigate href="{{ route('home') }}" class="flex items-center py-4 space-x-2 font-extrabold text-gray-900 md:py-0 group">
                 <span
-                    class="flex items-center justify-center w-16 h-16 p-2 rounded-full transition-all duration-300 group-hover:rotate-12 border border-[#3B82F6] text-white">
+                    class="flex items-center justify-center w-16 h-12 p-2 rounded-full transition-all duration-300 group-hover:rotate-12 border-[1.5px] border-black text-white">
                     <x-app-logo-icon />
                 </span>
                 <span
-                    class="uppercase text-xl transition-all duration-300 group-hover:text-b[#3B82F6]">Lost&Found</span>
+                    class="uppercase text-xl transition-all duration-300 group-hover:text-[#3B82F6]">Lostfound</span>
             </a>
         </div>
 
@@ -364,22 +364,19 @@
             :class="{'flex fixed': showMenu, 'hidden': !showMenu }">
             <div
                 class="flex flex-col w-full h-auto overflow-hidden bg-white rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row">
-                <a wire:navigate href="/"
-                    class="relative inline-block w-full py-2 mx-0 ml-6 text-left text-black md:ml-0 md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center group">
-                    <span class="transition-all duration-300 group-hover:text-[#3B82F6]">Home</span>
-                    <span
-                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#3B82F6] transition-all duration-300 group-hover:w-full"></span>
+                <a wire:navigate href="{{ route('home') }}"
+                    class="{{ request()->routeIs('home') ? 'bg-black text-slate-100 hover:bg-gray-900' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 mx-0 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:mx-1 lg:mx-2 md:text-center">
+                    Home
                 </a>
 
                 <div class="relative"
                     @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='lost-found'"
                     @mouseleave="navigationMenuLeave()">
                     <button
-                        class="inline-flex items-center justify-center w-full py-2 mx-0 text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-black lg:mx-3 md:text-center group">
-                        <span class="transition-all duration-300 group-hover:text-[#3B82F6]">Lost &
-                            Found</span>
+                        class="inline-flex items-center justify-center rounded-3xl w-full px-4 py-2 mx-0 md:w-auto bg-transparent md:mx-1 text-black lg:mx-1 md:text-center hover:bg-slate-100">
+                        Lost & Found
                         <svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'lost-found' }"
-                            class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
+                            class="relative ml-1 h-4 w-4 ease-out duration-300"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="6 9 12 15 18 9"></polyline>
@@ -387,17 +384,13 @@
                     </button>
                 </div>
 
-                <a wire:navigate href="/about"
-                    class="relative inline-block w-full py-2 mx-0 text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-black lg:mx-3 md:text-center group">
-                    <span class="transition-all duration-300 group-hover:text-[#3B82F6]">About US</span>
-                    <span
-                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#3B82F6] transition-all duration-300 group-hover:w-full"></span>
+                <a wire:navigate href="{{ route('about-us') }}"
+                    class="{{ request()->routeIs('about-us') ? 'bg-black text-slate-100 hover:bg-gray-900' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 mx-0 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:mx-1 lg:mx-2 md:text-center">
+                    About US
                 </a>
-                <a wire:navigate href="/contact"
-                    class="relative inline-block w-full py-2 mx-0 text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-black lg:mx-3 md:text-center group">
-                    <span class="transition-all duration-300 group-hover:text-[#3B82F6]">Contact US</span>
-                    <span
-                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#3B82F6] transition-all duration-300 group-hover:w-full"></span>
+                <a wire:navigate href="{{ route('contact-us') }}"
+                    class="{{ request()->routeIs('contact-us') ? 'bg-black text-slate-100 hover:bg-gray-900' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 mx-0 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:mx-1 lg:mx-2 md:text-center">
+                    Contact US
                 </a>
 
                 <button @click="modalOpen=true"
