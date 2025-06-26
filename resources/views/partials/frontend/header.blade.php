@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> --}}
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ in_array(app()->getLocale(), ['ar', 'he', 'fa']) ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
@@ -7,12 +8,17 @@
 
     <title>{{ $title . " | " . config('app.name') ?? config('app.name') }}</title>
 
+    @foreach(config('app.available_locales') as $locale)
+    <link rel="alternate" hreflang="{{ $locale }}" href="" />
+    @endforeach
+
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="LoFo" />
     <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="LoFo" />
+    <meta name="language" content="{{ app()->getLocale() }}">
 
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,17 +125,6 @@
         }
         .kenburns-slide {
             animation: kenburns-zoom 12s ease-in-out forwards;
-        }
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(180deg) scale(0.9);
-            }
-            100% {
-                transform: rotate(360deg) scale(1);
-            }
         }
         @keyframes squeeze {
             0%, 100% {

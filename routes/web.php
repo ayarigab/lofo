@@ -7,6 +7,10 @@ use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClaimerAuthController;
 
+Route::get('lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'switch'])
+    ->where('locale', implode('|', config('app.available_locales')))
+    ->name('lang.switch');
+
 Route::get('/', [LostFoundController::class, 'home'])->name('home');
 Route::get('/post-item', [LostFoundController::class, 'create'])->name('lost-items.store');
 

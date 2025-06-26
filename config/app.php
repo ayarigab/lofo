@@ -78,7 +78,39 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'available_locales' => [
+        'ar',
+        'de',
+        'en',
+        'es',
+        'fa',
+        'fr',
+        'ha',
+        'hi',
+        'it',
+        'pt',
+        'ru',
+        'vi',
+        'zh',
+    ],
+
+    'locale_names' => [
+        'ar' => 'عربي',
+        'de' => 'Deutsch',
+        'en' => 'English',
+        'es' => 'Español',
+        'fa' => 'فارسی',
+        'fr' => 'Français',
+        'ha' => 'Hausa',
+        'hi' => 'हिन्दी',
+        'it' => 'Italiano',
+        'pt' => 'Português',
+        'ru' => 'Русский',
+        'vi' => 'Tiếng Việt',
+        'zh' => '中文',
+    ],
+
+    'locale' => 'en',
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 

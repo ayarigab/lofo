@@ -308,7 +308,7 @@
     </template>
 </div>
 
-<nav class="relative z-50 h-24 select-none w-auto bg-white" x-data="{
+<nav class="relative z-50 h-24 select-none w-auto bg-white px-4" x-data="{
                 showMenu: false,
                 navigationMenuOpen: false,
                 navigationMenu: '',
@@ -365,7 +365,7 @@
             <div
                 class="flex flex-col w-full h-auto overflow-hidden bg-white rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row">
                 <a wire:navigate href="{{ route('home') }}"
-                    class="{{ request()->routeIs('home') ? 'bg-black text-slate-100 hover:bg-gray-900' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 mx-0 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:mx-1 lg:mx-2 md:text-center">
+                    class="{{ request()->routeIs('home') ? 'bg-black text-slate-100 hover:bg-gray-900 mx-1' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:text-center">
                     Home
                 </a>
 
@@ -373,7 +373,7 @@
                     @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='lost-found'"
                     @mouseleave="navigationMenuLeave()">
                     <button
-                        class="inline-flex items-center justify-center rounded-3xl w-full px-4 py-2 mx-0 md:w-auto bg-transparent md:mx-1 text-black lg:mx-1 md:text-center hover:bg-slate-100">
+                        class="inline-flex items-center justify-center rounded-3xl w-full px-4 py-2 md:w-auto bg-transparent text-black md:text-center hover:bg-slate-100">
                         Lost & Found
                         <svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'lost-found' }"
                             class="relative ml-1 h-4 w-4 ease-out duration-300"
@@ -385,16 +385,16 @@
                 </div>
 
                 <a wire:navigate href="{{ route('about-us') }}"
-                    class="{{ request()->routeIs('about-us') ? 'bg-black text-slate-100 hover:bg-gray-900' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 mx-0 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:mx-1 lg:mx-2 md:text-center">
+                    class="{{ request()->routeIs('about-us') ? 'bg-black text-slate-100 hover:bg-gray-900 mx-1' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:text-center">
                     About US
                 </a>
                 <a wire:navigate href="{{ route('contact-us') }}"
-                    class="{{ request()->routeIs('contact-us') ? 'bg-black text-slate-100 hover:bg-gray-900' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 mx-0 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:mx-1 lg:mx-2 md:text-center">
+                    class="{{ request()->routeIs('contact-us') ? 'bg-black text-slate-100 hover:bg-gray-900 mx-1' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:text-center">
                     Contact US
                 </a>
 
                 <button @click="modalOpen=true"
-                    class="absolute top-0 left-0 hidden items-center py-2 border rounded-full mt-6 ml-10 mr-2 text-gray-600 lg:inline-flex md:mt-0 md:ml-2 lg:mx-3 md:relative group transition-all duration-300 hover:border-[#3B82F6] hover:text-[#3B82F6] hover-scale"
+                    class="absolute top-0 left-0 hidden items-center py-2 border rounded-full mt-6 ml-10 mr-2 text-gray-600 lg:inline-flex md:mt-0 md:ml-2 lg:mx-3 md:relative group transition-all duration-300 hover:border-black hover:text-black hover-scale"
                     x-data="{
                         sparkle: false,
                         spin: false
@@ -441,17 +441,72 @@
                         </svg>
                         <span class="hidden ml-2 mr-4 md:inline">Search...</span>
                         <div
-                            class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400">
-                            <span class="pointer-events-none group-hover:text-blue-500">⌘K</span>
+                            class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400 pointer-events-none">
+                            ⌘K
                         </div>
                     </div>
                 </button>
             </div>
 
             <div class="flex flex-col items-start justify-end w-full pt-4 md:items-center md:w-1/3 md:flex-row md:py-0">
-                <a wire:navigate href="{{ route('claimer-login') }}"
-                    class="w-full px-6 py-2 mr-0 text-gray-700 md:px-6 md:mr-2 lg:mr-3 md:w-auto rounded-full border transition-all duration-300 hover:text-[#3B82F6] hover-scale">Sign
-                    In</a>
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" @mouseenter="open = true"
+                        class="flex items-center rounded-3xl overflow-hidden w-full px-6 py-3 bg-transparent text-black hover:bg-slate-100 hover-scale">
+                        <flux:icon name="globe-alt" class="w-4 h-4" />
+                        <span class="text-sm">
+                            @switch(app()->getLocale())
+                            @case('ar') {{ __('lang_v1.language') }} @break
+                            @case('de') {{ __('lang_v1.language') }} @break
+                            @case('en') {{ __('lang_v1.language') }} @break
+                            @case('es') {{ __('lang_v1.language') }} @break
+                            @case('fa') {{ __('lang_v1.language') }} @break
+                            @case('fr') {{ __('lang_v1.language') }} @break
+                            @case('ha') {{ __('lang_v1.language') }} @break
+                            @case('hi') {{ __('lang_v1.language') }} @break
+                            @case('it') {{ __('lang_v1.language') }} @break
+                            @case('pt') {{ __('lang_v1.language') }} @break
+                            @case('ru') {{ __('lang_v1.language') }} @break
+                            @case('vi') {{ __('lang_v1.language') }} @break
+                            @case('zh') {{ __('lang_v1.language') }} @break
+                            @endswitch
+                        </span>
+                        <svg class="w-4 h-4 transition-transform" :class="{ 'motion-safe:animate-[squeeze_0.6s_ease-in-out]': open }"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+
+                    <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95"
+                        class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-3xl bg-white shadow-xl border focus:outline-none">
+                        @foreach(config('app.available_locales') as $locale)
+                        <a href="{{ route('lang.switch', $locale) }}" class="flex items-center px-4 py-2 transition-all text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 last:rounded-b-3xl first:rounded-t-3xl
+                                                   {{ app()->getLocale() === $locale ? 'bg-gray-100 font-medium' : '' }}">
+                            <span class="mr-2">
+                                @switch($locale)
+                                @case('ar') 🇸🇦 @break
+                                @case('de') 🇩🇪 @break
+                                @case('en') 🇬🇧 @break
+                                @case('es') 🇪🇸 @break
+                                @case('fa') 🇮🇷 @break
+                                @case('fr') 🇫🇷 @break
+                                @case('ha') 🇳🇬 @break
+                                @case('hi') 🇮🇳 @break
+                                @case('it') 🇮🇹 @break
+                                @case('pt') 🇵🇹 @break
+                                @case('ru') 🇷🇺 @break
+                                @case('vi') 🇻🇳 @break
+                                @case('zh') 🇨🇳 @break
+                                @endswitch
+                            </span>
+                            {{ config('app.locale_names')[$locale] }}
+                        </a>
+                        @endforeach
+                    </div>
+                </div>
                 <a wire:navigate href="{{ route('claimer-register') }}"
                     class="relative inline-flex items-center overflow-hidden w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-gradient-to-r from-blue-400  to-green-400 md:w-auto md:rounded-full hover:bg-[#3B82F6] focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-300 hover-scale">
                     Sign Up
