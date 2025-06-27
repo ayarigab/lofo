@@ -9,7 +9,7 @@
     <title>{{ $title . " | " . config('app.name') ?? config('app.name') }}</title>
 
     @foreach(config('app.available_locales') as $locale)
-    <link rel="alternate" hreflang="{{ $locale }}" href="" />
+    <link rel="alternate" hreflang="{{ $locale }}" href="{{ route('lang.switch', $locale) }}" />
     @endforeach
 
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />

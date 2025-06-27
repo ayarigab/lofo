@@ -1,4 +1,5 @@
 <?php
+
 return [
     'language' => 'Langue',
     'searching' => 'Recherche',
@@ -6,16 +7,25 @@ return [
     'cancel' => 'Annuler',
     'save' => 'Sauvegarder',
     'delete' => 'Supprimer',
-
-    // Menu Items
-    'home' => 'Accueil',
-    'lostfound' => 'Perdutrouvé',
-    'lost_and_found' => 'Objets trouvés',
-    'about_us' => 'À propos',
-    'contact_us' => 'Nous contacter',
-
-    // other translations
-    'sign_up' => 'S\' inscrire',
-    'search' => 'Rechercher',
-    'search...' => 'Rechercher...',
+    'home' => 'Maison',
+    'lostfound' => 'Lostfound',
+    'lost_and_found' => 'Perdu et trouvé',
+    'about_us' => 'À propos de nous',
+    'contact_us' => 'Contactez-nous',
+    'reuniting' => 'Réunir des articles perdus avec leurs propriétaires légitimes',
+    'helping' => 'Vous aider à trouver ce qui compte',
+    'connecting' => 'Connecter les gens à leurs trésors perdus',
+    'our_community' => 'Notre plateforme alimentée par la communauté aide à connecter les éléments perdus avec leurs propriétaires légitimes rapidement et efficacement. Que vous ayez perdu quelque chose de précieux ou que vous trouviez un article, nous sommes là pour vous aider.',
+    'report_found_item' => 'Rapport trouvé l\'article',
+    'report_lost_item' => 'Signaler des articles perdus',
+    'trusted_by' => 'Trust par <span class = "font-semibold"> 1 200 + </span> utilisateurs heureux',
+    'lost_items' => 'Articles perdus',
+    'lost_items_description' => 'Parcourez les articles qui ont été signalés comme perdus dans notre communauté.',
+    'post_item' => 'Publier un article',
+    'post_item_description' => 'Signalez un article perdu que vous avez trouvé pour aider à le réunir avec son propriétaire.',
+    'send_message' => 'Envoyez-nous un message',
+    'send_message_description' => 'Envoyez un message, remettez une plainte ou faites une suggestion sur le site Web.',
+    'sign_up' => 'S\'inscrire',
+    'search' => 'Recherche',
+    'search...' => 'Recherche...',
 ];

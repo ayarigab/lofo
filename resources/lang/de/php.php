@@ -18,7 +18,7 @@ return [
     'our_community' => 'Unsere Community-betriebene Plattform hilft, verlorene Gegenstände schnell und effizient mit ihren rechtmäßigen Eigentümern zu verbinden. Egal, ob Sie etwas Wertvolles verloren haben oder einen Gegenstand gefunden haben, wir sind hier, um zu helfen.',
     'report_found_item' => 'Bericht gefunden Artikel',
     'report_lost_item' => 'Melden Sie verlorene Artikel',
-    'trusted_by' => 'Vertrauen von <span class = "font-semibold"> 1.200+</span> zufriedene Benutzer',
+    'trusted_by' => 'Vertrauen von 1.200 glücklichen Benutzern',
     'lost_items' => 'Verlorene Gegenstände',
     'lost_items_description' => 'Stöbern Sie in unserer Gemeinde, die als verloren gemeldet wurden.',
     'post_item' => 'Einen Artikel veröffentlichen',

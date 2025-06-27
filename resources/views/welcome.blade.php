@@ -8,8 +8,8 @@
             <div class="px-6 py-24 mx-auto max-w-7xl sm:px-10">
                 <div class="w-full mx-auto text-left md:text-center">
                     <div x-data="{
-                            text: 'Reuniting Lost Items with Their Owners',
-                            textArray: ['Reuniting lost items with their rightful owners', 'Helping You Find What Matters', 'Connecting people to their Lost Treasures'],
+                            text: '{{ __('lang_v1.reuniting') }}',
+                            textArray: ['{{ __('lang_v1.reuniting') }}', '{{ __('lang_v1.helping') }}', '{{ __('lang_v1.connecting') }}'],
                             textIndex: 0,
                             charIndex: 0,
                             typeSpeed: 100,
@@ -72,18 +72,17 @@
                         </div>
                     </div>
                     <p class="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
-                        Our community-powered platform helps connect lost items with their rightful owners quickly
-                        and efficiently. Whether you've lost something valuable or found an item, we're here to help.
+                        {{ __('lang_v1.our_community') }}
                     </p>
                     <div class="h-[10rem]"></div>
                     <div class="flex flex-col justify-center gap-4 mb-8 sm:flex-row sm:gap-6">
                         <a wire:navigate href="/post-item"
                             class="px-8 py-4 text-base font-medium text-white bg-black rounded-full hover:bg-gray-900 focus:outline-none focus:ring-2  focus:ring-offset-2 transition-all hover-scale">
-                            Report Found Item
+                            {{ __('lang_v1.report_found_item') }}
                         </a>
                         <a wire:navigate href="{{ route('lost-items') }}"
                             class="px-8 py-4 text-base font-medium text-black bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all hover-scale">
-                            Browse Lost Items
+                            {{ __('lang_v1.report_lost_item') }}
                         </a>
                     </div>
                     <div class="flex items-center justify-center">
@@ -96,7 +95,7 @@
                                 src="https://randomuser.me/api/portraits/women/94.jpg" alt="User">
                         </div>
                         <p class="ml-3 text-sm text-gray-600">
-                            Trusted by <span class="font-semibold">1,200+</span> happy users
+                            {!! __('lang_v1.trusted_by') !!}
                         </p>
                     </div>
                 </div>

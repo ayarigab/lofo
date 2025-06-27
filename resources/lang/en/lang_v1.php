@@ -1,20 +1,30 @@
 <?php
+
 return [
-    'language' => 'Lang',
+    'language' => 'Language',
     'searching' => 'Searching',
     'done' => 'Done',
     'cancel' => 'Cancel',
     'save' => 'Save',
     'delete' => 'Delete',
-
-    // Menu Items
     'home' => 'Home',
     'lostfound' => 'Lostfound',
     'lost_and_found' => 'Lost & Found',
     'about_us' => 'About US',
     'contact_us' => 'Contact US',
-
-    // other translations
+    'reuniting' => 'Reuniting lost items with their rightful owners',
+    'helping' => 'Helping You Find What Matters',
+    'connecting' => 'Connecting people to their Lost Treasures',
+    'our_community' => 'Our community-powered platform helps connect lost items with their rightful owners quickly and efficiently. Whether you have lost something valuable or found an item, we are here to help.',
+    'report_found_item' => 'Report Found Item',
+    'report_lost_item' => 'Report Lost Items',
+    'trusted_by' => 'Trusted by <span class="font-semibold">1,200+</span> happy users',
+    'lost_items' => 'Lost Items',
+    'lost_items_description' => 'Browse items that have been reported as lost in our community.',
+    'post_item' => 'Post an Item',
+    'post_item_description' => 'Report a lost item you have found to help reunite it with its owner.',
+    'send_message' => 'Send Us a Message',
+    'send_message_description' => 'Send a message, lodge a complain or make a suggestion about the website.',
     'sign_up' => 'Sign Up',
     'search' => 'Search',
     'search...' => 'Search...',

@@ -91,7 +91,7 @@ return [
         'pt',
         'ru',
         'vi',
-        'zh',
+        'zh-CN',
     ],
 
     'locale_names' => [
@@ -107,7 +107,7 @@ return [
         'pt' => 'Português',
         'ru' => 'Русский',
         'vi' => 'Tiếng Việt',
-        'zh' => '中文',
+        'zh-CN' => '中文',
     ],
 
     'locale' => 'en',

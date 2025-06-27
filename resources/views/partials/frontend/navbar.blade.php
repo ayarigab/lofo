@@ -352,7 +352,7 @@
         <div class="flex items-center justify-start w-1/4 h-full pr-4">
             <a wire:navigate href="{{ route('home') }}" class="flex items-center py-4 space-x-2 font-extrabold text-gray-900 md:py-0 group">
                 <span
-                    class="flex items-center justify-center w-16 h-12 p-2 rounded-full transition-all duration-300 group-hover:rotate-12 border-[1.5px] border-black text-white">
+                    class="flex items-center justify-center w-16 h-12 p-2 rounded-full transition-all duration-300 group-hover:rotate-12 border border-gray-300 text-white">
                     <x-app-logo-icon />
                 </span>
                 <span
@@ -467,7 +467,7 @@
                             @case('pt') {{ __('lang_v1.language') }} @break
                             @case('ru') {{ __('lang_v1.language') }} @break
                             @case('vi') {{ __('lang_v1.language') }} @break
-                            @case('zh') {{ __('lang_v1.language') }} @break
+                            @case('zh-CN') {{ __('lang_v1.language') }} @break
                             @endswitch
                         </span>
                         <svg class="w-4 h-4 transition-transform" :class="{ 'motion-safe:animate-[squeeze_0.6s_ease-in-out]': open }"
@@ -499,7 +499,7 @@
                                 @case('pt') 🇵🇹 @break
                                 @case('ru') 🇷🇺 @break
                                 @case('vi') 🇻🇳 @break
-                                @case('zh') 🇨🇳 @break
+                                @case('zh-CN') 🇨🇳 @break
                                 @endswitch
                             </span>
                             {{ config('app.locale_names')[$locale] }}
@@ -528,24 +528,20 @@
                     <div class="w-full sm:w-72">
                         <a wire:navigate href="{{ route('lost-items') }}" @click="navigationMenuClose()"
                             class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent">
-                            <span class="block mb-1 font-medium text-black">Lost Items</span>
-                            <span class="block font-light leading-5 text-gray-600">Browse items that have
-                                been
-                                reported as lost in our community.</span>
+                            <span class="block mb-1 font-medium text-black">{{ __('lang_v1.lost_items') }}</span>
+                            <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.lost_items_description') }}</span>
                         </a>
                         <a wire:navigate href="/post-item" @click="navigationMenuClose()"
                             class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent mt-2">
-                            <span class="block mb-1 font-medium text-black">Post an Item</span>
-                            <span class="block font-light leading-5 text-gray-600">Report a lost item you've
-                                found to help reunite it with its owner.</span>
+                            <span class="block mb-1 font-medium text-black">{{ __('lang_v1.post_item') }}</span>
+                            <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.post_item_description') }}</span>
                         </a>
                     </div>
                     <div class="w-full mt-4 sm:mt-0 sm:w-72">
                         <a href="#" @click.prevent="$dispatch('open-contact-form')" @click="navigationMenuClose()"
                             class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent">
-                            <span class="block mb-1 font-medium text-black">Send Us a Message <span class="ml-2  text-xs pointer-events-none text-gray-400">⌘M</span></span>
-                            <span class="block font-light leading-5 text-gray-600">Send a message, lodge a complain or make a suggestion about
-                                the website.</span>
+                            <span class="block mb-1 font-medium text-black">{{ __('lang_v1.send_message') }} <span class="ml-2  text-xs pointer-events-none text-gray-400">⌘M</span></span>
+                            <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.send_message_description') }}</span>
                         </a>
                         <a wire:navigate href="/claimed-items" @click="navigationMenuClose()"
                             class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent mt-2">
