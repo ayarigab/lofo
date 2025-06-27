@@ -60,8 +60,5 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('frontend.contact-us');
 })->name('contact-us');
-// Route::get('/signup', function () {
-//     return view('frontend/signup');
-// })->name('signup');
 
 require __DIR__.'/auth.php';

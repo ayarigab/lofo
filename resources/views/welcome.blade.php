@@ -1,5 +1,5 @@
 
-@include('partials.frontend.header', ['title' => 'Home'])
+@include('partials.frontend.header', ['title' => __('lang_v1.home')])
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen">
     <section class="w-full px-6 pb-0 antialiased bg-white particles-js" id="particles-js">
         <div class="mx-auto max-w-7xl pjs-ontop">
@@ -89,11 +89,11 @@
                     <div class="flex items-center justify-center">
                         <div class="flex -space-x-2">
                             <img class="w-10 h-10 rounded-full border-2 border-white"
-                                src="https://randomuser.me/api/portraits/women/6.jpg" alt="User">
+                                src="https://randomuser.me/api/portraits/women/79.jpg" alt="User">
                             <img class="w-10 h-10 rounded-full border-2 border-white"
-                                src="https://randomuser.me/api/portraits/men/80.jpg" alt="User">
+                                src="https://randomuser.me/api/portraits/men/64.jpg" alt="User">
                             <img class="w-10 h-10 rounded-full border-2 border-white"
-                                src="https://randomuser.me/api/portraits/women/89.jpg" alt="User">
+                                src="https://randomuser.me/api/portraits/women/94.jpg" alt="User">
                         </div>
                         <p class="ml-3 text-sm text-gray-600">
                             Trusted by <span class="font-semibold">1,200+</span> happy users
@@ -225,7 +225,7 @@
                         alt="Reunited wallet">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/men/59.jpg"
+                            <img class="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/men/96.jpg"
                                 alt="User">
                             <div class="ml-3">
                                 <h4 class="text-sm font-semibold text-slate-600">Michael Johnson</h4>
@@ -241,11 +241,11 @@
 
                 <div class="overflow-hidden transition-all bg-white rounded-3xl shadow-sm hover:shadow-xl">
                     <img class="object-cover w-full h-48"
-                        src="https://firmusadvisory.com/wp-content/uploads/2024/11/ghana-card.jpg"
+                        src="https://media.licdn.com/dms/image/v2/D4D12AQGQFtwWs14jpA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1665140762359?e=2147483647&v=beta&t=y1Ef5X3orvHvZ1FSDWNRZHDdJbDx4OJ4Uf9YqHMob7Y"
                         alt="Reunited laptop">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/women/6.jpg"
+                            <img class="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/women/94.jpg"
                                 alt="Ghana card review">
                             <div class="ml-3">
                                 <h4 class="text-sm font-semibold text-slate-600">Adizah Jones</h4>
@@ -263,7 +263,7 @@
                         alt="Reunited laptop review">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/men/91.jpg"
+                            <img class="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/men/64.jpg"
                                 alt="User">
                             <div class="ml-3">
                                 <h4 class="text-sm font-semibold text-slate-600">Adeliyine Courage</h4>

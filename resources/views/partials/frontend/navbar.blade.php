@@ -356,7 +356,7 @@
                     <x-app-logo-icon />
                 </span>
                 <span
-                    class="uppercase text-xl transition-all duration-300 group-hover:text-[#3B82F6]">Lostfound</span>
+                    class="uppercase text-xl transition-all duration-300 group-hover:text-[#3B82F6]">{{ __('lang_v1.lostfound') }}</span>
             </a>
         </div>
 
@@ -366,7 +366,7 @@
                 class="flex flex-col w-full h-auto overflow-hidden bg-white rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row">
                 <a wire:navigate href="{{ route('home') }}"
                     class="{{ request()->routeIs('home') ? 'bg-black text-slate-100 hover:bg-gray-900 mx-1' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:text-center">
-                    Home
+                    {{ __('lang_v1.home') }}
                 </a>
 
                 <div class="relative"
@@ -374,7 +374,7 @@
                     @mouseleave="navigationMenuLeave()">
                     <button
                         class="inline-flex items-center justify-center rounded-3xl w-full px-4 py-2 md:w-auto bg-transparent text-black md:text-center hover:bg-slate-100">
-                        Lost & Found
+                        {{ __('lang_v1.lost_and_found') }}
                         <svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'lost-found' }"
                             class="relative ml-1 h-4 w-4 ease-out duration-300"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -386,11 +386,11 @@
 
                 <a wire:navigate href="{{ route('about-us') }}"
                     class="{{ request()->routeIs('about-us') ? 'bg-black text-slate-100 hover:bg-gray-900 mx-1' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:text-center">
-                    About US
+                    {{ __('lang_v1.about_us') }}
                 </a>
                 <a wire:navigate href="{{ route('contact-us') }}"
                     class="{{ request()->routeIs('contact-us') ? 'bg-black text-slate-100 hover:bg-gray-900 mx-1' : 'bg-transparent text-black hover:bg-slate-100' }} relative px-4 inline-block w-full py-2 ml-6 rounded-3xl transition-all md:ml-0 md:w-auto md:text-center">
-                    Contact US
+                    {{ __('lang_v1.contact_us') }}
                 </a>
 
                 <button @click="modalOpen=true"
@@ -439,7 +439,7 @@
                                     'motion-safe:animate-[squeeze_0.6s_ease-in-out]': !spin
                                 }" style="transform-origin: center" />
                         </svg>
-                        <span class="hidden ml-2 mr-4 md:inline">Search...</span>
+                        <span class="hidden ml-2 mr-4 md:inline">{{ __('lang_v1.search...') }}</span>
                         <div
                             class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400 pointer-events-none">
                             ⌘K
@@ -483,8 +483,8 @@
                         x-transition:leave-end="opacity-0 scale-95"
                         class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-3xl bg-white shadow-xl border focus:outline-none">
                         @foreach(config('app.available_locales') as $locale)
-                        <a href="{{ route('lang.switch', $locale) }}" class="flex items-center px-4 py-2 transition-all text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 last:rounded-b-3xl first:rounded-t-3xl
-                                                   {{ app()->getLocale() === $locale ? 'bg-gray-100 font-medium' : '' }}">
+                        <a wire:navigate href="{{ route('lang.switch', $locale) }}" class="flex items-center px-4 py-2 transition-all text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 last:rounded-b-3xl first:rounded-t-3xl
+                            {{ app()->getLocale() === $locale ? 'bg-gray-100 font-medium' : '' }}">
                             <span class="mr-2">
                                 @switch($locale)
                                 @case('ar') 🇸🇦 @break
@@ -509,7 +509,7 @@
                 </div>
                 <a wire:navigate href="{{ route('claimer-register') }}"
                     class="relative inline-flex items-center overflow-hidden w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-gradient-to-r from-blue-400  to-green-400 md:w-auto md:rounded-full hover:bg-[#3B82F6] focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-300 hover-scale">
-                    Sign Up
+                    {{ __('lang_v1.sign_up') }}
                 </a>
             </div>
         </div>

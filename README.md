@@ -8,7 +8,7 @@
 
 ## 🔍 Overview
 
- ****LoFo **** (short for  **Lost Found ** ) is a modern, elegant, and fully responsive web application designed to help users report lost items and find missing belongings within their community. Built with the power of  **Laravel ** ,  **Livewire ** ,  **Alpine.js ** , and  **Tailwind CSS ** , LoFo offers a seamless experience for individuals to connect and reunite lost items with their rightful owners.
+**LoFo** (short for  **Lost Found** ) is a modern, elegant, and fully responsive web application designed to help users report lost items and find missing belongings within their community. Built with the power of **Laravel**, **Livewire**, **Alpine.js**, and **Tailwind CSS** , LoFo offers a seamless experience for individuals to connect and reunite lost items with their rightful owners.
 
 This system is ideal for campuses, offices, communities, or public spaces where people frequently lose or find items and want an organized way to report and track them.
 
@@ -23,14 +23,14 @@ This system is ideal for campuses, offices, communities, or public spaces where 
 
 ## 💡 Features
 
-* 🧾  **Report Lost Items ** : Users can submit detailed reports including item name, description, location, date, and photos.
-* 📸  **Multi-image Upload ** : Support for uploading multiple images to help identify the lost/found item clearly.
-* 🔍  **Search & Filter ** : Powerful search functionality to look up lost or found items by category, date, or keywords.
-* 📨  **Contact Form ** : A built-in messaging system that allows users to send inquiries or suggestions directly to the admin.
-* 👤  **Dual Login System ** : Separate login systems for **Admins **and **Claimers **using Laravel’s authentication guards.
-* 🛠  **Admin Dashboard ** : For managing reported items, messages, and claim requests.
-* 📱  **Responsive Design ** : Fully mobile-friendly interface using Tailwind CSS.
-* 🎨  **Interactive UI/UX ** : Powered by **Alpine.js **for dynamic interactions and **Livewire **for real-time updates without full page reloads.
+1. 🧾 **Report Lost Items**: Users can submit detailed reports including item name, description, location, date, and photos.
+2. 📸  **Multi-image Upload**: Support for uploading multiple images to help identify the lost/found item clearly.
+3. 🔍  **Search & Filter**: Powerful search functionality to look up lost or found items by category, date, or keywords.
+4. 📨  **Contact Form**: A built-in messaging system that allows users to send inquiries or suggestions directly to the admin.
+5. 👤  **Dual Login System**: Separate login systems for **Admins **and **Claimers **using Laravel’s authentication guards.
+6. 🛠  **Admin Dashboard**: For managing reported items, messages, and claim requests.
+7. 📱  **Responsive Design**: Fully mobile-friendly interface using Tailwind CSS.
+8. 🎨  **Interactive UI/UX**: Powered by **Alpine.js **for dynamic interactions and **Livewire **for real-time updates without full page reloads.
 
 ---
 
@@ -125,7 +125,11 @@ Built with ❤️ using:
 
 ## 🚀 Coming Soon
 
-* 🔐 Email verification & password reset
-* 📬 Admin email alerts for new item reports
-* 📊 Analytics dashboard for lost item trends
-* 🌍 Google Maps integration for item locations
+* [ ] 🔐 Email verification & password reset
+* [ ] 📬 Admin email alerts for new item reports
+* [ ] 📊 Analytics dashboard for lost item trends
+* [ ] 🌍 Google Maps integration for item locations
+* [ ] 🧭 Items tracking
+* [ ] Modularity and theming support.
+* [ ] Flutter Mobile Application
+* [ ] API routes.

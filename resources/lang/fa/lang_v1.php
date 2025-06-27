@@ -1,4 +1,5 @@
 <?php
 return [
-    'language' => 'زبان'
+    'language' => 'زبان',
+    'home' => 'خانه',
 ];
