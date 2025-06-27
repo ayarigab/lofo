@@ -1,14 +1,14 @@
 <div x-data="{ inputText: '' }">
     <div class="relative">
         <input type="text" wire:model.live.debounce.500ms="search"
-            placeholder="Search name, category, location, or description..."
+            placeholder="{{ __('lang_v1.search_input_description') }}"
             x-model="inputText"
             class="w-full px-6 py-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
             x-ref="searchInput" @keydown.enter.prevent />
         @if($search)
         <button wire:click="resetFilters"
             class="absolute right-0 top-0 h-full p-4 text-gray-500 hover:text-gray-700 transition-all duration-300 rounded-full"
-            title="Clear search">
+            title="{{ __('lang_v1.clear_search') }}">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
@@ -17,10 +17,10 @@
     </div>
 
     <div class="flex items-center justify-between mt-4">
-        <h4 class="font-medium text-gray-700">Search Filters</h4>
+        <h4 class="font-medium text-gray-700">{{ __('lang_v1.search_filters') }}</h4>
         @if($search || ($category && $category !== 'all'))
         <button wire:click="resetFilters" class="text-sm text-blue-600 hover:underline">
-            Reset filters
+            {{ __('lang_v1.reset_filters') }}
         </button>
         @endif
     </div>
@@ -39,13 +39,18 @@
         }">
         <button wire:click="$set('category', 'all')" class="px-3 py-1 text-sm rounded-full transition-all
             {{ $category === 'all' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300' }}">
-            All Items
+            {{ __('lang_v1.all_items') }}
         </button>
 
         @foreach($categories as $cat)
         <button wire:click="$set('category', '{{ $cat->id }}')" class="px-3 py-1 text-sm rounded-full transition-all
             {{ $category == $cat->id ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300' }}">
+            <!-- TODO: Use live translations for models data -->
+            {{-- @php
+                $translator = new Stichoza\GoogleTranslate\GoogleTranslate(app()->getLocale());
+            @endphp --}}
             {{ $cat->name }}
+            {{-- {{ $translator->translate($cat->name) }} --}}
         </button>
         @endforeach
     </div>

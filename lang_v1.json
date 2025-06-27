@@ -31,6 +31,16 @@
         "send_message_description": "Send a message, lodge a complain or make a suggestion about the website.",
         "sign_up": "Sign Up",
         "search": "Search",
-        "search...": "Search..."
+        "search...": "Search...",
+        "claimed_items": "Claimed Items",
+        "claimed_items_description": "View successfully reunited items and happy stories.",
+        "search_lost_items": "Search Lost & Found Items",
+        "close": "Close",
+        "close_panel": "Close panel",
+        "search_input_description": "Search name, category, location, or description...",
+        "clear_search": "Clear search",
+        "search_filters": "Search Filters",
+        "reset_filters": "Reset filters",
+        "all_items": "All Items"
     }
 }

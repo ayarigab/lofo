@@ -9,7 +9,6 @@ class LaravelTranslator:
     def __init__(self):
         self.cache_file = Path('.translation_cache.json')
         self.cache = self._load_cache()
-        self.rate_limit_delay = 0.5
         self.language_map = {
             'ar': 'ar', 'en': 'en', 'es': 'es', 'fr': 'fr',
             'de': 'de', 'fa': 'fa', 'ha': 'ha', 'hi': 'hi',
@@ -36,7 +35,7 @@ class LaravelTranslator:
             return self.cache[cache_key]
 
         try:
-            time.sleep(self.rate_limit_delay)
+            time.sleep(random.uniform(0.5, 1.0))
             translated = GoogleTranslator(
                 source=source_lang,
                 target=target_lang

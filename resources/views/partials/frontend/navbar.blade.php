@@ -545,10 +545,8 @@
                         </a>
                         <a wire:navigate href="/claimed-items" @click="navigationMenuClose()"
                             class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent mt-2">
-                            <span class="block mb-1 font-medium text-black">Claimed Items</span>
-                            <span class="block font-light leading-5 text-gray-600">View successfully
-                                reunited
-                                items and happy stories.</span>
+                            <span class="block mb-1 font-medium text-black">{{ __('lang_v1.claimed_items') }}</span>
+                            <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.claimed_items_description') }}</span>
                         </a>
                     </div>
                 </div>
@@ -591,7 +589,7 @@
                 class="relative w-full py-6 bg-white border shadow-lg px-7 border-neutral-200 sm:max-w-lg sm:rounded-3xl">
 
                 <div class="flex items-center justify-between pb-3">
-                    <h3 class="text-lg font-semibold">Search Lost & Found Items</h3>
+                    <h3 class="text-lg font-semibold">{{ __('lang_v1.search_lost_items') }}</h3>
                     <button @click="resetSearch()"
                         class="absolute top-0 right-0 flex items-center justify-center w-8 h-8 mt-5 mr-5 text-gray-600 rounded-full hover:text-gray-800 hover:bg-gray-50 transition-all duration-300">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -606,7 +604,7 @@
                 <div class="flex justify-end mt-4">
                     <button @click="resetSearch()" type="button"
                         class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors border border-gray-300 rounded-full hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2">
-                        Close
+                        {{ __('lang_v1.close') }}
                     </button>
                 </div>
             </div>
@@ -641,9 +639,9 @@
 
                 <div class="h-full flex flex-col bg-white shadow-xl">
                     <div class="flex items-center justify-between px-4 py-6 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Send Us a Message</h2>
+                        <h2 class="text-lg font-medium text-gray-900">{{ __('lang_v1.send_message') }}</h2>
                         <button @click="showContactForm = false" class="text-gray-400 hover:text-gray-500">
-                            <span class="sr-only">Close panel</span>
+                            <span class="sr-only">{{ __('lang_v1.close_panel') }}</span>
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M6 18L18 6M6 6l12 12" />
@@ -678,4 +676,4 @@
             }
         });
     });
-    </script>
+</script>
