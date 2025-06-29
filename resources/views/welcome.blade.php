@@ -2,8 +2,8 @@
 @include('partials.frontend.header', ['title' => __('lang_v1.home')])
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen">
     <section class="w-full px-6 pb-0 antialiased bg-white particles-js" id="particles-js">
+        @include('partials.frontend.navbar')
         <div class="mx-auto max-w-7xl pjs-ontop">
-            @include('partials.frontend.navbar')
 
             <div class="px-6 py-24 mx-auto max-w-7xl sm:px-10">
                 <div class="w-full mx-auto text-left md:text-center">

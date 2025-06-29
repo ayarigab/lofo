@@ -50,7 +50,7 @@
                 <p class="flex text-sm font-bold items-center m-0">
                     <x-app-logo-icon class="w-6 h-6" /> Lost and Found |
                 </p>
-                <p class="text-sm text-gray-600 ml-2">Copyright © {{ date('Y') }} Lost & Found Hub. All rights reserved.
+                <p class="text-sm text-gray-600 ml-2">{{ __('lang_v1.copyright_text', ['year' => date('Y')]) }}
                 </p>
             </div>
             <div class="flex space-x-6">

@@ -13,6 +13,9 @@ class PostLostForm extends Component
 
     public $category_id;
     public $title;
+    public $brand;
+    public $color;
+    public $model;
     public $description;
     public $found_location;
     public $found_date;
@@ -33,6 +36,9 @@ class PostLostForm extends Component
     protected $rules = [
         'category_id' => 'required|exists:categories,id',
         'title' => 'required|string|max:255',
+        'brand' => 'nullable|string|max:255',
+        'color' => 'nullable|string|max:255',
+        'model' => 'nullable|string|max:255',
         'description' => 'required|string',
         'found_location' => 'nullable|string|max:255',
         'found_date' => 'nullable|date',
@@ -103,6 +109,9 @@ class PostLostForm extends Component
             $data = [
                 'category_id' => $this->category_id,
                 'title' => $this->title,
+                'brand' => $this->brand,
+                'color' => $this->color,
+                'model' => $this->model,
                 'description' => $this->description,
                 'found_location' => $this->found_location,
                 'found_date' => $this->found_date,
@@ -149,6 +158,9 @@ class PostLostForm extends Component
         $this->reset([
             'category_id',
             'title',
+            'brand',
+            'color',
+            'model',
             'description',
             'found_location',
             'found_date',

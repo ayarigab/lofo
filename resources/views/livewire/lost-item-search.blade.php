@@ -126,9 +126,9 @@
                         d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 @if($search || ($category && $category !== 'all'))
-                No items found matching your search criteria "<span class="font-bold">{{ $search }}</span>"
+                {{ __('lang_v1.no_items_found_criteria') }} "<span class="font-bold">{{ $search }}</span>"
                 @else
-                No items available at the moment.
+                {{ __('lang_v1.no_items_available') }}
                 @endif
             </div>
             @endforelse

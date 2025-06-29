@@ -31,6 +31,31 @@
     </style>
     {{-- <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script> --}}
     {{-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
+    <script type="module">
+        document.addEventListener("alpine:init", () => {
+            Alpine.data('phoneInput', () => ({
+                locale: "{{ app()->getLocale() }}",
+                init() {
+                    const input = this.$refs.phoneInput;
+
+                    window.intlTelInput(input, {
+                        loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js"),
+                        i18n: this.locale,
+                        geoIpLookup: (callback) => {
+                            fetch("https://ipapi.co/json")
+                                .then(res => res.json())
+                                .then(data => callback(data.country_code || 'us'))
+                                .catch(() => callback("us"));
+                        },
+                        strictMode: true,
+                        initialCountry: this.locale.toLowerCase(),
+                    });
+                }
+            }));
+        });
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @fluxAppearance

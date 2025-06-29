@@ -308,7 +308,7 @@
     </template>
 </div>
 
-<nav class="relative z-50 h-24 select-none w-auto bg-white px-4" x-data="{
+<nav class="relative z-50 h-24 select-none w-auto border-b border-gray-200 bg-white px-4" x-data="{
                 showMenu: false,
                 navigationMenuOpen: false,
                 navigationMenu: '',
@@ -348,7 +348,7 @@
                 "
                 >
     <div
-        class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
+        class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
         <div class="flex items-center justify-start w-1/4 h-full pr-4">
             <a wire:navigate href="{{ route('home') }}" class="flex items-center py-4 space-x-2 font-extrabold text-gray-900 md:py-0 group">
                 <span
@@ -360,7 +360,7 @@
             </a>
         </div>
 
-        <div class="top-0 left-0 items-start hidden w-full h-full p-4 text-sm bg-white/10 backdrop-blur-sm bg-opacity-70 md:items-center md:w-3/4 lg:text-base md:bg-transparent md:p-0 md:relative md:flex"
+        <div class="top-0 left-0 items-start hidden w-full h-full p-4 text-sm md:items-center md:w-3/4 lg:text-base md:bg-transparent md:p-0 md:relative md:flex"
             :class="{'flex fixed': showMenu, 'hidden': !showMenu }">
             <div
                 class="flex flex-col w-full h-auto overflow-hidden bg-white rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row">

@@ -2,24 +2,23 @@
 
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen">
     @include('partials.frontend.navbar')
-
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="max-w-4xl mx-auto">
             <nav class="flex mb-6" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
                         <a wire:navigate href="{{ route('home') }}"
-                            class="inline-flex  text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                            class="inline-flex  text-sm font-medium text-gray-700 hover:text-green-600 transition-colors">
                             <flux:icon name="house" class="h-5 w-5 mr-1" />
-                            Home
+                            {{ __('lang_v1.home') }}
                         </a>
                     </li>
                     <li>
                         <div class="flex items-center">
                             <flux:icon name="chevron-right" class="h-5 w-5 text-gray-300" />
                             <a wire:navigate href="{{ route('lost-items') }}"
-                                class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors md:ml-2">
-                                Lost Items
+                                class="ml-1 text-sm font-medium text-gray-700 hover:text-green-600 transition-colors md:ml-2">
+                                {{ __('lang_v1.lost_items') }}
                             </a>
                         </div>
                     </li>
@@ -88,7 +87,7 @@
                                     @if($imageUrl)
                                     <img x-on:click="imageGalleryOpen" src="{{ $imageUrl }}" alt="Thumbnail {{ $index + 1 }}"
                                         data-index="{{ $index + 1 }}"
-                                        class="w-16 h-16 object-cover rounded-md cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all duration-200">
+                                        class="w-16 h-16 object-cover rounded-md cursor-pointer hover:ring-2 bg-[url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYGBgYGBgYHBwYJCgkKCQ0MCwsMDRQODw4PDhQfExYTExYTHxshGxkbIRsxJiIiJjE4Ly0vOEQ9PURWUVZwcJb/wgALCAApACkBAREA/8QAGgAAAgMBAQAAAAAAAAAAAAAABQYCAwQAB//aAAgBAQAAAAD2Yw1q4Se7YYEYuchae2GKwErao8vGGxYBTznmtZXbv//EADkQAAEBBQMFDQkBAAAAAAAAAAECAAMEBRESFTEGECE0kRMUIiMkQVFUc4GSorEWMjM1U3GDssHh/9oACAEBAAE/AATQaS0jPLTXTxSsdLWR0Bp8LEW6A0cUGqektU9J2tdEyA0wx2hoKHfS17viLRYdlJQFY6T9mM3lxAo/8paOdLmj5D2CRuiEosKOFD3tdEx6sdoa6476PmGafWd4IomnHJ780hURCPwOd7/M9/qpqg8bJiTOuSFAdD4lqtr3djezoprmAqeBgxf3ITDhO7W+HaPBpzNf6uqDxtfZ6t5/8YYBpJrquyVmygJMa7NCKuh65qsnBsnfmX4V+oYNlLrznsB+xz//2Q==)] hover:ring-green-600 transition-all duration-200">
                                     @endif
                                     @endforeach
                                 </div>
@@ -146,21 +145,45 @@
                         </template>
                     </div>
 
-                    <div class="absolute top-4 right-4 flex items-center bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold shadow-sm
-                                                {{ $item->status === 'pending' ? 'text-red-800 bg-red-100' :
-                                                    ($item->status === 'archived' ? 'text-yellow-800 bg-yellow-100' :
-                                                   ($item->status === 'claimed' ? 'text-purple-800 bg-purple-100' :
-                                                   'text-green-800 bg-green-100')) }}">
-                        @if($item->status === 'pending')
-                        <flux:icon name="clock" class="h-4 w-4 mr-1" />
-                        @elseif($item->status === 'archived')
-                        <flux:icon name="trash" class="h-4 w-4 mr-1" />
-                        @elseif($item->status === 'claimed')
-                        <flux:icon name="heart-handshake" class="h-4 w-4 mr-1" />
-                        @else
-                        <flux:icon name="circle-check-big" class="h-4 w-4 mr-1" />
-                        @endif
-                        {{ ucfirst($item->status) }}
+                    @php
+                    $statusConfig = [
+                        'pending' => [
+                            'text' => 'text-red-800',
+                            'bg' => 'bg-red-100',
+                            'icon' => 'clock',
+                            'label' => __('lang_v1.pending')
+                        ],
+                        'archived' => [
+                            'text' => 'text-yellow-800',
+                            'bg' => 'bg-yellow-100',
+                            'icon' => 'trash',
+                            'label' => __('lang_v1.archived')
+                        ],
+                        'claimed' => [
+                            'text' => 'text-purple-800',
+                            'bg' => 'bg-purple-100',
+                            'icon' => 'heart-handshake',
+                            'label' => __('lang_v1.claimed')
+                        ],
+                        'approved' => [
+                            'text' => 'text-green-800',
+                            'bg' => 'bg-green-100',
+                            'icon' => 'circle-check-big',
+                            'label' => __('lang_v1.approved')
+                        ],
+                        'default' => [
+                            'text' => 'text-green-800',
+                            'bg' => 'bg-green-100',
+                            'icon' => 'circle-check-big',
+                            'label' => __('lang_v1.approved')
+                        ]
+                    ];
+                    $config = $statusConfig[$item->status] ?? $statusConfig['default'];
+                    @endphp
+                    <div
+                        class="absolute top-4 right-4 flex items-center bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold shadow-sm {{ $config['text'] }} {{ $config['bg'] }}">
+                        <flux:icon name="{{ $config['icon'] }}" class="h-4 w-4 mr-1" />
+                        {{ $config['label'] }}
                     </div>
                 </div>
 
@@ -172,16 +195,12 @@
                                 <span
                                     class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                     <flux:icon name="tag" class="h-4 w-4 mr-1" />
-                                    {{ $item->category->name ?? 'Uncategorized' }}
+                                    {{ $item->category->name ?? __('lang_v1.uncategorized') }}
                                 </span>
                             </div>
                         </div>
                         <div class="flex items-center text-sm text-gray-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
+                            <flux:icon name="calendar-days" class="h-5 w-5 mr-1" />
                             {{ $item->created_at->format('M j, Y') }}
                         </div>
                     </div>
@@ -189,35 +208,22 @@
                     <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <div class="flex items-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 mr-2" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <h3 class="text-xl font-semibold text-gray-900">Description</h3>
+                                <flux:icon name="newspaper" class="h-6 w-6 text-gray-500 mr-2" />
+                                <h3 class="text-xl font-semibold text-gray-900">{{ __('lang_v1.description') }}</h3>
                             </div>
-                            <p class="mt-2 text-gray-600 whitespace-pre-line leading-relaxed">{{ $item->description }}
-                            </p>
+                            <p class="mt-2 text-gray-600 whitespace-pre-line leading-relaxed">{{ $item->description }}</p>
                         </div>
 
                         <div class="bg-gray-50 p-6 rounded-2xl">
                             <div class="flex items-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 mr-2" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <h3 class="text-xl font-semibold text-gray-900">Details</h3>
+                                <flux:icon name="badge-info" class="h-6 w-6 text-gray-500 mr-2" />
+                                <h3 class="text-xl font-semibold text-gray-900">{{ __('lang_v1.details') }}</h3>
                             </div>
                             <dl class="space-y-4">
                                 @if($item->brand)
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                        </svg>
+                                        <flux:icon name="briefcase" class="h-4 w-4 mr-2" />
                                         Brand
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->brand }}</dd>
@@ -227,13 +233,7 @@
                                 @if($item->model)
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
+                                        <flux:icon name="cog" class="h-4 w-4 mr-2" />
                                         Model
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->model }}</dd>
@@ -243,11 +243,7 @@
                                 @if($item->color)
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                                        </svg>
+                                        <flux:icon name="swatch" class="h-4 w-4 mr-2" />
                                         Color
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->color }}</dd>
@@ -256,13 +252,7 @@
 
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
+                                        <flux:icon name="map-pin" class="h-4 w-4 mr-2" />
                                         Found Location
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->found_location ?? 'Unknown'
@@ -271,11 +261,7 @@
 
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
+                                        <flux:icon name="calendar-days" class="h-4 w-4 mr-2" />
                                         Found Date
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->found_date ?
@@ -287,11 +273,7 @@
 
                     <div class="mt-10 border-t border-gray-200 pt-8">
                         <div class="flex items-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 mr-2" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+                            <flux:icon name="user-circle" class="h-6 w-6 text-gray-500 mr-2" />
                             <h3 class="text-xl font-semibold text-gray-900">Founder Information</h3>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
