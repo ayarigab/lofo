@@ -71,10 +71,37 @@
                                     }" @keyup.right.window="imageGalleryNext();" @keyup.left.window="imageGalleryPrev();"
                         class="w-full h-full select-none">
 
-                        <div class="relative overflow-hidden">
+                        <div x-data="{
+                                                    tooltipVisible: false,
+                                                    tooltipText: '{{ __('lang_v1.click_anywhere_to_zoom_in') }}',
+                                                    tooltipArrow: true,
+                                                    tooltipX: 0,
+                                                    tooltipY: 0,
+                                                    updateTooltipPosition(e) {
+                                                        this.tooltipX = e.clientX;
+                                                        this.tooltipY = e.clientY;
+                                                    }
+                                                }" x-init="$refs.content.addEventListener('mouseenter', () => { tooltipVisible = true; });
+                                                        $refs.content.addEventListener('mousemove', (e) => { updateTooltipPosition(e); });
+                                                        $refs.content.addEventListener('mouseleave', () => { tooltipVisible = false; });"
+                            class="relative overflow-hidden">
+                            <div x-ref="tooltip" x-show="tooltipVisible"
+                                :style="`position: fixed; top: ${tooltipY + 10}px; left: ${tooltipX + 10}px;`" class="z-50 w-auto text-sm"
+                                x-cloak>
+                                <div x-show="tooltipVisible" x-transition:enter="transition ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-90"
+                                    class="relative px-2 py-1 invert bg-white/10 backdrop-blur-sm rounded-full shadow-sm">
+                                    <div class="text-black invert-50">
+                                        <p x-text="tooltipText" class="flex-shrink-0 block text-xs whitespace-nowrap"></p>
+                                    </div>
+                                </div>
+                            </div>
+
                             @if($item->image_url)
                             <img x-on:click="imageGallery.length > 0 ? imageGalleryOpen($event) : null" src="{{ $item->image_url }}"
-                                alt="{{ $item->title }}" data-index="1"
+                                alt="{{ $item->title }}" data-index="1" x-ref="content"
                                 class="w-full h-full object-cover rounded-t-2xl transition-transform duration-500 hover:scale-105 cursor-pointer"
                                 :class="{'cursor-zoom-in': imageGallery.length > 0, 'cursor-default': imageGallery.length === 0}">
                             @endif
@@ -124,16 +151,19 @@
                                     <button x-show="imageGallery.length > 1" @click.stop="imageGalleryPrev()" @keydown.window.next="imageGalleryPrev()"
                                         class="absolute left-0 flex items-center justify-center text-black rounded-full cursor-pointer bg-black/10 w-14 h-14 hover:bg-black/20 active:scale-110 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all">
                                         <flux:icon name="chevron-left" class="w-6 h-6" />
+                                        <span class="sr-only">{{ __('lang_v1.previous') }}</span>
                                     </button>
 
                                     <button x-show="imageGallery.length > 1" @click.stop="imageGalleryNext()"
                                         class="absolute right-0 flex items-center justify-center text-black rounded-full cursor-pointer bg-black/10 w-14 h-14 hover:bg-black/20 active:scale-110 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all">
                                         <flux:icon name="chevron-right" class="w-6 h-6" />
+                                        <span class="sr-only">{{ __('lang_v1.next') }}</span>
                                     </button>
 
                                     <button @click.stop="imageGalleryClose"
                                         class="absolute top-4 right-4 p-2 text-white rounded-full bg-black/50 hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 hover-scale">
                                         <flux:icon name="x" class="w-6 h-6" />
+                                        <span class="sr-only">{{ __('lang_v1.close') }}</span>
                                     </button>
 
                                     <div x-show="imageGallery.length > 1"
@@ -193,7 +223,7 @@
                             <h1 class="text-3xl font-bold text-gray-900">{{ $item->title }}</h1>
                             <div class="mt-2 flex items-center space-x-2">
                                 <span
-                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-gray-800">
                                     <flux:icon name="tag" class="h-4 w-4 mr-1" />
                                     {{ $item->category->name ?? __('lang_v1.uncategorized') }}
                                 </span>
@@ -224,7 +254,7 @@
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
                                         <flux:icon name="briefcase" class="h-4 w-4 mr-2" />
-                                        Brand
+                                        {{ __('lang_v1.brand') }}
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->brand }}</dd>
                                 </div>
@@ -234,7 +264,7 @@
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
                                         <flux:icon name="cog" class="h-4 w-4 mr-2" />
-                                        Model
+                                        {{ __('lang_v1.model') }}
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->model }}</dd>
                                 </div>
@@ -244,7 +274,7 @@
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
                                         <flux:icon name="swatch" class="h-4 w-4 mr-2" />
-                                        Color
+                                        {{ __('lang_v1.brand') }}
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->color }}</dd>
                                 </div>
@@ -253,19 +283,19 @@
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
                                         <flux:icon name="map-pin" class="h-4 w-4 mr-2" />
-                                        Found Location
+                                        {{ __('lang_v1.found_location') }}
                                     </dt>
-                                    <dd class="text-sm font-medium text-gray-900">{{ $item->found_location ?? 'Unknown'
+                                    <dd class="text-sm font-medium text-gray-900">{{ $item->found_location ?? __('lang_v1.unknown')
                                         }}</dd>
                                 </div>
 
                                 <div class="flex justify-between items-center">
                                     <dt class="flex items-center text-sm font-medium text-gray-500">
                                         <flux:icon name="calendar-days" class="h-4 w-4 mr-2" />
-                                        Found Date
+                                        {{ __('lang_v1.found_date') }}
                                     </dt>
                                     <dd class="text-sm font-medium text-gray-900">{{ $item->found_date ?
-                                        $item->found_date->diffForHumans() : 'Unknown' }}</dd>
+                                        $item->found_date->diffForHumans() : __('lang_v1.unknown') }}</dd>
                                 </div>
                             </dl>
                         </div>
@@ -274,26 +304,26 @@
                     <div class="mt-10 border-t border-gray-200 pt-8">
                         <div class="flex items-center mb-4">
                             <flux:icon name="user-circle" class="h-6 w-6 text-gray-500 mr-2" />
-                            <h3 class="text-xl font-semibold text-gray-900">Founder Information</h3>
+                            <h3 class="text-xl font-semibold text-gray-900">{{ __('lang_v1.founder_information') }}</h3>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="bg-gray-50 p-4 rounded-xl">
-                                <h4 class="text-sm font-medium text-gray-500 mb-1">Founder Name</h4>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">{{ __('lang_v1.founder_name') }}</h4>
                                 <p class="text-sm font-medium text-gray-900">{{ $item->founder_name }}</p>
                             </div>
                             <div class="bg-gray-50 p-4 rounded-xl">
-                                <h4 class="text-sm font-medium text-gray-500 mb-1">Contact Phone</h4>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">{{ __('lang_v1.founder_phone') }}</h4>
                                 <p class="text-sm font-medium text-gray-900">{{ $item->founder_phone }}</p>
                             </div>
                             @if($item->founder_email)
                             <div class="bg-gray-50 p-4 rounded-xl">
-                                <h4 class="text-sm font-medium text-gray-500 mb-1">Email</h4>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">{{ __('lang_v1.founder_email') }}</h4>
                                 <p class="text-sm font-medium text-gray-900">{{ $item->founder_email }}</p>
                             </div>
                             @endif
                             @if($item->founder_address)
                             <div class="bg-gray-50 p-4 rounded-xl md:col-span-2">
-                                <h4 class="text-sm font-medium text-gray-500 mb-1">Address</h4>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">{{ __('lang_v1.founder_address') }}</h4>
                                 <p class="text-sm font-medium text-gray-900">{{ $item->founder_address }}</p>
                             </div>
                             @endif
@@ -307,16 +337,16 @@
                                 window.dispatchEvent(new CustomEvent('toast-show', {
                                     detail: {
                                         type: 'success',
-                                        message: 'Success!',
-                                        description: 'Item has been successfully reported.'
+                                        message: '{{ __('lang_v1.item_added_to_claim_list') }}',
+                                        description: '{{ __('lang_v1.item_added_for_further_processing', ['item' => $item->title]) }}'
                                     }
                                 }));
                             @else
                                 window.dispatchEvent(new CustomEvent('toast-show', {
                                     detail: {
                                         type: 'danger',
-                                        message: 'Login to claim Item',
-                                        description: 'To claim {{ $item->title }} you need to login now.'
+                                        message: '{{ __('lang_v1.login_to_claim_item') }}',
+                                        description: '{{ __('lang_v1.to_claim_item_login_now', ['item' => $item->title]) }}'
                                     }
                                 }));
                             @endauth
@@ -327,7 +357,7 @@
                             @click="claimItem"
                             class="inline-flex items-center px-8 py-3 bg-green-600 text-white rounded-full shadow-lg text-base font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-all transform hover-scale">
                             <flux:icon name="gift" />
-                            Claim This Item
+                            {{ __('lang_v1.claim_this_item') }}
                         </button>
                     </div>
                 </div>

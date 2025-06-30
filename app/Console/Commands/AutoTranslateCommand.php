@@ -3,77 +3,178 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class AutoTranslateCommand extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'translate:auto
-                            {source_file : Path to source JSON file containing translations}
-                            {--source=en : Source language code (default: en)}
-                            {--targets= : Comma-separated target language codes (e.g. es,fr,ar)}
-                            {--api=google : Translation API: google|mymemory|microsoft}
-                            {--email= : Email for MyMemory API}
-                            {--azure-key= : Azure key for Microsoft Translator}
-                            {--output-format=json : Output format: json or php}
-                            {--filename=translations : Base filename for output files}
-                            {--csv : Export translations to CSV}';
+                            {--config= : Path to custom config file}
+                            {--import : Import mode (requires CSV path)}
+                            {--csv= : Path to CSV file/directory for import}
+                            {--format=php : Output format (php or json)}
+                            {--filename=translations : Base filename for output}';
 
-    protected $description = 'Automatically generate translations using the Python translator';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Automatically translate language files using Python translation service';
 
+    /**
+     * Path to Python translator script
+     */
+    protected $pythonScriptPath;
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->pythonScriptPath = base_path('translator.py');
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
     public function handle()
     {
-        // Validate required arguments
-        $sourceFile = $this->argument('source_file');
-        if (!file_exists($sourceFile)) {
-            $this->error("Source file not found: {$sourceFile}");
+        if ($this->option('import')) {
+            return $this->handleImport();
+        }
+
+        return $this->handleTranslate();
+    }
+
+    /**
+     * Handle translation mode
+     */
+    protected function handleTranslate()
+    {
+        $configPath = $this->option('config') ?? $this->getDefaultConfigPath();
+
+        if (!File::exists($configPath)) {
+            $this->error("Config file not found at: {$configPath}");
             return 1;
         }
 
-        // Build config for Python script
-        $config = [
-            'translations' => json_decode(file_get_contents($sourceFile), true),
-            'source_language' => $this->option('source'),
-            'target_languages' => explode(',', $this->option('targets') ?: 'es,fr'),
-            'translation_api' => $this->option('api'),
-            'file_format' => $this->option('output-format'),
-            'filename' => $this->option('filename'),
-            'export_csv' => (bool)$this->option('csv'),
-            'csv_single_file' => false, // Optional extra feature you can add later
+        $this->info("Starting translation using config: {$configPath}");
+
+        $process = new Process([
+            'python3',
+            $this->pythonScriptPath,
+            'translate',
+            $configPath
+        ]);
+
+        $process->setTimeout(3600); // 1 hour timeout
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            $this->error("Translation failed:");
+            $this->error($process->getErrorOutput());
+            throw new ProcessFailedException($process);
+        }
+
+        $this->info($process->getOutput());
+        $this->info("Translation completed successfully!");
+
+        return 0;
+    }
+
+    /**
+     * Handle import mode
+     */
+    protected function handleImport()
+    {
+        $csvPath = $this->option('csv');
+        $format = $this->option('format');
+        $filename = $this->option('filename');
+
+        if (!$csvPath) {
+            $this->error("CSV path is required for import mode (use --csv option)");
+            return 1;
+        }
+
+        $this->info("Starting import from CSV: {$csvPath}");
+
+        $process = new Process([
+            'python3',
+            $this->pythonScriptPath,
+            'import',
+            $csvPath,
+            '--format',
+            $format,
+            '--filename',
+            $filename
+        ]);
+
+        $process->setTimeout(3600); // 1 hour timeout
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            $this->error("Import failed:");
+            $this->error($process->getErrorOutput());
+            throw new ProcessFailedException($process);
+        }
+
+        $this->info($process->getOutput());
+        $this->info("Import completed successfully!");
+
+        return 0;
+    }
+
+    /**
+     * Get default config file path
+     */
+    protected function getDefaultConfigPath()
+    {
+        return base_path('config/translations.json');
+    }
+
+    /**
+     * Create default config file if it doesn't exist
+     */
+    protected function createDefaultConfig()
+    {
+        $defaultConfig = [
+            "source_language" => "en",
+            "target_languages" => ["es", "fr", "de"],
+            "file_format" => "php",
+            "filename" => "translations",
+            "export_csv" => true,
+            "csv_single_file" => true,
+            "translation_api" => "google",
+            "translations" => [
+                "welcome" => "Welcome",
+                "goodbye" => "Goodbye",
+                "hello" => "Hello"
+            ]
         ];
 
-        // Add optional credentials
-        if ($this->hasOption('email') && $this->option('email')) {
-            $config['api_key_username'] = $this->option('email');
+        $configPath = $this->getDefaultConfigPath();
+
+        if (!File::exists($configPath)) {
+            File::put($configPath, json_encode($defaultConfig, JSON_PRETTY_PRINT));
+            $this->info("Created default config file at: {$configPath}");
         }
 
-        if ($this->hasOption('azure-key') && $this->option('azure-key')) {
-            $config['api_key_username'] = $this->option('azure-key');
-        }
-
-        // Write config to temporary file
-        $configPath = base_path('.translator_config.json');
-        file_put_contents($configPath, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
-        // Run Python script
-        $pythonScript = base_path('translator.py');
-        $command = ['python3', $pythonScript, 'translate', $configPath];
-
-        $process = new Process($command);
-        $process->setTimeout(600); // Increase timeout for large translations
-
-        try {
-            $process->mustRun(function ($type, $buffer) {
-                $this->output->write($buffer);
-            });
-
-            $this->info('✅ Translation completed successfully!');
-            return 0;
-        } catch (ProcessFailedException $exception) {
-            $this->error('❌ Translation failed: ' . $exception->getMessage());
-            return 1;
-        } finally {
-            @unlink($configPath); // Clean up temp config
-        }
+        return $configPath;
     }
 }
+
+// php artisan translate:auto --config=path/to/custom_config.json
+// php artisan translate:auto --import --csv=path/to/translations.csv
+// php artisan translate:auto --import --csv=path/to/translations --format=json --filename=custom_name

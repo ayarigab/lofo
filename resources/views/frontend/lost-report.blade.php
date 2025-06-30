@@ -1,3 +1,8 @@
+@push('styles')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+@endpush
+
 @include('partials.frontend.header', ['title' => __('lang_v1.post_item')])
 
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen">

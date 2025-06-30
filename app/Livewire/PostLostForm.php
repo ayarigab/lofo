@@ -51,6 +51,8 @@ class PostLostForm extends Component
         'image3' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
     ];
 
+    protected $listeners = ['refreshImages' => '$refresh'];
+
     public function render()
     {
         return view('livewire.post-lost-form', [

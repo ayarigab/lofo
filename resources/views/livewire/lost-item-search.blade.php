@@ -19,7 +19,7 @@
     <div class="flex items-center justify-between mt-4">
         <h4 class="font-medium text-gray-700">{{ __('lang_v1.search_filters') }}</h4>
         @if($search || ($category && $category !== 'all'))
-        <button wire:click="resetFilters" class="text-sm text-blue-600 hover:underline">
+        <button wire:click="resetFilters" class="text-sm text-red-600 hover:underline">
             {{ __('lang_v1.reset_filters') }}
         </button>
         @endif

@@ -19,20 +19,15 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="LoFo" />
     <meta name="language" content="{{ app()->getLocale() }}">
+    @stack('meta')
 
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style type="text/tailwindcss">
-        @theme {
-            --color-clifford: #da373d;
-        }
-    </style>
-    {{-- <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script> --}}
-    {{-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script> --}}
     <script type="module">
         document.addEventListener("alpine:init", () => {
             Alpine.data('phoneInput', () => ({
@@ -56,9 +51,9 @@
             }));
         });
     </script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
     @fluxAppearance
+    @livewireStyles
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7Z3EJJM1P"></script>
     <script>
@@ -89,6 +84,7 @@
     </script>
 
     <link rel="stylesheet" href="{{ asset('libs/cookieconsent/cookieconsent.css') }}">
+    @stack('styles')
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         * {
@@ -150,6 +146,9 @@
         }
         .kenburns-slide {
             animation: kenburns-zoom 12s ease-in-out forwards;
+        }
+        .iti__selected-country-primary{
+            border-radius: 100% !important;
         }
         @keyframes squeeze {
             0%, 100% {

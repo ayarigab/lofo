@@ -5,7 +5,7 @@
     <div class="max-w-6xl px-6 py-12 mx-auto relative z-20">
         <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
             <div>
-                <h3 class="mb-6 text-sm font-semibold text-gray-400 uppercase">About US</h3>
+                <h3 class="mb-6 text-sm font-semibold text-gray-400 uppercase">{{ __('lang_v1.about_us') }}</h3>
                 <div class="flex space-x-6">
                     <p class="text-gray-600 text-sm text-justify">
                         Lost and Found is a community-driven platform dedicated to reuniting lost items with their
@@ -16,11 +16,11 @@
             </div>
             <div>
                 <h3 class="mb-6 text-sm font-semibold uppercase text-gray-400">Company</h3>
-                <ul class="space-y-2">
-                    <li><a wire:navigate href="#" class="hover:text-[#3B82F6] transition-colors">About</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-[#3B82F6] transition-colors">Careers</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-[#3B82F6] transition-colors">Blog</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-[#3B82F6] transition-colors">Press</a></li>
+                <ul class="space-y-2 hover:text-gray-500">
+                    <li><a wire:navigate href="{{ route('about-us') }}" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.about_us') }}</a></li>
+                    <li><a wire:navigate href="{{ route('contact-us') }}" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.contact_us') }}</a></li>
+                    <li><a wire:navigate href="{{ route('about-us') }}" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.careers') }}</a></li>
+                    <li><a wire:navigate href="{{ route('about-us') }}" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.press') }}</a></li>
                 </ul>
             </div>
 
@@ -82,3 +82,5 @@
 <script src="{{ asset("libs/cookieconsent/cookieconsent.js") }}"></script>
 <script src="{{ asset('libs/cookieconsent/cookieconsent-config.js') }}"></script>
 @livewireScripts
+
+@stack('scripts')
