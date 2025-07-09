@@ -157,9 +157,8 @@
                         });
 
                         canvas.toBlob((blob) => {
-                            const file = new File([blob], 'cropped-image.jpg', {
-                                type: 'image/jpeg',
-                                lastModified: Date.now()
+                            const file = new File([blob], 'cropped-image.webp', {
+                                type: 'image/webp',
                             });
 
                             const dataTransfer = new DataTransfer();
@@ -179,7 +178,7 @@
                             }
 
                             this.closeCropper();
-                        }, 'image/jpeg', 0.9);
+                        }, 'image/webp', 0.9);
                     }
                 },
             }">
@@ -194,6 +193,11 @@
                                 @if($previewImage)
                                 <img src="{{ $previewImage }}" class="w-24 h-24 object-cover rounded-2xl" id="main-preview">
                                 <div
+                                    x-data="{
+                                        init() {
+                                            initCropper('main-preview', 'image');
+                                        }
+                                    }"
                                     class="absolute inset-0 bg-white/10 rounded-2xl backdrop-blur-[2px] opacity-0 -translate-y-2 scale-95 ease-out duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all flex items-center justify-center space-x-2">
                                     <button type="button"
                                         @click="cropOpen = true; initCropper('main-preview', 'image')"
@@ -231,11 +235,16 @@
                                 <img src="{{ $previewImage2 }}" id="additional-preview-{{ $index }}"
                                     class="w-24 h-24 object-cover rounded-2xl">
                                 <div
+                                    x-data="{
+                                        init() {
+                                            initCropper('additional-preview-{{ $index }}', '{{ $additionalImg['field'] }}', {{ $index }});
+                                        }
+                                    }"
                                     class="absolute inset-0 bg-white/10 rounded-2xl backdrop-blur-[2px] opacity-0 -translate-y-2 scale-95 ease-out duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all flex items-center justify-center space-x-2">
                                     <button type="button"
                                         @click="initCropper('additional-preview-{{ $index }}', '{{ $additionalImg['field'] }}', {{ $index }})"
                                         class="p-1 bg-white/70 rounded-full hover-scale">
-                                        <flux:icon name="scissors" class="h-5 w-5" />
+                                        <flux:icon name="adjustments-horizontal" class="h-5 w-5" />
                                     </button>
                                     <button type="button" wire:click="removeAdditionalImage({{ $index }})"
                                         class="p-1 bg-white/70 rounded-full hover-scale">
@@ -246,11 +255,16 @@
                                 <img src="{{ $previewImage3 }}" id="additional-preview-{{ $index }}"
                                     class="w-24 h-24 object-cover rounded-2xl">
                                 <div
+                                    x-data="{
+                                        init() {
+                                            initCropper('additional-preview-{{ $index }}', '{{ $additionalImg['field'] }}', {{ $index }});
+                                        }
+                                    }"
                                     class="absolute inset-0 bg-white/10 rounded-2xl backdrop-blur-[2px] opacity-0 -translate-y-2 scale-95 ease-out duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all flex items-center justify-center space-x-2">
                                     <button type="button"
                                         @click="initCropper('additional-preview-{{ $index }}', '{{ $additionalImg['field'] }}', {{ $index }})"
                                         class="p-1 bg-white/70 rounded-full hover-scale">
-                                        <flux:icon name="scissors" class="h-5 w-5" />
+                                        <flux:icon name="adjustments-horizontal" class="h-5 w-5" />
                                     </button>
                                     <button type="button" wire:click="removeAdditionalImage({{ $index }})"
                                         class="p-1 bg-white/70 rounded-full hover-scale">
@@ -298,7 +312,7 @@
                     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                         <div x-show="cropOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
                             x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-300"
-                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="closeCropper()"
+                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="cropButton()"
                             class="absolute inset-0 w-full h-full bg-white/10 backdrop-blur-sm bg-opacity-70">
                         </div>
                         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -323,12 +337,12 @@
                             </div>
                             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                 <button type="button" @click="cropButton()"
-                                    class="w-full inline-flex justify-center rounded-full px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black sm:ml-3 sm:w-auto sm:text-sm">
+                                    class="w-full inline-flex justify-center rounded-full hover-scale px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black sm:ml-3 sm:w-auto sm:text-sm">
                                     {{ __('lang_v1.save') }}
                                 </button>
                                 <button type="button"
-                                    @click="closeCropper()"
-                                    class="w-full inline-flex justify-center rounded-full border border-gray-400 px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black sm:ml-3 sm:w-auto sm:text-sm">
+                                    @click="cropButton()"
+                                    class="w-full inline-flex justify-center rounded-full border hover-scale border-gray-400 px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black sm:ml-3 sm:w-auto sm:text-sm">
                                     {{ __('lang_v1.cancel') }}
                                 </button>
                             </div>

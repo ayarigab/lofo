@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\LostFound;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class PostLostForm extends Component
 {
@@ -105,8 +106,20 @@ class PostLostForm extends Component
     {
         $this->validate();
 
+        if (auth()->guard('claimer')->check()) {
+            $postedBy = auth()->guard('claimer')->id();
+            $posterType = 'claimer';
+        } elseif (Auth::check()) {
+            $postedBy = Auth::id();
+            $posterType = 'web';
+        } else {
+            $postedBy = null;
+            $posterType = 'guest';
+        }
+
         try {
             $imagePath = $this->image->store('', 'public');
+
 
             $data = [
                 'category_id' => $this->category_id,
@@ -122,7 +135,10 @@ class PostLostForm extends Component
                 'founder_phone' => $this->founder_phone,
                 'founder_address' => $this->founder_address,
                 'image' => $imagePath,
-                'status' => 'pending'
+                'status' => 'pending',
+                'posted_by' => $postedBy,
+                'poster_type' => $posterType,
+                'poster_ip' => request()->ip(),
             ];
 
             if ($this->image2) {

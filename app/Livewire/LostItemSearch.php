@@ -40,12 +40,18 @@ class LostItemSearch extends Component
     {
         $categories = Category::where('active', true)->get();
 
-        $query = LostFound::query()->where('status', '!=', 'claimed');
+        $query = LostFound::query()->where(function($q){
+            $q->where('status', '!=', 'claimed')
+                ->whereNull('poster_type')
+                ->orWhere('poster_type', '!=', 'guest');
+        });
 
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('title', 'like', "%{$this->search}%")
                     ->orWhere('description', 'like', "%{$this->search}%")
+                    ->whereNull('poster_type')
+                    ->orWhere('poster_type', '!=', 'guest')
                     ->orWhere('found_location', 'like', "%{$this->search}%")
                     ->orWhereHas('category', function ($q) {
                         $q->where('name', 'like', "%{$this->search}%");

@@ -10,7 +10,7 @@
                             <h3 class="text-lg font-medium mb-3">{{ __('lang_v1.search_items') }}</h3>
                             <div class="relative">
                                 <input type="text" wire:model.live.debounce.500ms="search"
-                                    placeholder="{{ __('lang_v1.search_lost_items') }}"
+                                    placeholder="{{ __('lang_v1.search_items') }}"
                                     class="w-full px-4 py-2 border rounded-full ring-none focus:ring-2 focus:ring-blue-500 focus:border-none">
                                 <button class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -235,7 +235,7 @@
 
                     @if($lostItems->hasPages())
                     <div class="mt-10">
-                        {{ $lostItems->onEachSide(1)->links('vendor.livewire.tailwind') }}
+                        {{ $lostItems->links() }}
                     </div>
                     @endif
                 </main>

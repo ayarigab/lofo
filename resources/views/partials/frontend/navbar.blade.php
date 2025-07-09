@@ -1,89 +1,79 @@
 <div class="relative w-auto h-auto" x-data>
     <div x-data="{
-                title: 'Success Notification',
-                description: '',
-                type: 'success',
-                popToast(){
-                    toast(this.title, { description: this.description, type: this.type })
-                }
-            }" x-init="
-                window.toast = function(message, options = {}){
-                    let description = '';
-                    let type = 'success';
-                    if(typeof options.description != 'undefined') description = options.description;
-                    if(typeof options.type != 'undefined') type = options.type;
+            title: 'Success Notification',
+            description: '',
+            type: 'success',
+            popToast(){
+                toast(this.title, { description: this.description, type: this.type })
+            }
+        }" x-init="
+            window.toast = function(message, options = {}){
+                let description = '';
+                let type = 'success';
+                if(typeof options.description != 'undefined') description = options.description;
+                if(typeof options.type != 'undefined') type = options.type;
 
-                    window.dispatchEvent(new CustomEvent('toast-show', { detail : { type: type, message: message, description: description }}));
-                }
-            " class="relative space-y-5">
+                window.dispatchEvent(new CustomEvent('toast-show', { detail : { type: type, message: message, description: description }}));
+            }
+        " class="relative space-y-5">
     </div>
 
     <script>
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('toast-show', (event) => {
                 const detail = Array.isArray(event) ? event[0] : event;
-                window.dispatchEvent(new CustomEvent('toast-show', {
-                    detail: detail
-                }));
+                window.dispatchEvent(new CustomEvent('toast-show', { detail }));
             });
+            @php
+                $toast = session('toast');
+            @endphp
+            @if($toast)
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: '{{ $toast['type'] }}',
+                    message: '{{ $toast['message'] }}',
+                    description: '{{ $toast['description'] }}'
+                }
+            }));
+            @endif
+            @if(session('error'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'danger',
+                    message: 'Error!',
+                    description: '{{ session('error') }}'
+                }
+            }));
+            @endif
+            @if(session('success'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'success',
+                    message: 'Success!',
+                    description: '{{ session('success') }}'
+                }
+            }));
+            @endif
+            @if(session('warning'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'warning',
+                    message: 'Warning!',
+                    description: '{{ session('warning') }}'
+                }
+            }));
+            @endif
+            @if(session('info'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'info',
+                    message: 'Info!',
+                    description: '{{ session('info') }}'
+                }
+            }));
+            @endif
         });
     </script>
-    <script>
-        document.addEventListener('livewire:initialized', function() {
-                @php
-                    $toast = session('toast');
-                @endphp
-                @if($toast)
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: '{{ $toast['type'] }}',
-                            message: '{{ $toast['message'] }}',
-                            description: '{{ $toast['description'] }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('error'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'danger',
-                            message: 'Error!',
-                            description: '{{ session('error') }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('success'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'success',
-                            message: 'Success!',
-                            description: '{{ session('success') }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('warning'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'warning',
-                            message: 'Warning!',
-                            description: '{{ session('warning') }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('info'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'info',
-                            message: 'Info!',
-                            description: '{{ session('info') }}'
-                        }
-                    }));
-                @endif
-            });
-        </script>
 
     <template x-teleport="body">
         <ul x-data="{
@@ -128,40 +118,43 @@
                             that.calculateHeightOfToastsContainer();
                         }, 300);
                     },
-                    positionToasts(){
-                        if(this.toasts.length == 0) return;
+                    positionToasts() {
+                        if (this.toasts.length == 0) return;
 
-                        for(let i = 0; i < this.toasts.length && i < 4; i++){
+                        for (let i = 0; i < this.toasts.length; i++) {
                             let toastElement = document.getElementById(this.toasts[i].id);
-                            if(toastElement){
-                                toastElement.style.zIndex = 100 - (i * 10);
-                                if(this.toastsHovered){
-                                    toastElement.style.top = (i * (toastElement.getBoundingClientRect().height + this.paddingBetweenToasts)) + 'px';
-                                    toastElement.style.scale = '100%';
-                                    toastElement.style.transform = 'translateY(0px)';
+                            if (!toastElement) continue;
+
+                            toastElement.style.zIndex = 100 - (i * 10);
+
+                            if (this.toastsHovered) {
+                                toastElement.style.top = (i * (toastElement.getBoundingClientRect().height + this.paddingBetweenToasts)) + 'px';
+                                toastElement.style.scale = '100%';
+                                toastElement.style.transform = 'translateY(0px)';
+                                toastElement.firstElementChild.classList.remove('opacity-0');
+                                toastElement.firstElementChild.classList.add('opacity-100');
+                            } else {
+                                toastElement.style.top = '0px';
+
+                                if (i >= 3) {
+                                    toastElement.style.opacity = '0';
+                                    toastElement.style.pointerEvents = 'none';
                                 } else {
-                                    toastElement.style.top = '0px';
-                                    if(i === 0){
-                                        toastElement.style.scale = '100%';
-                                        toastElement.style.transform = 'translateY(0px)';
-                                    } else if(i === 1){
-                                        toastElement.style.scale = '94%';
-                                        toastElement.style.transform = 'translateY(16px)';
-                                    } else if(i === 2){
-                                        toastElement.style.scale = '88%';
-                                        toastElement.style.transform = 'translateY(32px)';
-                                    } else {
-                                        toastElement.style.scale = '82%';
-                                        toastElement.style.transform = 'translateY(48px)';
-                                        toastElement.firstElementChild.classList.remove('opacity-100');
-                                        toastElement.firstElementChild.classList.add('opacity-0');
-                                        let that = this;
-                                        setTimeout(function(){
-                                            that.toasts.pop();
-                                        }, 300);
-                                    }
+                                    const scale = 100 - (i * 6);
+                                    const translateY = i * 16;
+                                    toastElement.style.scale = `${scale}%`;
+                                    toastElement.style.transform = `translateY(${translateY}px)`;
+                                    toastElement.style.opacity = '1';
+                                    toastElement.style.pointerEvents = 'auto';
                                 }
                             }
+                        }
+
+                        if (!this.toastsHovered && this.toasts.length > 3) {
+                            setTimeout(() => {
+                                this.toasts.pop();
+                                this.stackToasts();
+                            }, 300);
                         }
                     },
                     calculateHeightOfToastsContainer(){
@@ -227,64 +220,50 @@
 
             <template x-for="(toast, index) in toasts" :key="toast.id">
                 <li :id="toast.id" x-data="{
-                            toastHovered: false
-                        }" x-init="
-                            $el.firstElementChild.classList.add('opacity-0', '-translate-y-full');
-                            setTimeout(function(){
-                                setTimeout(function(){
-                                    $el.firstElementChild.classList.remove('opacity-0', '-translate-y-full');
-                                    $el.firstElementChild.classList.add('opacity-100', 'translate-y-0');
-                                    setTimeout(function(){
-                                        stackToasts();
-                                    }, 10);
-                                }, 5);
-                            }, 50);
+                                    toastHovered: false,
+                                    timeoutId: null,
+                                    initToast() {
+                                        $el.firstElementChild.classList.add('opacity-0', '-translate-y-full');
+                                        setTimeout(() => {
+                                            $el.firstElementChild.classList.remove('opacity-0', '-translate-y-full');
+                                            $el.firstElementChild.classList.add('opacity-100', 'translate-y-0');
+                                            this.stackToasts();
 
-                            setTimeout(function(){
-                                setTimeout(function(){
-                                    $el.firstElementChild.classList.remove('opacity-100');
-                                    $el.firstElementChild.classList.add('opacity-0');
-                                    if(toasts.length == 1){
-                                        $el.firstElementChild.classList.remove('translate-y-0');
-                                        $el.firstElementChild.classList.add('-translate-y-full');
+                                            if (!this.toastHovered) {
+                                                this.startDismissTimer();
+                                            }
+                                        }, 50);
+                                    },
+                                    startDismissTimer() {
+                                        if (this.timeoutId) clearTimeout(this.timeoutId);
+
+                                        this.timeoutId = setTimeout(() => {
+                                            if (!this.toastHovered) {
+                                                this.dismissToast();
+                                            }
+                                        }, 4000);
+                                    },
+                                    dismissToast() {
+                                        $el.firstElementChild.classList.remove('opacity-100');
+                                        $el.firstElementChild.classList.add('opacity-0');
+
+                                        setTimeout(() => {
+                                            this.deleteToastWithId(toast.id);
+                                            this.stackToasts();
+                                        }, 300);
                                     }
-                                    setTimeout(function(){
-                                        deleteToastWithId(toast.id)
-                                    }, 300);
-                                }, 5);
-                            }, 4000);
-                        " @mouseover="toastHovered=true" @mouseout="toastHovered=false"
-                    class="absolute w-full duration-300 ease-out select-none sm:max-w-xs">
+                                }" x-init="initToast()" @mouseover="toastHovered = true; if (timeoutId) clearTimeout(timeoutId);"
+                    @mouseleave="toastHovered = false; startDismissTimer();" class="absolute w-full duration-300 ease-out select-none sm:max-w-xs">
                     <span
                         class="relative flex flex-col items-start shadow-[0_5px_15px_-3px_rgb(0_0_0_/_0.08)] w-full transition-all duration-300 ease-out bg-white border border-gray-100 sm:rounded-2xl sm:max-w-xs group p-4">
                         <div class="relative">
                             <div class="flex items-center"
                                 :class="{ 'text-green-500' : toast.type=='success', 'text-blue-500' : toast.type=='info', 'text-orange-400' : toast.type=='warning', 'text-red-500' : toast.type=='danger' }">
 
-                                <svg x-show="toast.type=='success'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM16.7744 9.63269C17.1238 9.20501 17.0604 8.57503 16.6327 8.22559C16.2051 7.87615 15.5751 7.93957 15.2256 8.36725L10.6321 13.9892L8.65936 12.2524C8.24484 11.8874 7.61295 11.9276 7.248 12.3421C6.88304 12.7566 6.92322 13.3885 7.33774 13.7535L9.31046 15.4903C10.1612 16.2393 11.4637 16.1324 12.1808 15.2547L16.7744 9.63269Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                                <svg x-show="toast.type=='info'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 9C12.5523 9 13 8.55228 13 8C13 7.44772 12.5523 7 12 7C11.4477 7 11 7.44772 11 8C11 8.55228 11.4477 9 12 9ZM13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12V16C11 16.5523 11.4477 17 12 17C12.5523 17 13 16.5523 13 16V12Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                                <svg x-show="toast.type=='warning'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M9.44829 4.46472C10.5836 2.51208 13.4105 2.51168 14.5464 4.46401L21.5988 16.5855C22.7423 18.5509 21.3145 21 19.05 21L4.94967 21C2.68547 21 1.25762 18.5516 2.4004 16.5862L9.44829 4.46472ZM11.9995 8C12.5518 8 12.9995 8.44772 12.9995 9V13C12.9995 13.5523 12.5518 14 11.9995 14C11.4473 14 10.9995 13.5523 10.9995 13V9C10.9995 8.44772 11.4473 8 11.9995 8ZM12.0009 15.99C11.4486 15.9892 11.0003 16.4363 10.9995 16.9886L10.9995 16.9986C10.9987 17.5509 11.4458 17.9992 11.9981 18C12.5504 18.0008 12.9987 17.5537 12.9995 17.0014L12.9995 16.9914C13.0003 16.4391 12.5532 15.9908 12.0009 15.99Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                                <svg x-show="toast.type=='danger'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM11.9996 7C12.5519 7 12.9996 7.44772 12.9996 8V12C12.9996 12.5523 12.5519 13 11.9996 13C11.4474 13 10.9996 12.5523 10.9996 12V8C10.9996 7.44772 11.4474 7 11.9996 7ZM12.001 14.99C11.4488 14.9892 11.0004 15.4363 10.9997 15.9886L10.9996 15.9986C10.9989 16.5509 11.446 16.9992 11.9982 17C12.5505 17.0008 12.9989 16.5537 12.9996 16.0014L12.9996 15.9914C13.0004 15.4391 12.5533 14.9908 12.001 14.99Z"
-                                        fill="currentColor"></path>
-                                </svg>
+                                <flux:icon.check-circle variant="solid" x-show="toast.type=='success'" class="w-[22px] h-[22px] mr-1.5 -ml-1" />
+                                <flux:icon.information-circle variant="solid" x-show="toast.type=='info'" class="w-[22px] h-[22px] mr-1.5 -ml-1" />
+                                <flux:icon.exclamation-triangle variant="solid" x-show="toast.type=='warning'" class="w-[22px] h-[22px] mr-1.5 -ml-1" />
+                                <flux:icon.exclamation-triangle variant="solid" x-show="toast.type=='danger'" class="w-[22px] h-[22px] mr-1.5 -ml-1" />
                                 <p class="text-[13px] font-medium leading-none text-gray-800" x-text="toast.message">
                                 </p>
                             </div>
@@ -292,14 +271,9 @@
                                 x-text="toast.description"></p>
                         </div>
                         <span @click="burnToast(toast.id)"
-                            class="absolute right-0 p-1.5 mr-2.5 text-gray-400 duration-100 ease-in-out rounded-full opacity-0 cursor-pointer hover:bg-gray-50 hover:text-gray-500 top-0 mt-2.5"
+                            class="absolute right-0 p-1.5 mr-2.5 text-gray-400 duration-100 ease-in-out rounded-full opacity-0 cursor-pointer hover:bg-red-50 hover:text-red-500 top-0 mt-2.5"
                             :class="{ 'opacity-100' : toastHovered, 'opacity-0' : !toastHovered }">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
+                            <flux:icon.x class="w-3 h-3" />
                         </span>
                     </span>
                 </li>
@@ -407,38 +381,7 @@
                         setTimeout(() => spin = true, 150);
                     " @mouseleave="spin = false">
                     <div class="relative flex items-center justify-between w-full px-8 pl-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-all duration-300 group-hover:scale-110"
-                            viewBox="0 0 24 24">
-
-                            <path fill="currentColor"
-                                d="M15.088 6.412a2.84 2.84 0 0 0-1.347-.955l-1.378-.448a.544.544 0 0 1 0-1.025l1.378-.448A2.84 2.84 0 0 0 15.5 1.774l.011-.034l.448-1.377a.544.544 0 0 1 1.027 0l.447 1.377a2.84 2.84 0 0 0 1.799 1.796l1.377.448l.028.007a.544.544 0 0 1 0 1.025l-1.378.448a2.84 2.84 0 0 0-1.798 1.796l-.448 1.377l-.013.034a.544.544 0 0 1-1.013-.034l-.448-1.377a2.8 2.8 0 0 0-.45-.848"
-                                x-show="!sparkle" x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
-                                x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-200"
-                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" />
-
-                            <path fill="currentColor"
-                                d="M22.783 10.213l-.766-.248a1.58 1.58 0 0 1-.998-.999l-.25-.764a.302.302 0 0 0-.57 0l-.248.764a1.58 1.58 0 0 1-.984.999l-.765.248a.302.302 0 0 0 0 .57l.765.249a1.58 1.58 0 0 1 1 1.002l.248.764a.302.302 0 0 0 .57 0l.249-.764a1.58 1.58 0 0 1 .999-.999l.765-.248a.302.302 0 0 0 0-.57z"
-                                x-show="!sparkle" x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
-                                x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-200"
-                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" />
-
-                            <path fill="currentColor"
-                                d="M15.088 6.412a2.84 2.84 0 0 0-1.347-.955l-1.378-.448a.544.544 0 0 1 0-1.025l1.378-.448A2.84 2.84 0 0 0 15.5 1.774l.011-.034l.448-1.377a.544.544 0 0 1 1.027 0l.447 1.377a2.84 2.84 0 0 0 1.799 1.796l1.377.448l.028.007a.544.544 0 0 1 0 1.025l-1.378.448a2.84 2.84 0 0 0-1.798 1.796l-.448 1.377l-.013.034a.544.544 0 0 1-1.013-.034l-.448-1.377a2.8 2.8 0 0 0-.45-.848"
-                                x-show="sparkle" x-transition:enter="transition-all duration-300" x-transition:enter-start="opacity-0 scale-50"
-                                x-transition:enter-end="opacity-100 scale-110" class="text-yellow-600" style="transform-origin: center" />
-
-                            <path fill="currentColor"
-                                d="M22.783 10.213l-.766-.248a1.58 1.58 0 0 1-.998-.999l-.25-.764a.302.302 0 0 0-.57 0l-.248.764a1.58 1.58 0 0 1-.984.999l-.765.248a.302.302 0 0 0 0 .57l.765.249a1.58 1.58 0 0 1 1 1.002l.248.764a.302.302 0 0 0 .57 0l.249-.764a1.58 1.58 0 0 1 .999-.999l.765-.248a.302.302 0 0 0 0-.57z"
-                                x-show="sparkle" x-transition:enter="transition-all duration-300 delay-100"
-                                x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-110"
-                                class="text-yellow-400" style="transform-origin: center" />
-
-                            <path fill="currentColor"
-                                d="M11.663 3.2a7 7 0 1 0 2.528 12.407l5.102 5.101a1 1 0 0 0 1.414-1.414l-5.1-5.1A6.97 6.97 0 0 0 17 10v-.048a1.5 1.5 0 0 1-.54.097c-.659-.002-1.347-.427-1.56-1.05v-.003q.099.488.1 1.004a5 5 0 1 1-3.852-4.868A1.6 1.6 0 0 1 11 4.47c.001-.517.257-.983.664-1.27"
-                                :class="{
-                                    'motion-safe:animate-[squeeze_0.6s_ease-in-out]': !spin
-                                }" style="transform-origin: center" />
-                        </svg>
+                        <flux:icon.search-smart />
                         <span class="hidden ml-2 mr-4 md:inline">{{ __('lang_v1.search...') }}</span>
                         <div
                             class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400 pointer-events-none">
@@ -509,7 +452,11 @@
                 </div>
                 <a wire:navigate href="{{ route('claimer-register') }}"
                     class="relative inline-flex items-center overflow-hidden w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-gradient-to-r from-blue-400  to-green-400 md:w-auto md:rounded-full hover:bg-[#3B82F6] focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-300 hover-scale">
+                    @auth('claimer')
+                    {{ __('lang_v1.dashboard') }}
+                    @else
                     {{ __('lang_v1.sign_up') }}
+                    @endauth
                 </a>
             </div>
         </div>
@@ -531,7 +478,7 @@
                             <span class="block mb-1 font-medium text-black">{{ __('lang_v1.lost_items') }}</span>
                             <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.lost_items_description') }}</span>
                         </a>
-                        <a wire:navigate href="/post-item" @click="navigationMenuClose()"
+                        <a wire:navigate href="{{ route('lost-items.store') }}" @click="navigationMenuClose()"
                             class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent mt-2">
                             <span class="block mb-1 font-medium text-black">{{ __('lang_v1.post_item') }}</span>
                             <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.post_item_description') }}</span>
@@ -543,27 +490,14 @@
                             <span class="block mb-1 font-medium text-black">{{ __('lang_v1.send_message') }} <span class="ml-2  text-xs pointer-events-none text-gray-400">⌘M</span></span>
                             <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.send_message_description') }}</span>
                         </a>
-                        <a wire:navigate href="/claimed-items" @click="navigationMenuClose()"
+                        <a wire:navigate href="{{ route('contact-us') }}" @click="navigationMenuClose()"
                             class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent mt-2">
-                            <span class="block mb-1 font-medium text-black">{{ __('lang_v1.claimed_items') }}</span>
-                            <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.claimed_items_description') }}</span>
+                            <span class="block mb-1 font-medium text-black">{{ __('lang_v1.report_lost_item') }}</span>
+                            <span class="block font-light leading-5 text-gray-600">{{ __('lang_v1.we_love_to_here_from_you') }}</span>
                         </a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div @click="showMenu = !showMenu"
-            class="absolute right-0 flex flex-col items-center justify-center w-10 h-10 bg-white rounded-full cursor-pointer md:hidden hover:bg-gray-100 transition-all duration-300 z-50">
-            <svg class="w-6 h-6 text-gray-700" x-show="!showMenu" fill="none" stroke-linecap="round"
-                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-            <svg class="w-6 h-6 text-gray-700" x-show="showMenu" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                </path>
-            </svg>
         </div>
     </div>
 
@@ -592,10 +526,7 @@
                     <h3 class="text-lg font-semibold">{{ __('lang_v1.search_lost_items') }}</h3>
                     <button @click="resetSearch()"
                         class="absolute top-0 right-0 flex items-center justify-center w-8 h-8 mt-5 mr-5 text-gray-600 rounded-full hover:text-gray-800 hover:bg-gray-50 transition-all duration-300">
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <flux:icon.x class="w-5 h-5" />
                     </button>
                 </div>
 
@@ -642,10 +573,7 @@
                         <h2 class="text-lg font-medium text-gray-900">{{ __('lang_v1.send_message') }}</h2>
                         <button @click="showContactForm = false" class="text-gray-400 hover:text-gray-500">
                             <span class="sr-only">{{ __('lang_v1.close_panel') }}</span>
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <flux:icon.x class="w-6 h-6" />
                         </button>
                     </div>
 

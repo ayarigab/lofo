@@ -4,12 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 
 class SendMessageModal extends Component
 {
     public $title;
     public $message;
-
     protected $rules = [
         'title' => 'required|string|max:255',
         'message' => 'required|string',
@@ -24,10 +24,24 @@ class SendMessageModal extends Component
     {
         $this->validate();
 
+        if (auth()->guard('claimer')->check()) {
+            $postedBy = auth()->guard('claimer')->id();
+            $posterType = 'claimer';
+        } elseif (Auth::check()) {
+            $postedBy = Auth::id();
+            $posterType = 'web';
+        } else {
+            $postedBy = null;
+            $posterType = 'guest';
+        }
+
         try {
             Message::create([
                 'title' => $this->title,
                 'message' => $this->message,
+                'posted_by' => $postedBy,
+                'poster_type' => $posterType,
+                'poster_ip' => request()->ip(),
             ]);
 
             $this->dispatch(

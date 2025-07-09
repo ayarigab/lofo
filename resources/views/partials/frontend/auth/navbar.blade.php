@@ -1,88 +1,78 @@
 <div class="relative w-auto h-auto" x-data>
     <div x-data="{
-                title: 'Success Notification',
-                description: '',
-                type: 'success',
-                popToast(){
-                    toast(this.title, { description: this.description, type: this.type })
-                }
-            }" x-init="
-                window.toast = function(message, options = {}){
-                    let description = '';
-                    let type = 'success';
-                    if(typeof options.description != 'undefined') description = options.description;
-                    if(typeof options.type != 'undefined') type = options.type;
+            title: 'Success Notification',
+            description: '',
+            type: 'success',
+            popToast(){
+                toast(this.title, { description: this.description, type: this.type })
+            }
+        }" x-init="
+            window.toast = function(message, options = {}){
+                let description = '';
+                let type = 'success';
+                if(typeof options.description != 'undefined') description = options.description;
+                if(typeof options.type != 'undefined') type = options.type;
 
-                    window.dispatchEvent(new CustomEvent('toast-show', { detail : { type: type, message: message, description: description }}));
-                }
-            " class="relative space-y-5">
+                window.dispatchEvent(new CustomEvent('toast-show', { detail : { type: type, message: message, description: description }}));
+            }
+        " class="relative space-y-5">
     </div>
 
     <script>
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('toast-show', (event) => {
                 const detail = Array.isArray(event) ? event[0] : event;
-                window.dispatchEvent(new CustomEvent('toast-show', {
-                    detail: detail
-                }));
+                window.dispatchEvent(new CustomEvent('toast-show', { detail }));
             });
+            @php
+                $toast = session('toast');
+            @endphp
+            @if($toast)
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: '{{ $toast['type'] }}',
+                    message: '{{ $toast['message'] }}',
+                    description: '{{ $toast['description'] }}'
+                }
+            }));
+            @endif
+            @if(session('error'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'danger',
+                    message: 'Error!',
+                    description: '{{ session('error') }}'
+                }
+            }));
+            @endif
+            @if(session('success'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'success',
+                    message: 'Success!',
+                    description: '{{ session('success') }}'
+                }
+            }));
+            @endif
+            @if(session('warning'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'warning',
+                    message: 'Warning!',
+                    description: '{{ session('warning') }}'
+                }
+            }));
+            @endif
+            @if(session('info'))
+            window.dispatchEvent(new CustomEvent('toast-show', {
+                detail: {
+                    type: 'info',
+                    message: 'Info!',
+                    description: '{{ session('info') }}'
+                }
+            }));
+            @endif
         });
-    </script>
-    <script>
-        document.addEventListener('livewire:initialized', function() {
-                @php
-                    $toast = session('toast');
-                @endphp
-                @if($toast)
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: '{{ $toast['type'] }}',
-                            message: '{{ $toast['message'] }}',
-                            description: '{{ $toast['description'] }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('error'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'danger',
-                            message: 'Error!',
-                            description: '{{ session('error') }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('success'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'success',
-                            message: 'Success!',
-                            description: '{{ session('success') }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('warning'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'warning',
-                            message: 'Warning!',
-                            description: '{{ session('warning') }}'
-                        }
-                    }));
-                @endif
-
-                @if(session('info'))
-                    window.dispatchEvent(new CustomEvent('toast-show', {
-                        detail: {
-                            type: 'info',
-                            message: 'Info!',
-                            description: '{{ session('info') }}'
-                        }
-                    }));
-                @endif
-            });
     </script>
 
     <template x-teleport="body">
@@ -128,40 +118,43 @@
                             that.calculateHeightOfToastsContainer();
                         }, 300);
                     },
-                    positionToasts(){
-                        if(this.toasts.length == 0) return;
+                    positionToasts() {
+                        if (this.toasts.length == 0) return;
 
-                        for(let i = 0; i < this.toasts.length && i < 4; i++){
+                        for (let i = 0; i < this.toasts.length; i++) {
                             let toastElement = document.getElementById(this.toasts[i].id);
-                            if(toastElement){
-                                toastElement.style.zIndex = 100 - (i * 10);
-                                if(this.toastsHovered){
-                                    toastElement.style.top = (i * (toastElement.getBoundingClientRect().height + this.paddingBetweenToasts)) + 'px';
-                                    toastElement.style.scale = '100%';
-                                    toastElement.style.transform = 'translateY(0px)';
+                            if (!toastElement) continue;
+
+                            toastElement.style.zIndex = 100 - (i * 10);
+
+                            if (this.toastsHovered) {
+                                toastElement.style.top = (i * (toastElement.getBoundingClientRect().height + this.paddingBetweenToasts)) + 'px';
+                                toastElement.style.scale = '100%';
+                                toastElement.style.transform = 'translateY(0px)';
+                                toastElement.firstElementChild.classList.remove('opacity-0');
+                                toastElement.firstElementChild.classList.add('opacity-100');
+                            } else {
+                                toastElement.style.top = '0px';
+
+                                if (i >= 3) {
+                                    toastElement.style.opacity = '0';
+                                    toastElement.style.pointerEvents = 'none';
                                 } else {
-                                    toastElement.style.top = '0px';
-                                    if(i === 0){
-                                        toastElement.style.scale = '100%';
-                                        toastElement.style.transform = 'translateY(0px)';
-                                    } else if(i === 1){
-                                        toastElement.style.scale = '94%';
-                                        toastElement.style.transform = 'translateY(16px)';
-                                    } else if(i === 2){
-                                        toastElement.style.scale = '88%';
-                                        toastElement.style.transform = 'translateY(32px)';
-                                    } else {
-                                        toastElement.style.scale = '82%';
-                                        toastElement.style.transform = 'translateY(48px)';
-                                        toastElement.firstElementChild.classList.remove('opacity-100');
-                                        toastElement.firstElementChild.classList.add('opacity-0');
-                                        let that = this;
-                                        setTimeout(function(){
-                                            that.toasts.pop();
-                                        }, 300);
-                                    }
+                                    const scale = 100 - (i * 6);
+                                    const translateY = i * 16;
+                                    toastElement.style.scale = `${scale}%`;
+                                    toastElement.style.transform = `translateY(${translateY}px)`;
+                                    toastElement.style.opacity = '1';
+                                    toastElement.style.pointerEvents = 'auto';
                                 }
                             }
+                        }
+
+                        if (!this.toastsHovered && this.toasts.length > 3) {
+                            setTimeout(() => {
+                                this.toasts.pop();
+                                this.stackToasts();
+                            }, 300);
                         }
                     },
                     calculateHeightOfToastsContainer(){
@@ -222,38 +215,46 @@
                             }, 20)
                         }
                     });
-                " class="fixed top-0 left-1/2 transform -translate-x-1/2 z-[99] sm:mt-6 w-full sm:max-w-xs group"
+                " class="fixed top-0 left-1/2 transform -translate-x-1/2 z-[999] sm:mt-6 w-full sm:max-w-xs group"
             x-cloak>
 
             <template x-for="(toast, index) in toasts" :key="toast.id">
                 <li :id="toast.id" x-data="{
-                            toastHovered: false
-                        }" x-init="
-                            $el.firstElementChild.classList.add('opacity-0', '-translate-y-full');
-                            setTimeout(function(){
-                                setTimeout(function(){
-                                    $el.firstElementChild.classList.remove('opacity-0', '-translate-y-full');
-                                    $el.firstElementChild.classList.add('opacity-100', 'translate-y-0');
-                                    setTimeout(function(){
-                                        stackToasts();
-                                    }, 10);
-                                }, 5);
-                            }, 50);
+                                    toastHovered: false,
+                                    timeoutId: null,
+                                    initToast() {
+                                        $el.firstElementChild.classList.add('opacity-0', '-translate-y-full');
+                                        setTimeout(() => {
+                                            $el.firstElementChild.classList.remove('opacity-0', '-translate-y-full');
+                                            $el.firstElementChild.classList.add('opacity-100', 'translate-y-0');
+                                            this.stackToasts();
 
-                            setTimeout(function(){
-                                setTimeout(function(){
-                                    $el.firstElementChild.classList.remove('opacity-100');
-                                    $el.firstElementChild.classList.add('opacity-0');
-                                    if(toasts.length == 1){
-                                        $el.firstElementChild.classList.remove('translate-y-0');
-                                        $el.firstElementChild.classList.add('-translate-y-full');
+                                            if (!this.toastHovered) {
+                                                this.startDismissTimer();
+                                            }
+                                        }, 50);
+                                    },
+                                    startDismissTimer() {
+                                        if (this.timeoutId) clearTimeout(this.timeoutId);
+
+                                        this.timeoutId = setTimeout(() => {
+                                            if (!this.toastHovered) {
+                                                this.dismissToast();
+                                            }
+                                        }, 4000);
+                                    },
+                                    dismissToast() {
+                                        $el.firstElementChild.classList.remove('opacity-100');
+                                        $el.firstElementChild.classList.add('opacity-0');
+
+                                        setTimeout(() => {
+                                            this.deleteToastWithId(toast.id);
+                                            this.stackToasts();
+                                        }, 300);
                                     }
-                                    setTimeout(function(){
-                                        deleteToastWithId(toast.id)
-                                    }, 300);
-                                }, 5);
-                            }, 4000);
-                        " @mouseover="toastHovered=true" @mouseout="toastHovered=false"
+                                }" x-init="initToast()"
+                    @mouseover="toastHovered = true; if (timeoutId) clearTimeout(timeoutId);"
+                    @mouseleave="toastHovered = false; startDismissTimer();"
                     class="absolute w-full duration-300 ease-out select-none sm:max-w-xs">
                     <span
                         class="relative flex flex-col items-start shadow-[0_5px_15px_-3px_rgb(0_0_0_/_0.08)] w-full transition-all duration-300 ease-out bg-white border border-gray-100 sm:rounded-2xl sm:max-w-xs group p-4">
@@ -261,30 +262,14 @@
                             <div class="flex items-center"
                                 :class="{ 'text-green-500' : toast.type=='success', 'text-blue-500' : toast.type=='info', 'text-orange-400' : toast.type=='warning', 'text-red-500' : toast.type=='danger' }">
 
-                                <svg x-show="toast.type=='success'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM16.7744 9.63269C17.1238 9.20501 17.0604 8.57503 16.6327 8.22559C16.2051 7.87615 15.5751 7.93957 15.2256 8.36725L10.6321 13.9892L8.65936 12.2524C8.24484 11.8874 7.61295 11.9276 7.248 12.3421C6.88304 12.7566 6.92322 13.3885 7.33774 13.7535L9.31046 15.4903C10.1612 16.2393 11.4637 16.1324 12.1808 15.2547L16.7744 9.63269Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                                <svg x-show="toast.type=='info'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 9C12.5523 9 13 8.55228 13 8C13 7.44772 12.5523 7 12 7C11.4477 7 11 7.44772 11 8C11 8.55228 11.4477 9 12 9ZM13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12V16C11 16.5523 11.4477 17 12 17C12.5523 17 13 16.5523 13 16V12Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                                <svg x-show="toast.type=='warning'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M9.44829 4.46472C10.5836 2.51208 13.4105 2.51168 14.5464 4.46401L21.5988 16.5855C22.7423 18.5509 21.3145 21 19.05 21L4.94967 21C2.68547 21 1.25762 18.5516 2.4004 16.5862L9.44829 4.46472ZM11.9995 8C12.5518 8 12.9995 8.44772 12.9995 9V13C12.9995 13.5523 12.5518 14 11.9995 14C11.4473 14 10.9995 13.5523 10.9995 13V9C10.9995 8.44772 11.4473 8 11.9995 8ZM12.0009 15.99C11.4486 15.9892 11.0003 16.4363 10.9995 16.9886L10.9995 16.9986C10.9987 17.5509 11.4458 17.9992 11.9981 18C12.5504 18.0008 12.9987 17.5537 12.9995 17.0014L12.9995 16.9914C13.0003 16.4391 12.5532 15.9908 12.0009 15.99Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                                <svg x-show="toast.type=='danger'" class="w-[22px] h-[22px] mr-1.5 -ml-1"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM11.9996 7C12.5519 7 12.9996 7.44772 12.9996 8V12C12.9996 12.5523 12.5519 13 11.9996 13C11.4474 13 10.9996 12.5523 10.9996 12V8C10.9996 7.44772 11.4474 7 11.9996 7ZM12.001 14.99C11.4488 14.9892 11.0004 15.4363 10.9997 15.9886L10.9996 15.9986C10.9989 16.5509 11.446 16.9992 11.9982 17C12.5505 17.0008 12.9989 16.5537 12.9996 16.0014L12.9996 15.9914C13.0004 15.4391 12.5533 14.9908 12.001 14.99Z"
-                                        fill="currentColor"></path>
-                                </svg>
+                                <flux:icon.check-circle variant="solid" x-show="toast.type=='success'"
+                                    class="w-[22px] h-[22px] mr-1.5 -ml-1" />
+                                <flux:icon.information-circle variant="solid" x-show="toast.type=='info'"
+                                    class="w-[22px] h-[22px] mr-1.5 -ml-1" />
+                                <flux:icon.exclamation-triangle variant="solid" x-show="toast.type=='warning'"
+                                    class="w-[22px] h-[22px] mr-1.5 -ml-1" />
+                                <flux:icon.exclamation-triangle variant="solid" x-show="toast.type=='danger'"
+                                    class="w-[22px] h-[22px] mr-1.5 -ml-1" />
                                 <p class="text-[13px] font-medium leading-none text-gray-800" x-text="toast.message">
                                 </p>
                             </div>
@@ -292,14 +277,9 @@
                                 x-text="toast.description"></p>
                         </div>
                         <span @click="burnToast(toast.id)"
-                            class="absolute right-0 p-1.5 mr-2.5 text-gray-400 duration-100 ease-in-out rounded-full opacity-0 cursor-pointer hover:bg-gray-50 hover:text-gray-500 top-0 mt-2.5"
+                            class="absolute right-0 p-1.5 mr-2.5 text-gray-400 duration-100 ease-in-out rounded-full opacity-0 cursor-pointer hover:bg-red-50 hover:text-red-500 top-0 mt-2.5"
                             :class="{ 'opacity-100' : toastHovered, 'opacity-0' : !toastHovered }">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
+                            <flux:icon.x class="w-3 h-3" />
                         </span>
                     </span>
                 </li>
@@ -308,13 +288,14 @@
     </template>
 </div>
 
-<nav class="relative z-50 h-24 select-none w-auto bg-white" x-data="{
+<nav class="relative z-50 h-24 select-none w-auto border-b border-gray-200 bg-white" x-data="{
                 showMenu: false,
                 navigationMenuOpen: false,
                 navigationMenu: '',
                 navigationMenuCloseDelay: 200,
                 navigationMenuCloseTimeout: null,
                 modalOpen: false,
+                deleteOpen: false,
                 messageModalOpen: false,
                 navigationMenuLeave() {
                     this.navigationMenuCloseTimeout = setTimeout(() => {
@@ -335,102 +316,498 @@
                 navigationMenuClose(){
                     this.navigationMenuOpen = false;
                     this.navigationMenu = '';
-                }          }" x-on:keydown.window="
+                }          }"
+                x-on:keydown.window="
                 if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-                event.preventDefault();
-                modalOpen = !modalOpen;
+                    event.preventDefault();
+                    modalOpen = !modalOpen;
                 }
 
                 if (event.key === 'Escape') {
-                modalOpen = false;
+                    modalOpen = false;
+                    deleteOpen = false;
                 }
-                ">
+
+                if (event.shiftKey && (event.metaKey || event.ctrlKey) && event.key === 'l') {
+                    event.preventDefault();
+                    document.getElementById('logoutForm').submit();
+                }
+            "
+        >
     <div
-        class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
+        class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
         <div class="flex items-center justify-start w-1/4 h-full pr-4">
-            <a wire:navigate href="/"
+            <a wire:navigate href="{{ route('home') }}"
                 class="flex items-center py-4 space-x-2 font-extrabold text-gray-900 md:py-0 group">
                 <span
-                    class="flex items-center justify-center w-16 h-16 p-2 rounded-full transition-all duration-300 group-hover:rotate-12 border border-[#3B82F6] text-white">
-                    <img src="{{ auth()->guard('claimer')->user()->image_url }}" alt="{{ auth()->guard('claimer')->user()->full_name }}" class="rounded-full">
+                    class="flex items-center justify-center w-16 h-12 p-2 rounded-full transition-all duration-300 group-hover:rotate-12 border border-gray-300 text-white">
+                    <x-app-logo-icon />
                 </span>
-                <span
-                    class="uppercase text-xl transition-all duration-300 group-hover:text-b[#3B82F6]">Welcome 👋 {{ auth()->guard('claimer')->user()->initials() }}</span>
+                <span class="uppercase text-xl transition-all duration-300 group-hover:text-[#3B82F6]">{{
+                    __('lang_v1.lostfound') }}</span>
             </a>
         </div>
 
-        <div class="top-0 left-0 items-start hidden w-full h-full p-4 text-sm bg-gray-900 bg-opacity-50 md:items-center md:w-3/4 md:absolute lg:text-base md:bg-transparent md:p-0 md:relative md:flex"
+        <div class="top-0 left-0 items-start hidden w-full h-full p-4 text-sm bg-gray-900 bg-opacity-50 md:items-center md:w-3/4 lg:text-base md:bg-transparent md:p-0 md:relative md:flex"
             :class="{'flex fixed': showMenu, 'hidden': !showMenu }">
             <div
                 class="flex flex-col w-full h-auto overflow-hidden bg-white rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row">
-                <a wire:navigate href="{{ route('home') }}"
-                    class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent">
-                    <span class="transition-all duration-300 group-hover:text-[#3B82F6]">Homepage</span>
+                <a wire:navigate href="{{ route('claimer-dashboard') }}"
+                    class="block px-3.5 py-3 text-sm rounded-full hover:bg-slate-100 transition-all duration-300 border border-transparent">
+                    <span class="transition-all duration-300">{{ __('lang_v1.dashboard') }}</span>
                 </a>
                 <a wire:navigate href="{{ route('contact-us') }}"
-                    class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent">
-                    <span class="transition-all duration-300 group-hover:text-[#3B82F6]">Contact US</span>
+                    class="block px-3.5 py-3 text-sm rounded-full hover:bg-slate-100 transition-all duration-300 border border-transparent">
+                    <span class="transition-all duration-300">Contact US</span>
                 </a>
                 <a href="#" @click.prevent="$dispatch('open-contact-form')" @click="navigationMenuClose()"
-                    class="block px-3.5 py-3 text-sm rounded-xl hover:bg-slate-100 transition-all duration-300 border border-transparent">
-                    <span class="transition-all duration-300 group-hover:text-[#3B82F6]">Message <span
+                    class="block px-3.5 py-3 text-sm rounded-full hover:bg-slate-100 transition-all duration-300 border border-transparent">
+                    <span class="transition-all duration-300">Message <span
                             class="ml-2  text-xs pointer-events-none text-gray-400">⌘M</span></span>
                 </a>
 
                 <button @click="modalOpen=true"
-                    class="absolute top-0 left-0 hidden items-center py-2 border rounded-full mt-6 ml-10 mr-2 text-gray-600 lg:inline-flex md:mt-0 md:ml-2 lg:mx-3 md:relative group transition-all duration-300 hover:border-[#3B82F6] hover:text-[#3B82F6] hover-scale">
+                    class="absolute top-0 left-0 hidden items-center py-2 border rounded-full mt-6 ml-10 mr-2 text-gray-600 lg:inline-flex md:mt-0 md:ml-2 lg:mx-3 md:relative group transition-all duration-300 hover:border-black hover:text-black hover-scale"
+                    x-data="{
+                                        sparkle: false,
+                                        spin: false
+                                    }" x-init="
+                                        $watch('sparkle', val => {
+                                            if (val) setTimeout(() => sparkle = false, 1000);
+                                        });
+                                    " @mouseenter="
+                                        sparkle = true;
+                                        setTimeout(() => spin = true, 150);
+                                    " @mouseleave="spin = false">
                     <div class="relative flex items-center justify-between w-full px-8 pl-4">
-                        <svg class="w-5 h-5 transition-all duration-300 group-hover:scale-110" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                        <span class="hidden ml-2 mr-4 md:inline">Search...</span>
+                        <flux:icon.search-smart />
+                        <span class="hidden ml-2 mr-4 md:inline">{{ __('lang_v1.search...') }}</span>
                         <div
-                            class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400">
-                            <span class="pointer-events-none">⌘K</span>
+                            class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400 pointer-events-none">
+                            ⌘K
                         </div>
                     </div>
                 </button>
             </div>
 
             <div class="flex flex-col items-start justify-end w-full pt-4 md:items-center md:w-1/3 md:flex-row md:py-0">
-                <form method="POST" action="{{ route('claimer-logout') }}">
-                    @csrf
-                    <button type="submit" class="relative inline-flex items-center overflow-hidden w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-black md:w-auto rounded-full hover:bg-red-600 focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-300 hover-scale">Log out</button>
-                </form>
-            </div>
-        </div>
+                <div class="absolute top-0 left-0 hidden items-center p-1 border rounded-full lg:inline-flex md:relative">
+                    <div x-data="{ open: false }" class="relative mr-2">
+                        <button @click="open = !open"
+                            class="flex items-center rounded-3xl overflow-hidden w-full h-full p-2 bg-transparent text-black hover:bg-slate-100 hover-scale">
+                            @switch(app()->getLocale())
+                            @case('ar') 🇸🇦 @break
+                            @case('de') 🇩🇪 @break
+                            @case('en') 🇬🇧 @break
+                            @case('es') 🇪🇸 @break
+                            @case('fa') 🇮🇷 @break
+                            @case('fr') 🇫🇷 @break
+                            @case('ha') 🇳🇬 @break
+                            @case('hi') 🇮🇳 @break
+                            @case('it') 🇮🇹 @break
+                            @case('pt') 🇵🇹 @break
+                            @case('ru') 🇷🇺 @break
+                            @case('vi') 🇻🇳 @break
+                            @case('zh-CN') 🇨🇳 @break
+                            @endswitch
+                            <svg class="w-4 h-4 transition-transform" :class="{ 'motion-safe:animate-[squeeze_0.6s_ease-in-out]': open }"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
 
-        <div @click="showMenu = !showMenu"
-            class="absolute right-0 flex flex-col items-center items-end justify-center w-10 h-10 bg-white rounded-full cursor-pointer md:hidden hover:bg-gray-100 transition-all duration-300 z-50">
-            <svg class="w-6 h-6 text-gray-700" x-show="!showMenu" fill="none" stroke-linecap="round"
-                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-            <svg class="w-6 h-6 text-gray-700" x-show="showMenu" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                </path>
-            </svg>
+                        <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95"
+                            class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-3xl bg-white shadow-xl border focus:outline-none">
+                            @foreach(config('app.available_locales') as $locale)
+                            <a wire:navigate href="{{ route('lang.switch', $locale) }}"
+                                class="flex items-center px-4 py-2 transition-all text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 last:rounded-b-3xl first:rounded-t-3xl
+                                                                            {{ app()->getLocale() === $locale ? 'bg-gray-100 font-medium' : '' }}">
+                                <span class="mr-2">
+                                    @switch($locale)
+                                    @case('ar') 🇸🇦 @break
+                                    @case('de') 🇩🇪 @break
+                                    @case('en') 🇬🇧 @break
+                                    @case('es') 🇪🇸 @break
+                                    @case('fa') 🇮🇷 @break
+                                    @case('fr') 🇫🇷 @break
+                                    @case('ha') 🇳🇬 @break
+                                    @case('hi') 🇮🇳 @break
+                                    @case('it') 🇮🇹 @break
+                                    @case('pt') 🇵🇹 @break
+                                    @case('ru') 🇷🇺 @break
+                                    @case('vi') 🇻🇳 @break
+                                    @case('zh-CN') 🇨🇳 @break
+                                    @endswitch
+                                </span>
+                                {{ config('app.locale_names')[$locale] }}
+                            </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div x-data="{
+                                            dropdownOpen: false
+                                        }" class="relative">
+
+                        <button @click="dropdownOpen=true"
+                            class="inline-flex items-center justify-center h-full p-2 text-sm font-medium bg-white border rounded-full text-neutral-700 hover:border-black hover-scale active:bg-white focus:bg-white focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
+                            <img src="{{ auth()->guard('claimer')->user()->image_url }}" alt="{{ auth()->guard('claimer')->user()->full_name }}'s Avatar"
+                                class="object-cover w-8 h-8 border rounded-full border-neutral-200" />
+                            <span class="flex flex-col items-start flex-shrink-0 h-full ml-2 leading-none translate-y-px">
+                                <span>{{ auth()->guard('claimer')->user()->full_name }}</span>
+                                <span class="text-[0.65rem] font-light text-neutral-400">{{ auth()->guard('claimer')->user()->email }}</span>
+                            </span>
+
+                        </button>
+
+                        <div x-show="dropdownOpen" @click.away="dropdownOpen=false"
+                            @click="if($event.target.closest('a')) dropdownOpen = false"
+                            x-trap.inert.noscroll="dropdownOpen"
+                            x-transition:enter="ease-out duration-300"
+                            x-transition:enter-start="opacity-0 -translate-y-2 sm:scale-95"
+                            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                            x-transition:leave="ease-in duration-200"
+                            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                            x-transition:leave-end="opacity-0 -translate-y-2 sm:scale-95"
+                            class="absolute top-0 z-50 w-56 mt-12 -translate-x-1/2 left-1/2" x-cloak>
+                            <div class="p-1 mt-1 bg-white border rounded-md shadow-xl border-slate-200/70 text-slate-700">
+                                <div class="px-2 py-1.5 text-sm font-semibold">My Account</div>
+                                <div class="h-px my-1 -mx-1 bg-slate-200"></div>
+                                    <a wire:navigate href="{{ route('claimer-profile') }}" style="--animation-delay: 50ms"
+                                        class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                        <flux:icon name="user-circle" class="w-4 h-4 mr-2" />
+                                        <span>Profile settings</span>
+                                    </a>
+                                    <a wire:navigate href="{{ route('claimer-password') }}" style="--animation-delay: 100ms"
+                                        class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                        <flux:icon name="lock-closed" class="w-4 h-4 mr-2" />
+                                        <span>Change password</span>
+                                    </a>
+                                    <a wire:navigate href="{{ route('claimer-settings') }}" style="--animation-delay: 150ms"
+                                        class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                        <flux:icon name="cog" class="w-4 h-4 mr-2" />
+                                        <span>System settings</span>
+                                    </a>
+                                    <a @click="deleteOpen=true" href="javascript:void(0);" style="--animation-delay: 200ms"
+                                        class="relative flex cursor-default select-none animate-fade-in text-red-500 hover:text-white hover:bg-red-500 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                        <flux:icon name="trash" class="w-4 h-4 mr-2" />
+                                        <span>Delete account</span>
+                                    </a>
+                                <div class="h-px my-1 -mx-1 bg-slate-200"></div>
+                                    <a href="https://github.com/ayarigab/lofo" target="_blank" style="--animation-delay: 250ms"
+                                        class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors active:bg-accent active:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                        <flux:icon name="github" class="w-4 h-4 mr-2" />
+                                        <span>GitHub Repo</span>
+                                    </a>
+                                    <a href="https://lofo.naabatechs.com" target="_blank" style="--animation-delay: 300ms"
+                                        class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors active:bg-accent active:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                        <flux:icon name="lifebuoy" class="w-4 h-4 mr-2" />
+                                        <span>Support</span>
+                                    </a>
+                                <div class="h-px my-1 -mx-1 bg-slate-200"></div>
+                                    <form method="POST" action="{{ route('claimer-logout') }}" id="logoutForm">
+                                        @csrf
+                                        <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit()" style="--animation-delay: 350ms"
+                                            class="relative flex cursor-default select-none animate-fade-in hover:text-red-600 hover:bg-red-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                            <flux:icon name="arrow-right-end-on-rectangle" class="w-4 h-4 mr-2" />
+                                            <span>Log out</span>
+                                            <span class="ml-auto text-xs tracking-widest opacity-60">⇧⌘L</span>
+                                        </a>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <template x-teleport="body">
-        <div x-show="modalOpen" x-data="{
+        <div
+            x-show="deleteOpen"
+            x-data="{
+                showPasswordField: false,
+                countdown: 3,
+                password: '',
+                isVerifying: false,
+                isCounting: false,
+                isVerified: false,
+                passwordError: false,
+                passwordVerified: false,
+                attemptsRemaining: null,
+                startCountdown() {
+                    this.showPasswordField = true;
+                    this.isCounting = true;
+                    const interval = setInterval(() => {
+                        this.countdown--;
+                        if (this.countdown <= 0) {
+                            clearInterval(interval);
+                            this.isCounting = false;
+                        }
+                    }, 1000);
+                },
+                resetCountdown() {
+                    deleteOpen = false;
+                    this.countdown = 3;
+                    this.isCounting = false;
+                    this.password = '';
+                    this.isVerified = false;
+                    this.showPasswordField = false;
+                },
+
+                verifyPassword() {
+                    if (this.passwordVerified || this.password.length === 0) {
+                        return;
+                    }
+                    if (this.isCounting) {
+                        window.dispatchEvent(new CustomEvent('toast-show', {
+                            detail: {
+                                type: 'warning',
+                                message: 'Please wait',
+                                description: `You must wait ${this.countdown} seconds before entering your password`
+                            }
+                        }));
+                        return;
+                    }
+                    if (this.isVerifying) {
+                        window.dispatchEvent(new CustomEvent('toast-show', {
+                            detail: {
+                                type: 'warning',
+                                message: 'Verification in progress',
+                                description: 'Please wait for the current verification to complete'
+                            }
+                        }));
+                        return;
+                    }
+                    if(this.attemptsRemaining === 0) {
+                        window.dispatchEvent(new CustomEvent('toast-show', {
+                            detail: {
+                                type: 'danger',
+                                message: 'Account locked',
+                                description: 'You have exhausted all attempts. Please try again later.'
+                            }
+                        }));
+                        this.resetCountdown();
+                        return;
+                    }
+                    if (this.password.length < 6) {
+                        this.passwordError = false;
+                        this.passwordVerified = false;
+                        return;
+                    }
+
+                    this.isVerifying = true;
+                    this.passwordError = false;
+
+                    axios.post('{{ route("claimer-verify-password") }}', {
+                        password: this.password
+                    })
+                    .then(response => {
+                        if (response.data.status === 'success') {
+                            this.passwordVerified = true;
+                            this.isVerified = true;
+                            this.passwordError = false;
+                            this.isVerifying = false;
+                            window.dispatchEvent(new CustomEvent('toast-show', {
+                                detail: {
+                                    type: 'success',
+                                    message: 'Password verified',
+                                    description: 'You can now proceed with account deletion'
+                                }
+                            }));
+                        } else {
+                            this.passwordError = true;
+                            this.passwordVerified = false;
+                            this.isVerifying = false;
+                            this.attemptsRemaining = response.data.attempts_remaining;
+                            window.dispatchEvent(new CustomEvent('toast-show', {
+                                detail: {
+                                    type: 'danger',
+                                    message: 'Verification failed',
+                                    description: 'Incorrect password. Please try again.'
+                                }
+                            }));
+                        }
+                    })
+                    .catch(error => {
+                        this.passwordError = true;
+                        this.passwordVerified = false;
+                        this.isVerifying = false;
+                        this.attemptsRemaining = error.response?.data?.attempts_remaining;
+                        window.dispatchEvent(new CustomEvent('toast-show', {
+                            detail: {
+                                type: 'danger',
+                                message: 'Verification failed',
+                                description: 'Incorrect password. Please try again.'
+                            }
+                        }));
+
+                        if (error.response) {
+                            console.error('Server error:', error.response.data);
+
+                            if (error.response.status === 422) {
+                                this.errorMessage = error.response.data.message || 'Incorrect password';
+                            } else if (error.response.status === 401) {
+                                this.errorMessage = 'Session expired. Please log in again.';
+                                window.location.reload();
+                            } else {
+                                this.errorMessage = 'An error occurred. Please try again.';
+                            }
+                        } else {
+                            this.errorMessage = 'Network error. Please check your connection.';
+                        }
+                    });
+                },
+                deleteAccount() {
+                    if (this.isVerified) {
+                        axios.get('{{ route("delete-account") }}')
+                            .then(response => {
+                                window.location.href = '{{ route('claimer-register') }}';
+                            })
+                            .catch(error => {
+                                this.resetCountdown();
+                                window.dispatchEvent(new CustomEvent('toast-show', {
+                                    detail: {
+                                    type: 'danger',
+                                    message: 'Verification failed',
+                                    description: 'Password verification required'
+                                }
+                            }));
+                        });
+                    } else {
+                        window.dispatchEvent(new CustomEvent('toast-show', {
+                            detail: {
+                                type: 'danger',
+                                message: 'Verification required',
+                                description: 'Please verify your password first'
+                            }
+                        }));
+                    }
+                }
+            }"
+            class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen"
+            x-cloak>
+            <div x-show="deleteOpen" @click="resetCountdown"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-300"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="absolute inset-0 w-full h-full bg-red-500/10 backdrop-blur-sm bg-opacity-70">
+            </div>
+
+            <div x-show="deleteOpen"
+                x-trap.inert.noscroll="deleteOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 -translate-y-2 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 -translate-y-2 sm:scale-95"
+                class="relative w-full py-6 bg-red-50 shadow-xl shadow-red-100/50 px-7 sm:max-w-lg sm:rounded-3xl text-red-700">
+
+                <div class="flex items-center justify-between pb-3">
+                    <h3 class="text-lg font-semibold">Confirm Account Deletion</h3>
+                    <button @click="resetCountdown"
+                        class="absolute top-0 right-0 flex items-center justify-center w-8 h-8 mt-5 mr-5 text-red-600 rounded-full hover:text-gray-800 hover:bg-gray-50 transition-all duration-300">
+                        <span class="sr-only">{{ __('lang_v1.close_panel') }}</span>
+                        <flux:icon.x class="w-5 h-5" />
+                    </button>
+                </div>
+
+                <div class="space-y-2 text-sm">
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <p>All your data will be permanently erased from our systems.</p>
+                    <p class="font-medium text-red-600">This action is irreversible.</p>
+                </div>
+
+                <div class="mt-6 space-y-4">
+                    <template x-if="!showPasswordField">
+                        <div class="p-4 bg-red-700 rounded-2xl text-white">
+                            <p class="font-medium">For security, you must verify your identity</p>
+                            <button @click="startCountdown"
+                                class="px-4 py-2 mt-3 text-sm font-medium text-white bg-black rounded-full hover:bg-gray-900 hover-scale">
+                                Begin Verification
+                            </button>
+                        </div>
+                    </template>
+
+                    <template x-if="showPasswordField">
+                        <div class="p-4 bg-red-700 rounded-2xl text-white">
+                            <p class="mb-3 text-sm" x-text="isCounting ?
+                                `Please wait ${countdown} second${countdown !== 1 ? 's' : ''} before entering your password` :
+                                'Enter your password to confirm deletion'"></p>
+
+                            <div class="relative">
+                                <input x-model="password" :disabled="isCounting || isVerifying || isVerified" @input.debounce.500ms="verifyPassword" :class="{
+                                    'border-green-500': passwordVerified,
+                                    'border-red-500': passwordError,
+                                    'border-gray-300': !passwordVerified && !passwordError
+                                    }" type="password" placeholder="Confirm your password"
+                                    class="w-full px-4 py-2 text-sm border rounded-full focus:ring-red-500 focus:border-red-500 disabled:opacity-50">
+
+                                <div x-show="isVerifying" class="mt-1 text-xs">
+                                    Verifying password...
+                                </div>
+                                <div x-show="passwordError" class="mt-1 text-xs">
+                                    Incorrect password. Attempts remaining: <span x-text="attemptsRemaining"></span>
+                                </div>
+
+                                <template x-if="isCounting">
+                                    <div
+                                        class="absolute inset-0 bg-red-700 flex border border-gray-300 items-center px-4 bg-opacity-80 rounded-full text-white/40 cursor-not-allowed">
+                                        Please wait! <span x-text="countdown"> </span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="flex items-center justify-end mt-4 space-x-3">
+                                <button type="button" @click="resetCountdown"
+                                    class="px-4 py-2 text-sm font-medium transition-colors border border-white rounded-full hover:bg-green-500 hover-scale">
+                                    Cancel
+                                </button>
+                                <div type="button" @click="deleteAccount" :disabled="!isVerified"
+                                    :class="isVerified ? 'bg-black hover:bg-gray-900 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'"
+                                    class="px-4 py-2 text-sm font-medium text-white rounded-full hover-scale">
+                                    Confirm Deletion
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template x-teleport="body">
+        <div x-show="modalOpen"
+            x-data="{
                 resetSearch() {
                     Livewire.dispatch('reset-search');
                     this.modalOpen = false;
                 }
             }" class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen" x-cloak>
 
-            <div x-show="modalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-300"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="resetSearch()"
+            <div
+                x-show="modalOpen"
+                @click="resetSearch()"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-300"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
                 class="absolute inset-0 w-full h-full bg-white/10 backdrop-blur-sm bg-opacity-70">
             </div>
 
-            <div x-show="modalOpen" x-trap.inert.noscroll="modalOpen" x-transition:enter="ease-out duration-300"
+            <div
+                x-show="modalOpen"
+                x-trap.inert.noscroll="modalOpen"
+                x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 -translate-y-2 sm:scale-95"
                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
                 x-transition:leave="ease-in duration-200"
@@ -439,29 +816,27 @@
                 class="relative w-full py-6 bg-white border shadow-lg px-7 border-neutral-200 sm:max-w-lg sm:rounded-3xl">
 
                 <div class="flex items-center justify-between pb-3">
-                    <h3 class="text-lg font-semibold">Search Lost & Found Items</h3>
+                    <h3 class="text-lg font-semibold">{{ __('lang_v1.search_lost_items') }}</h3>
                     <button @click="resetSearch()"
                         class="absolute top-0 right-0 flex items-center justify-center w-8 h-8 mt-5 mr-5 text-gray-600 rounded-full hover:text-gray-800 hover:bg-gray-50 transition-all duration-300">
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <span class="sr-only">{{ __('lang_v1.close_panel') }}</span>
+                        <flux:icon.x class="w-5 h-5" />
                     </button>
                 </div>
-
-                @livewire('lost-item-search', key('search-'.now()->timestamp))
-
+                <livewire:lost-item-search lazy />
                 <div class="flex justify-end mt-4">
                     <button @click="resetSearch()" type="button"
                         class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors border border-gray-300 rounded-full hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2">
-                        Close
+                        {{ __('lang_v1.close') }}
                     </button>
                 </div>
             </div>
         </div>
     </template>
 
-    <div x-data="{ showContactForm: false }" x-on:open-contact-form.window="showContactForm = true" x-on:keydown.window="
+    <div x-data="{ showContactForm: false }"
+        x-on:open-contact-form.window="showContactForm = true"
+        x-on:keydown.window="
             if ((event.metaKey || event.ctrlKey) && event.key === 'm') {
                 event.preventDefault();
                 showContactForm = !showContactForm;
@@ -470,29 +845,35 @@
             if (event.key === 'Escape') {
                 showContactForm = false;
             }
-        " class="fixed inset-0 z-[100] overflow-hidden" x-cloak x-show="showContactForm"
-        x-transition:enter="ease-in-out duration-300" x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100" x-transition:leave="ease-in-out duration-300"
-        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        "
+        class="fixed inset-0 z-[100] overflow-hidden"
+        x-cloak
+        x-show="showContactForm"
+        x-transition:enter="ease-in-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in-out duration-300"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0">
 
         <div class="absolute inset-0 bg-white/10 backdrop-blur-sm bg-opacity-70 transition-opacity"
             @click="showContactForm = false"></div>
 
         <div class="fixed inset-y-0 right-0 max-w-full flex">
-            <div class="relative w-screen max-w-md" x-transition:enter="transform transition ease-in-out duration-300"
-                x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+            <div class="relative w-screen max-w-md"
+                x-transition:enter="transform transition ease-in-out duration-300"
+                x-transition:enter-start="translate-x-full"
+                x-transition:enter-end="translate-x-0"
                 x-transition:leave="transform transition ease-in-out duration-300"
-                x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+                x-transition:leave-start="translate-x-0"
+                x-transition:leave-end="translate-x-full">
 
                 <div class="h-full flex flex-col bg-white shadow-xl">
                     <div class="flex items-center justify-between px-4 py-6 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Send Us a Message</h2>
+                        <h2 class="text-lg font-medium text-gray-900">{{ __('lang_v1.send_message') }}</h2>
                         <button @click="showContactForm = false" class="text-gray-400 hover:text-gray-500">
-                            <span class="sr-only">Close panel</span>
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <span class="sr-only">{{ __('lang_v1.close_panel') }}</span>
+                            <flux:icon.x class="w-6 h-6" />
                         </button>
                     </div>
 

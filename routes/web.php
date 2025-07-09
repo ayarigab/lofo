@@ -1,15 +1,37 @@
 <?php
 
+use App\Http\Controllers\Claimer\DashboardController;
 use App\Http\Controllers\LostFoundController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClaimerAuthController;
+use App\Models\LostFound;
 
 Route::get('lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'switch'])
     ->where('locale', implode('|', config('app.available_locales')))
     ->name('lang.switch');
+
+Route::get('/sitemap.xml', function () {
+    $items = LostFound::query()
+        ->where(function ($q) {
+            $q->whereNull('poster_type')
+                ->orWhere('poster_type', '!=', 'guest');
+        })
+        ->get();
+    if ($items->isEmpty()) {
+        return response()->view('sitemap', [
+            'items' => [],
+            'pages' => ['/', '/about', '/contact', '/lost-items', '/post-item', '/claimer/signin', '/claimer/signup', '/claimer/dashboard', '/claimer/logout', '/claimer/claimed-items', '/claimer/claimed-items/{id}', '/claimer/lost-report']
+        ])->header('Content-Type', 'text/xml');
+    }
+
+    return response()->view('sitemap', [
+        'items' => $items,
+        'pages' => ['/', '/about', '/contact', '/lost-items', '/post-item', '/claimer/signin', '/claimer/signup', '/claimer/dashboard', '/claimer/logout', '/claimer/claimed-items', '/claimer/claimed-items/{id}', '/claimer/lost-report']
+    ])->header('Content-Type', 'text/xml');
+});
 
 Route::get('/', [LostFoundController::class, 'home'])->name('home');
 Route::get('/post-item', [LostFoundController::class, 'create'])->name('lost-items.store');
@@ -32,9 +54,12 @@ Route::prefix('claimer')->group(function () {
         ->name('claimer-logout');
 
     Route::middleware(['claimer'])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('frontend.dashboard');
-        })->name('claimer-dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('claimer-dashboard');
+        Route::get('/profile', [DashboardController::class, 'profile'])->name('claimer-profile');
+        Route::get('/change-password', [DashboardController::class, 'changePassword'])->name('claimer-password');
+        Route::get('/delete-account', [DashboardController::class, 'deleteAccount'])->name('delete-account');
+        Route::get('/settings', [DashboardController::class, 'settings'])->name('claimer-settings');
+        Route::post('/verify-password', [DashboardController::class, 'passwordVerify'])->name('claimer-verify-password')->middleware('throttle:3,1');
     });
 });
 

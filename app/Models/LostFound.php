@@ -33,6 +33,9 @@ class LostFound extends Model
         'image2',
         'image3',
         'status',
+        'posted_by',
+        'poster_type',
+        'poster_ip',
     ];
 
     protected $dates = ['found_date'];
@@ -43,11 +46,6 @@ class LostFound extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function claims()
-    {
-        return $this->hasMany(ClaimedItem::class);
     }
 
     public function scopeApproved($query)

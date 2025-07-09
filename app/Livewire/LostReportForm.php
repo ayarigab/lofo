@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\LostReport;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class LostReportForm extends Component
 {
@@ -35,6 +35,17 @@ class LostReportForm extends Component
     {
         $this->validate();
 
+        if (auth()->guard('claimer')->check()) {
+            $postedBy = auth()->guard('claimer')->id();
+            $posterType = 'claimer';
+        } elseif (Auth::check()) {
+            $postedBy = Auth::id();
+            $posterType = 'web';
+        } else {
+            $postedBy = null;
+            $posterType = 'guest';
+        }
+
         try {
             LostReport::create([
                 'full_name' => $this->full_name,
@@ -44,6 +55,9 @@ class LostReportForm extends Component
                 'lost_date' => $this->lost_date,
                 'lost_location' => $this->lost_location,
                 'description' => $this->description,
+                'posted_by' => $postedBy,
+                'poster_type' => $posterType,
+                'poster_ip' => request()->ip(),
             ]);
 
             $this->dispatch(

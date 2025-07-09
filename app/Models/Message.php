@@ -13,6 +13,9 @@ class Message extends Model
     protected $fillable = [
         'title',
         'message',
+        'posted_by',
+        'poster_type',
+        'poster_ip',
     ];
 
     public function scopeRecent($query, $days = 7)

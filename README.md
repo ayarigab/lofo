@@ -1,3 +1,11 @@
+<p align="center">
+<a href="https://github.com/ayarigab/lofo"><img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/ayarigab/lofo/total"></a>
+<a href="https://github.com/sponsors/ayarigab"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/ayarigab"></a>
+<a href="https://github.com/ayarigab/lofo"><img alt="Latest Stable Version" src="https://img.shields.io/github/v/tag/ayarigab/ayarigab"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt=""></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/github/l/ayarigab/lofo" alt="License"></a>
+</p>
+
 # 📦 LoFo - Lost & Found System
 
 ![1750957963592](image/README/1750957963592.png)

@@ -22,6 +22,11 @@ class LostItems extends Component
         'status' => ['except' => []]
     ];
 
+    public function paginationView()
+    {
+        return 'vendor.livewire.tailwind';
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -49,6 +54,10 @@ class LostItems extends Component
 
         $query = LostFound::query()
             ->with('category')
+            ->where(function ($q) {
+                $q->whereNull('poster_type')
+                    ->orWhere('poster_type', '!=', 'guest');
+            })
             ->latest();
 
         if ($this->search) {

@@ -31,12 +31,12 @@ class ClaimLogin extends Component
             $claimer = Claimer::where('email', $this->email)->first();
 
             if (!$claimer) {
-                $this->addError('email', 'Invalid credentials');
+                $this->addError('email', 'Please check your email and try again!');
                 return;
             }
 
             if (!Hash::check($this->password, $claimer->password)) {
-                $this->addError('email', 'Invalid credentials');
+                $this->addError('password', 'Invalid password, please try again!');
                 return;
             }
 

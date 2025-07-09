@@ -17,6 +17,9 @@ class LostReport extends Model
         'lost_date',
         'lost_location',
         'description',
+        'posted_by',
+        'poster_type',
+        'poster_ip',
     ];
 
     protected $casts = [

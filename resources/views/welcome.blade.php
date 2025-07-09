@@ -281,7 +281,7 @@
         </div>
     </section>
 
-    <section class="relative py-20 bg-[url('{{ asset('Enterprise-LightMode-2.webp') }}')] bg-cover bg-center-center bg-no-repeat">
+    <section class="relative py-20 bg-[url('https://github.blog/wp-content/uploads/2024/02/Enterprise-LightMode-2.png')] bg-cover bg-center-center bg-no-repeat">
         <div class="absolute inset-0 backdrop-blur-md bg-white/10 z-10"></div>
         <div class="max-w-4xl px-6 mx-auto text-center relative z-20">
             <h2 class="mb-6 text-3xl font-bold text-blue-900 sm:text-4xl">Ready to Find Your Lost Item?</h2>

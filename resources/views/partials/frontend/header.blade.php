@@ -25,9 +25,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/suneditor@2.47.6/dist/css/suneditor.min.css">
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/suneditor@2.47.6/dist/suneditor.min.js"></script>
     <script type="module">
         document.addEventListener("alpine:init", () => {
             Alpine.data('phoneInput', () => ({
@@ -55,7 +55,7 @@
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7Z3EJJM1P"></script>
+    {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7Z3EJJM1P"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -81,7 +81,7 @@
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
           g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
         })();
-    </script>
+    </script> --}}
 
     <link rel="stylesheet" href="{{ asset('libs/cookieconsent/cookieconsent.css') }}">
     @stack('styles')
@@ -201,9 +201,10 @@
         }
 
         .animate-fade-in {
-            animation: fadeInUp 0.5s ease-out forwards;
+            animation: fadeInUp 0.3s ease-out forwards;
             opacity: 0;
             transform: translateY(10px);
+            animation-delay: var(--animation-delay, 0ms);
         }
 
         @keyframes fadeInUp {
@@ -211,6 +212,25 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes elastic-drop {
+            0% {
+                transform: scaleY(0.95) translateY(-8px);
+                opacity: 0;
+            }
+            50% {
+                transform: scaleY(1.05) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleY(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-elastic-drop {
+            animation: elastic-drop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
         [wire\:loading].grid {
             animation: contentFade 0.3s ease-out;

@@ -19,6 +19,7 @@ class Claimer extends Authenticatable
     ];
 
     protected $fillable = [
+        'uuid',
         'email',
         'full_name',
         'location',
@@ -29,6 +30,7 @@ class Claimer extends Authenticatable
     ];
 
     protected $hidden = [
+        'id',
         'password',
         'remember_token',
     ];
@@ -37,7 +39,24 @@ class Claimer extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'uuid' => 'string',
         ];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) Str::uuid();
+            }
+        });
+    }
+
+    public function claims()
+    {
+        return $this->hasMany(ClaimedItem::class);
     }
 
     public function getImageUrlAttribute()
