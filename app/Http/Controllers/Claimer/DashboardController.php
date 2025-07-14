@@ -96,7 +96,7 @@ class DashboardController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => __('lang_v1.too_many_attempts'),
-                'description' => __('lang_v1.please_wait_and_try_again')
+                'description' => __('lang_v1.process_failed')
             ], 429);
         }
 
@@ -104,7 +104,7 @@ class DashboardController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => __('lang_v1.unauthorized_access'),
-                'description' => __('lang_v1.you_must_be_logged_in_to_delete_account')
+                'description' => __('lang_v1.you_must_be_logged_in_to_perform_this_action')
             ], 401);
         }
 
@@ -146,7 +146,7 @@ class DashboardController extends Controller
             return redirect()->route('claimer-login')->with('toast', [
                 'type' => 'danger',
                 'message' => __('lang_v1.unauthorized_access'),
-                'description' => __('lang_v1.you_must_be_logged_in_to_delete_account')
+                'description' => __('lang_v1.you_must_be_logged_in_to_perform_this_action')
             ]);
         }
         if (
@@ -155,14 +155,14 @@ class DashboardController extends Controller
         ) {
             return back()->with('toast', [
                 'type' => 'danger',
-                'message' => 'lang_v1.password_verification_required',
-                'description' => 'lang_v1.please_verify_your_password_before_deleting_your_account'
+                'message' => __('lang_v1.verification_required'),
+                'description' => __('lang_v1.verify_your_identity')
             ]);
         }
         $deleteAccount = Claimer::findOrFail(auth('claimer')->id())->delete();
         if ($deleteAccount) {
             session()->now('toast', [
-                'type' => 'success',
+                'type' => 'info',
                 'message' => __('lang_v1.account_deleted'),
                 'description' => __('lang_v1.your_account_has_been_deleted_successfully')
             ]);

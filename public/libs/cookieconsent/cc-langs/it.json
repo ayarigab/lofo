@@ -1,0 +1,106 @@
+{
+    "consentModal": {
+        "title": "Consenso ai cookie",
+        "description": "Questo sito utilizza i cookie per offrire un'esperienza fluida. Cliccando su <b>Consenti</b>, accetti la memorizzazione dei cookie sul tuo dispositivo per migliorare l'esperienza del sito, analizzare l'utilizzo e supportare i nostri sforzi di marketing. <a href=\"#link\" style=\"text-decoration: underline;\">Scopri di più</a>",
+        "acceptAllBtn": "Consenti tutto",
+        "acceptNecessaryBtn": "Solo necessari",
+        "showPreferencesBtn": "Gestisci preferenze",
+        "footer": "<a href=\"#link\">Politica sulla privacy</a>\n<a href=\"#link\">Termini e condizioni</a>"
+    },
+    "preferencesModal": {
+        "title": "<svg class=\"fill-current text-gray-600 dark:text-gray-300\" viewBox=\"0 0 1450 350\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M286.33,180.13 L286.33,320.19 L239.51,320.19 L239.51,180.13 C239.51,166.87 237.02,154.3 232.05,142.42 C227.08,130.55 220.17,120.19 211.33,111.34 C202.49,102.5 192.2,95.53 180.46,90.41 C168.71,85.3 156.22,82.74 142.96,82.74 C129.7,82.74 116.85,85.3 105.25,90.41 C93.65,95.52 83.5,102.5 74.79,111.34 C66.09,120.18 59.25,130.54 54.28,142.42 C49.31,154.3 46.82,166.87 46.82,180.13 L46.82,320.19 L-2.78383965e-22,320.19 L-2.78383965e-22,180.13 C-2.78383965e-22,160.52 3.79,142.15 11.4,125.02 C18.99,107.89 29.28,92.98 42.27,80.27 C55.25,67.57 70.38,57.62 87.64,50.43 C104.9,43.25 123.34,39.66 142.96,39.66 C162.58,39.66 181.01,43.25 198.28,50.43 C215.54,57.62 230.74,67.56 243.86,80.27 C256.98,92.98 267.34,107.9 274.94,125.02 C282.53,142.15 286.34,160.52 286.34,180.13 L286.33,180.13 Z\" id=\"n\" fill=\"currentColor\"></path><path d=\"M551.95,320.19 L551.95,277.09 C539.79,291.74 524.6,302.57 506.37,309.62 C488.14,316.66 469.76,320.19 451.26,320.19 C432.76,320.19 413.55,316.6 396.15,309.42 C378.75,302.24 363.48,292.29 350.36,279.58 C337.24,266.88 326.88,252.02 319.28,235.03 C311.68,218.04 307.88,199.74 307.88,180.12 C307.88,160.5 311.67,142.14 319.28,125.01 C326.87,107.88 337.23,92.97 350.36,80.26 C363.48,67.56 378.67,57.54 395.94,50.22 C413.2,42.9 431.64,39.24 451.26,39.24 C470.88,39.24 489.24,42.9 506.37,50.22 C523.5,57.54 538.55,67.56 551.54,80.26 C564.52,92.97 574.75,107.89 582.2,125.01 C589.66,142.14 593.39,160.51 593.39,180.12 L593.39,320.18 L551.95,320.18 L551.95,320.19 Z M451.25,81.92 C437.71,81.92 425.14,84.55 413.54,89.79 C401.94,95.04 391.71,102.16 382.88,111.13 C374.04,120.11 367.13,130.54 362.16,142.42 C357.19,154.3 354.7,166.87 354.7,180.13 C354.7,193.39 357.19,206.31 362.16,218.05 C367.13,229.8 373.97,240.08 382.67,248.92 C391.37,257.76 401.59,264.74 413.33,269.85 C425.07,274.96 437.71,277.52 451.25,277.52 C464.79,277.52 477.42,274.97 489.17,269.85 C500.91,264.74 511.06,257.77 519.63,248.92 C528.19,240.08 534.96,229.72 539.93,217.84 C544.9,205.97 547.39,193.39 547.39,180.13 C547.39,166.87 544.9,153.89 539.93,142.01 C534.96,130.14 528.18,119.78 519.63,110.93 C511.06,102.09 500.91,95.05 489.17,89.8 C477.42,84.56 464.79,81.93 451.25,81.93 L451.25,81.92 Z\" id=\"a\" fill=\"currentColor\"></path><path d=\"M896.46,312.16 C883.47,299.46 873.26,284.55 865.8,267.41 C858.34,250.29 854.61,231.92 854.61,212.3 L854.61,188.54 C854.61,201.8 852.12,214.37 847.15,226.24 C842.18,238.12 835.41,248.48 826.85,257.32 C818.29,266.17 808.14,273.14 796.39,278.25 C784.65,283.37 772.01,285.91 758.47,285.91 C744.93,285.91 732.3,283.36 720.55,278.25 C708.81,273.14 698.59,266.17 689.89,257.32 C681.19,248.48 674.36,238.2 669.38,226.46 C664.41,214.72 661.92,202.08 661.92,188.54 C661.92,175 664.41,162.71 669.38,150.83 C674.35,138.96 681.25,128.53 690.09,119.55 C698.93,110.57 709.15,103.46 720.76,98.21 C732.36,92.97 744.93,90.34 758.46,90.34 C771.99,90.34 784.64,92.97 796.38,98.21 C808.12,103.46 818.27,110.5 826.84,119.34 C835.4,128.19 842.17,138.55 847.14,150.43 C852.11,162.3 854.6,175.01 854.6,188.55 L854.6,84.79 C842.58,73.91 828.9,65.2 813.57,58.65 C796.45,51.33 778.07,47.66 758.46,47.66 C738.85,47.66 720.4,51.33 703.14,58.65 C685.87,65.97 670.68,75.99 657.56,88.69 C644.43,101.4 634.08,116.32 626.48,133.45 C618.88,150.58 615.08,168.95 615.08,188.56 C615.08,208.17 618.87,226.48 626.48,243.46 C634.07,260.45 644.43,275.3 657.56,288.01 C670.68,300.72 685.95,310.66 703.35,317.84 C720.76,325.03 739.13,328.61 758.46,328.61 C777.79,328.61 795.35,325.08 813.57,318.04 C831.8,311 846.99,300.16 859.15,285.51 L859.15,359.61 L900.59,359.61 L900.59,316.06 C899.18,314.8 897.8,313.49 896.44,312.17 L896.46,312.16 Z\" id=\"a\" fill=\"currentColor\"></path><path d=\"M1127.72,132.39 C1120.12,115.4 1109.76,100.56 1096.64,87.85 C1083.51,75.14 1068.25,65.2 1050.85,58.02 C1033.44,50.83 1015.06,47.25 995.74,47.25 C983.58,47.25 972.53,48.49 962.58,50.98 C952.64,53.46 943.52,56.78 935.23,60.92 C926.94,65.07 919.48,69.7 912.86,74.8 C906.22,79.92 900.28,85.09 895.03,90.34 L895.03,3.04040088e-23 L853.6,3.04040088e-23 L853.6,59.78 C855.01,61.04 856.39,62.35 857.75,63.67 C870.73,76.38 880.95,91.3 888.41,108.43 C895.87,125.56 899.6,143.93 899.6,163.54 L899.6,187.3 C899.6,174.04 902.09,161.47 907.05,149.59 C912.02,137.72 918.79,127.36 927.36,118.51 C935.91,109.67 946.06,102.7 957.82,97.58 C969.55,92.47 982.19,89.92 995.74,89.92 C1009.29,89.92 1021.9,92.48 1033.65,97.58 C1045.39,102.7 1055.62,109.67 1064.32,118.51 C1073.02,127.36 1079.85,137.64 1084.83,149.38 C1089.8,161.12 1092.29,173.76 1092.29,187.3 C1092.29,200.84 1089.8,213.13 1084.83,225 C1079.86,236.88 1073.03,247.31 1064.32,256.29 C1055.62,265.27 1045.39,272.38 1033.65,277.62 C1021.91,282.88 1009.27,285.5 995.74,285.5 C982.21,285.5 969.55,282.88 957.82,277.62 C946.07,272.38 935.92,265.34 927.36,256.49 C918.79,247.65 912.02,237.3 907.05,225.41 C902.09,213.54 899.6,200.82 899.6,187.29 L899.6,291.04 C911.61,301.93 925.29,310.64 940.63,317.19 C957.75,324.51 976.12,328.17 995.74,328.17 C1015.36,328.17 1033.79,324.51 1051.06,317.19 C1068.32,309.87 1083.51,299.85 1096.64,287.14 C1109.76,274.44 1120.11,259.53 1127.72,242.39 C1135.31,225.27 1139.12,206.9 1139.12,187.28 C1139.12,167.66 1135.32,149.36 1127.72,132.37 L1127.72,132.39 Z\" id=\"b\" fill=\"currentColor\"></path></svg> Preferenze sui cookie",
+        "acceptAllBtn": "Consenti tutto",
+        "acceptNecessaryBtn": "Solo necessari",
+        "savePreferencesBtn": "Salva le impostazioni correnti",
+        "closeIconLabel": "Chiudi la finestra",
+        "serviceCounterLabel": "Servizio|Servizi",
+        "sections": [{
+                "title": "Uso dei cookie",
+                "description": "Quando visiti un sito web, potrebbe memorizzare o recuperare informazioni sul tuo browser, principalmente sotto forma di cookie. Queste informazioni potrebbero riguardarti, le tue preferenze o il tuo dispositivo e sono principalmente utilizzate per garantire che il sito funzioni come previsto. Sebbene di solito non identifichino direttamente, possono fornire un'esperienza web più personalizzata. Poiché rispettiamo il tuo diritto alla privacy, puoi scegliere di disabilitare determinati tipi di cookie sulla nostra piattaforma. Clicca sulle diverse categorie per saperne di più e regolare le tue impostazioni. Tuttavia, bloccare alcuni tipi di cookie potrebbe influire sulla tua esperienza su questo sito e limitare i servizi che offriamo."
+            },
+            {
+                "title": "Cookie strettamente necessari <span class=\"pm__badge\">Necessari</span>",
+                "description": "Questi cookie sono strettamente necessari per il funzionamento del sito e non possono essere disattivati nei nostri sistemi. Vengono solitamente impostati in risposta ad azioni da te effettuate, come l'impostazione delle preferenze sulla privacy, il login, o la compilazione di moduli. Puoi impostare il tuo browser per bloccare o avvisarti di questi cookie, ma alcune parti del sito potrebbero non funzionare correttamente senza di essi."
+            },
+            {
+                "title": "Cookie funzionali",
+                "description": "I cookie funzionali consentono funzionalità migliorate e personalizzazione, come ricordare i dettagli di accesso, le preferenze di lingua o la regione. Questi cookie possono essere impostati da noi o da fornitori terzi i cui servizi sono integrati nella nostra piattaforma. Disabilitarli potrebbe ridurre la funzionalità del sito."
+            },
+            {
+                "title": "Cookie di analisi e prestazioni",
+                "description": "Questi cookie ci aiutano a capire come i visitatori interagiscono con il nostro sito raccogliendo e riportando informazioni in modo anonimo. Utilizziamo strumenti come Google Analytics, Microsoft Clarity e Mixpanel per misurare le prestazioni del sito, l'engagement degli utenti e gli errori tecnici. Questi dati ci aiutano a migliorare continuamente la tua esperienza.",
+                "cookieTable": {
+                    "headers": {
+                        "name": "Nome",
+                        "domain": "Servizio",
+                        "description": "Descrizione",
+                        "expiration": "Scadenza"
+                    },
+                    "body": [{
+                            "name": "_ga",
+                            "domain": "Google Analytics",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://support.google.com/analytics/answer/11397207?hl=it\">Google Analytics</a>.",
+                            "expiration": "Scade dopo 2 anni"
+                        },
+                        {
+                            "name": "_gid",
+                            "domain": "Google Analytics",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://support.google.com/analytics/answer/11397207?hl=it\">Google Analytics</a>.",
+                            "expiration": "Sessione"
+                        },
+                        {
+                            "name": "_clck",
+                            "domain": "Clarity Analytics",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://learn.microsoft.com/it/clarity/setup-and-installation/cookie-list\">Microsoft Clarity</a>.",
+                            "expiration": "Sessione"
+                        },
+                        {
+                            "name": "_clsk",
+                            "domain": "Clarity Analytics",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://learn.microsoft.com/it/clarity/setup-and-installation/cookie-list\">Microsoft Clarity</a>.",
+                            "expiration": "Sessione"
+                        },
+                        {
+                            "name": "hubspotutk",
+                            "domain": "Hubspot Analytics",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://knowledge.hubspot.com/it/privacy-and-consent/what-cookies-does-hubspot-set-in-a-visitor-s-browser\">Hubspot</a>.",
+                            "expiration": "Scade dopo 6 mesi"
+                        },
+                        {
+                            "name": "__hstc",
+                            "domain": "Hubspot Live Chat",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://knowledge.hubspot.com/it/privacy-and-consent/what-cookies-does-hubspot-set-in-a-visitor-s-browser\">Hubspot</a>.",
+                            "expiration": "Scade dopo 30 minuti"
+                        },
+                        {
+                            "name": "__hssrc",
+                            "domain": "Hubspot Live Chat",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://knowledge.hubspot.com/it/privacy-and-consent/what-cookies-does-hubspot-set-in-a-visitor-s-browser\">Hubspot</a>.",
+                            "expiration": "Sessione"
+                        },
+                        {
+                            "name": "__hssc",
+                            "domain": "Hubspot Live Chat",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://knowledge.hubspot.com/it/privacy-and-consent/what-cookies-does-hubspot-set-in-a-visitor-s-browser\">Hubspot</a>.",
+                            "expiration": "Scade dopo 30 minuti"
+                        },
+                        {
+                            "name": "messagesUtk",
+                            "domain": "Hubspot Live Chat",
+                            "description": "Cookie impostato da <a target=\"_blank\" href=\"https://knowledge.hubspot.com/it/privacy-and-consent/what-cookies-does-hubspot-set-in-a-visitor-s-browser\">Hubspot</a>.",
+                            "expiration": "Scade dopo 6 mesi"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Cookie di marketing e tracciamento",
+                "description": "Questi cookie vengono utilizzati per fornire contenuti pubblicitari pertinenti in base al tuo comportamento di navigazione e per misurare l'efficacia delle nostre campagne di marketing. Possono essere impostati da partner pubblicitari di terze parti o piattaforme integrate come Mixpanel e Tawk.to. Disabilitarli non rimuoverà gli annunci ma potrebbe renderli meno pertinenti."
+            },
+            {
+                "title": "Per saperne di più",
+                "description": "Per saperne di più su come Lost & Found System utilizza i cookie e rispetta la tua privacy, visita la nostra pagina <a class=\"cc__link\" href=\"#\">Politica sui cookie</a>."
+            }
+        ]
+    }
+}

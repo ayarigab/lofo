@@ -63,8 +63,8 @@ class LostReportForm extends Component
             $this->dispatch(
                 'toast-show',
                 type: 'success',
-                message: 'Report Submitted',
-                description: 'Your lost item report has been successfully submitted'
+                message: __('lang_v1.action_successful'),
+                description: __('lang_v1.item_successfully_reported')
             );
 
             $this->resetForm();
@@ -72,8 +72,8 @@ class LostReportForm extends Component
             $this->dispatch(
                 'toast-show',
                 type: 'danger',
-                message: 'Error',
-                description: 'Failed to submit report. Please try again.'
+                message: __('lang_v1.error'),
+                description: __('lang_v1.process_failed')
             );
         }
     }

@@ -474,27 +474,27 @@
                             x-transition:leave-end="opacity-0 -translate-y-2 sm:scale-95"
                             class="absolute top-0 z-50 w-56 mt-12 -translate-x-1/2 left-1/2" x-cloak>
                             <div class="p-1 mt-1 bg-white border rounded-md shadow-xl border-slate-200/70 text-slate-700">
-                                <div class="px-2 py-1.5 text-sm font-semibold">My Account</div>
+                                <div class="px-2 py-1.5 text-sm font-semibold">{{ __('lang_v1.my_account') }}</div>
                                 <div class="h-px my-1 -mx-1 bg-slate-200"></div>
                                     <a wire:navigate href="{{ route('claimer-profile') }}" style="--animation-delay: 50ms"
                                         class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                         <flux:icon name="user-circle" class="w-4 h-4 mr-2" />
-                                        <span>Profile settings</span>
+                                        <span>{{ __('lang_v1.profile_settings') }}</span>
                                     </a>
                                     <a wire:navigate href="{{ route('claimer-password') }}" style="--animation-delay: 100ms"
                                         class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                         <flux:icon name="lock-closed" class="w-4 h-4 mr-2" />
-                                        <span>Change password</span>
+                                        <span>{{ __('lang_v1.change_password') }}</span>
                                     </a>
                                     <a wire:navigate href="{{ route('claimer-settings') }}" style="--animation-delay: 150ms"
                                         class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                         <flux:icon name="cog" class="w-4 h-4 mr-2" />
-                                        <span>System settings</span>
+                                        <span>{{ __('lang_v1.system_settings') }}</span>
                                     </a>
                                     <a @click="deleteOpen=true" href="javascript:void(0);" style="--animation-delay: 200ms"
                                         class="relative flex cursor-default select-none animate-fade-in text-red-500 hover:text-white hover:bg-red-500 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                         <flux:icon name="trash" class="w-4 h-4 mr-2" />
-                                        <span>Delete account</span>
+                                        <span>{{ __('lang_v1.delete_account') }}</span>
                                     </a>
                                 <div class="h-px my-1 -mx-1 bg-slate-200"></div>
                                     <a href="https://github.com/ayarigab/lofo" target="_blank" style="--animation-delay: 250ms"
@@ -505,7 +505,7 @@
                                     <a href="https://lofo.naabatechs.com" target="_blank" style="--animation-delay: 300ms"
                                         class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors active:bg-accent active:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                         <flux:icon name="lifebuoy" class="w-4 h-4 mr-2" />
-                                        <span>Support</span>
+                                        <span>{{ __('lang_v1.support') }}</span>
                                     </a>
                                 <div class="h-px my-1 -mx-1 bg-slate-200"></div>
                                     <form method="POST" action="{{ route('claimer-logout') }}" id="logoutForm">
@@ -513,7 +513,7 @@
                                         <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit()" style="--animation-delay: 350ms"
                                             class="relative flex cursor-default select-none animate-fade-in hover:text-red-600 hover:bg-red-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                             <flux:icon name="arrow-right-end-on-rectangle" class="w-4 h-4 mr-2" />
-                                            <span>Log out</span>
+                                            <span>{{ __('lang_v1.logout') }}</span>
                                             <span class="ml-auto text-xs tracking-widest opacity-60">⇧⌘L</span>
                                         </a>
                                     </form>
@@ -566,8 +566,8 @@
                         window.dispatchEvent(new CustomEvent('toast-show', {
                             detail: {
                                 type: 'warning',
-                                message: 'Please wait',
-                                description: `You must wait ${this.countdown} seconds before entering your password`
+                                message: '{{ __('lang_v1.please_wait') }}',
+                                description: `{{ __('lang_v1.you_must_wait_countdown', ['countdown' => '${this.countdown}']) }}`
                             }
                         }));
                         return;
@@ -576,8 +576,8 @@
                         window.dispatchEvent(new CustomEvent('toast-show', {
                             detail: {
                                 type: 'warning',
-                                message: 'Verification in progress',
-                                description: 'Please wait for the current verification to complete'
+                                message: '{{ __('lang_v1.verifying') }}',
+                                description: '{{ __('lang_v1.please_wait_for_the_current_verification') }}'
                             }
                         }));
                         return;
@@ -586,8 +586,8 @@
                         window.dispatchEvent(new CustomEvent('toast-show', {
                             detail: {
                                 type: 'danger',
-                                message: 'Account locked',
-                                description: 'You have exhausted all attempts. Please try again later.'
+                                message: '{{ __('lang_v1.account_locked') }}',
+                                description: '{{ __('lang_v1.you_have_exhausted_all_attempts') }}'
                             }
                         }));
                         this.resetCountdown();
@@ -614,8 +614,8 @@
                             window.dispatchEvent(new CustomEvent('toast-show', {
                                 detail: {
                                     type: 'success',
-                                    message: 'Password verified',
-                                    description: 'You can now proceed with account deletion'
+                                    message: '{{ __('lang_v1.verification_successful') }}',
+                                    description: '{{ __('lang_v1.you_can_now_proceed') }}'
                                 }
                             }));
                         } else {
@@ -626,8 +626,8 @@
                             window.dispatchEvent(new CustomEvent('toast-show', {
                                 detail: {
                                     type: 'danger',
-                                    message: 'Verification failed',
-                                    description: 'Incorrect password. Please try again.'
+                                    message: '{{ __('lang_v1.verification_failed') }}',
+                                    description: '{{ __('lang_v1.process_failed') }}'
                                 }
                             }));
                         }
@@ -640,14 +640,12 @@
                         window.dispatchEvent(new CustomEvent('toast-show', {
                             detail: {
                                 type: 'danger',
-                                message: 'Verification failed',
-                                description: 'Incorrect password. Please try again.'
+                                message: '{{ __('lang_v1.verification_failed') }}',
+                                description: '{{ __('lang_v1.process_failed') }}'
                             }
                         }));
 
                         if (error.response) {
-                            console.error('Server error:', error.response.data);
-
                             if (error.response.status === 422) {
                                 this.errorMessage = error.response.data.message || 'Incorrect password';
                             } else if (error.response.status === 401) {
@@ -711,7 +709,7 @@
                 class="relative w-full py-6 bg-red-50 shadow-xl shadow-red-100/50 px-7 sm:max-w-lg sm:rounded-3xl text-red-700">
 
                 <div class="flex items-center justify-between pb-3">
-                    <h3 class="text-lg font-semibold">Confirm Account Deletion</h3>
+                    <h3 class="text-lg font-semibold">{{ __('lang_v1.confirm_account_deletion') }}</h3>
                     <button @click="resetCountdown"
                         class="absolute top-0 right-0 flex items-center justify-center w-8 h-8 mt-5 mr-5 text-red-600 rounded-full hover:text-gray-800 hover:bg-gray-50 transition-all duration-300">
                         <span class="sr-only">{{ __('lang_v1.close_panel') }}</span>
@@ -720,18 +718,18 @@
                 </div>
 
                 <div class="space-y-2 text-sm">
-                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-                    <p>All your data will be permanently erased from our systems.</p>
-                    <p class="font-medium text-red-600">This action is irreversible.</p>
+                    <p>{{ __('lang_v1.are_you_sure_you_want_to_delete') }}</p>
+                    <p>{{ __('lang_v1.all_your_data_will_be_erased') }}</p>
+                    <p class="font-medium text-red-600">{{ __('lang_v1.this_action_is_irreversible') }}</p>
                 </div>
 
                 <div class="mt-6 space-y-4">
                     <template x-if="!showPasswordField">
                         <div class="p-4 bg-red-700 rounded-2xl text-white">
-                            <p class="font-medium">For security, you must verify your identity</p>
+                            <p class="font-medium">{{ __('lang_v1.verify_your_identity') }}</p>
                             <button @click="startCountdown"
                                 class="px-4 py-2 mt-3 text-sm font-medium text-white bg-black rounded-full hover:bg-gray-900 hover-scale">
-                                Begin Verification
+                                {{ __('lang_v1.begin_verification') }}
                             </button>
                         </div>
                     </template>
@@ -739,28 +737,28 @@
                     <template x-if="showPasswordField">
                         <div class="p-4 bg-red-700 rounded-2xl text-white">
                             <p class="mb-3 text-sm" x-text="isCounting ?
-                                `Please wait ${countdown} second${countdown !== 1 ? 's' : ''} before entering your password` :
-                                'Enter your password to confirm deletion'"></p>
+                                `{{ __('lang_v1.please_wait') }} ${countdown} second${countdown !== 1 ? 's' : ''} {{ __('lang_v1.before_entering_password') }}` :
+                                '{{ __('lang_v1.enter_your_password_to_confirm') }}'"></p>
 
                             <div class="relative">
                                 <input x-model="password" :disabled="isCounting || isVerifying || isVerified" @input.debounce.500ms="verifyPassword" :class="{
                                     'border-green-500': passwordVerified,
                                     'border-red-500': passwordError,
                                     'border-gray-300': !passwordVerified && !passwordError
-                                    }" type="password" placeholder="Confirm your password"
+                                    }" type="password" placeholder="{{ __('lang_v1.confirm_your_password') }}"
                                     class="w-full px-4 py-2 text-sm border rounded-full focus:ring-red-500 focus:border-red-500 disabled:opacity-50">
 
                                 <div x-show="isVerifying" class="mt-1 text-xs">
-                                    Verifying password...
+                                    {{ __('lang_v1.verifying') }}
                                 </div>
                                 <div x-show="passwordError" class="mt-1 text-xs">
-                                    Incorrect password. Attempts remaining: <span x-text="attemptsRemaining"></span>
+                                    {{ __('lang_v1.incorrect_password') }}{{ __('lang_v1.attempts_remaining') }} <span x-text="attemptsRemaining"></span>
                                 </div>
 
                                 <template x-if="isCounting">
                                     <div
                                         class="absolute inset-0 bg-red-700 flex border border-gray-300 items-center px-4 bg-opacity-80 rounded-full text-white/40 cursor-not-allowed">
-                                        Please wait! <span x-text="countdown"> </span>
+                                        {{ __('lang_v1.please_wait') }} <span x-text="countdown"> </span>
                                     </div>
                                 </template>
                             </div>
@@ -768,12 +766,12 @@
                             <div class="flex items-center justify-end mt-4 space-x-3">
                                 <button type="button" @click="resetCountdown"
                                     class="px-4 py-2 text-sm font-medium transition-colors border border-white rounded-full hover:bg-green-500 hover-scale">
-                                    Cancel
+                                    {{ __('lang_v1.cancel') }}
                                 </button>
                                 <div type="button" @click="deleteAccount" :disabled="!isVerified"
                                     :class="isVerified ? 'bg-black hover:bg-gray-900 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'"
                                     class="px-4 py-2 text-sm font-medium text-white rounded-full hover-scale">
-                                    Confirm Deletion
+                                    {{ __('lang_v1.confirm') }}
                                 </div>
                             </div>
                         </div>

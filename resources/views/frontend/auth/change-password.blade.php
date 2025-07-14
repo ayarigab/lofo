@@ -1,4 +1,4 @@
-@include('partials.frontend.header', ['title' => __('lang_v1.Change Password')])
+@include('partials.frontend.header', ['title' => __('lang_v1.change_password')])
 
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen font-sans">
 
@@ -6,15 +6,13 @@
     @include('partials.frontend.auth.navbar')
 
     <div class="container mx-auto px-4 py-8 min-h-dvh">
-        <div class="bg-slate-100 rounded-3xl p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full border border-blue-500 mr-4">
-                    <flux:icon name="user" class="w-6 h-6 text-blue-500" />
+        <div class="relative w-full max-w-xl mx-auto lg:mb-0">
+            <div class="relative px-8 py-6 bg-white rounded-3xl shadow-xl">
+                <div class="mb-12">
+                    <p class="text-2xl font-semibold text-gray-800">{{ __('lang_v1.update_password') }}</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('lang_v1.use_strong_password') }}</p>
                 </div>
-                <div>
-                    <p class="text-sm font-medium text-gray-500">Profile</p>
-                    <p class="text-2xl font-semibold text-gray-800">{{ auth('claimer')->user()->full_name }}</p>
-                </div>
+                @livewire('claimer.change-password')
             </div>
         </div>
     </div>

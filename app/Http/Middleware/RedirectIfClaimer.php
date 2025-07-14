@@ -18,8 +18,8 @@ class RedirectIfClaimer
         if (auth()->guard('claimer')->check()) {
             return redirect()->route('claimer-dashboard')->with('toast', [
                 'type' => 'info',
-                'message' => 'Already logged in',
-                'description' => 'You are already logged in to your account'
+                'message' => __('lang_v1.already_logged_in'),
+                'description' => __('lang_v1.you_are_already_logged_in')
             ]);
         }
 

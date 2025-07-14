@@ -59,8 +59,8 @@ class ClaimRegister extends Component
         ]);
         return redirect()->route('claimer-login')->with('toast', [
             'type' => 'success',
-            'message' => 'Registration successful',
-            'description' => 'Please login now to access your dashboard.'
+            'message' => __('lang_v1.registration_successful'),
+            'description' => __('lang_v1.you_can_now_login_with_your_credentials')
         ]);
     }
 }

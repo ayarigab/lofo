@@ -1,3 +1,18 @@
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/de.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/fa.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/hi.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/it.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/zh.js"></script>
+@endpush
+
 @include('partials.frontend.header', ['title' => __('lang_v1.contact_us')])
 
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen">
@@ -6,7 +21,7 @@
     {{-- <div class="mx-auto max-w-7xl antialiased">
     </div> --}}
     <section class="relative bg-gray-50 p-20">
-        <img src="{{ asset('data-globe-hero@3x.png') }}" alt="Overlay Image"
+        <img src="{{ assetV('data-globe-hero@3x.png') }}" alt="Overlay Image"
             class="absolute inset-0 object-cover w-full h-full z-10">
         <div class="max-w-6xl px-6 mx-auto relative z-20">
             <div class="grid gap-12 md:grid-cols-2">

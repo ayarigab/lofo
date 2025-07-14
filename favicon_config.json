@@ -1,0 +1,97 @@
+{
+    "input_icon": "lofo.png",
+    "output_dir": "public/icons",
+    "favicon_path": "/icons/",
+    "default_format": "png",
+    "error_log": "favicon_generator_errors.log",
+    "generate_usage_file": true,
+    "usage_format": "blade",
+
+    "regular_icon": {
+      "background": "#ffffff",
+      "margin": 0.1,
+      "corner_radius": 0.4,
+      "color_overlay": null,
+      "brightness": 1.0,
+      "sizes": [
+        {"size": 16, "filename": "favicon-16x16.png"},
+        {"size": 24, "filename": "favicon-24x24.png"},
+        {"size": 32, "filename": "favicon-32x32.png"},
+        {"size": 48, "filename": "favicon-48x48.png"},
+        {"size": 64, "filename": "favicon-64x64.png"},
+        {"size": 128, "filename": "favicon-128x128.png"},
+        {"size": 256, "filename": "favicon-256x256.png"},
+        {"size": 512, "filename": "favicon-512x512.png"},
+        {"size": 1024, "filename": "favicon-1024x1024.png"}
+      ]
+    },
+
+    "dark_icon": {
+      "enabled": true,
+      "input_icon": "lofo_dark.png",
+      "background": "#222222",
+      "margin": 0.1,
+      "corner_radius": 0.2,
+      "brightness": 1.0,
+      "sizes": [
+        {"size": 16, "filename": "favicon-dark-16x16.png"},
+        {"size": 24, "filename": "favicon-dark-24x24.png"},
+        {"size": 32, "filename": "favicon-dark-32x32.png"},
+        {"size": 48, "filename": "favicon-dark-48x48.png"},
+        {"size": 64, "filename": "favicon-dark-64x64.png"},
+        {"size": 128, "filename": "favicon-dark-128x128.png"},
+        {"size": 256, "filename": "favicon-dark-256x256.png"},
+        {"size": 512, "filename": "favicon-dark-512x512.png"},
+        {"size": 1024, "filename": "favicon-dark-1024x1024.png"}
+      ]
+    },
+
+    "apple_touch_icon": {
+      "background": "#ffffff",
+      "margin": 0.1,
+      "corner_radius": 0.2,
+      "app_name": "LoFo Systems",
+      "sizes": [
+        {"size": 57, "filename": "apple-touch-icon-57x57.png"},
+        {"size": 72, "filename": "apple-touch-icon-72x72.png"},
+        {"size": 76, "filename": "apple-touch-icon-76x76.png"},
+        {"size": 114, "filename": "apple-touch-icon-114x114.png"},
+        {"size": 120, "filename": "apple-touch-icon-120x120.png"},
+        {"size": 144, "filename": "apple-touch-icon-144x144.png"},
+        {"size": 152, "filename": "apple-touch-icon-152x152.png"},
+        {"size": 180, "filename": "apple-touch-icon-180x180.png"},
+        {"size": 180, "filename": "apple-touch-icon.png"},
+        {"size": 192, "filename": "apple-touch-icon-192x192.png"},
+        {"size": 256, "filename": "apple-touch-icon-256x256.png"},
+        {"size": 512, "filename": "apple-touch-icon-512x512.png"}
+      ]
+    },
+
+    "manifest": {
+      "enabled": true,
+      "name": "LoFo Systems",
+      "short_name": "LoFo",
+      "background_color": "#ffffff",
+      "theme_color": "#ffffff",
+      "icons": [
+        {"src": "icons/favicon-16x16.png", "sizes": "16x16", "type": "image/png"},
+        {"src": "icons/favicon-24x24.png", "sizes": "24x24", "type": "image/png"},
+        {"src": "icons/favicon-32x32.png", "sizes": "32x32", "type": "image/png"},
+        {"src": "icons/favicon-48x48.png", "sizes": "48x48", "type": "image/png"},
+        {"src": "icons/favicon-64x64.png", "sizes": "64x64", "type": "image/png"},
+        {"src": "icons/favicon-128x128.png", "sizes": "128x128", "type": "image/png"},
+        {"src": "icons/favicon-256x256.png", "sizes": "256x256", "type": "image/png"},
+        {"src": "icons/favicon-512x512.png", "sizes": "512x512", "type": "image/png"},
+        {"src": "icons/favicon-1024x1024.png", "sizes": "1024x1024", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-57x57.png", "sizes": "57x57", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-72x72.png", "sizes": "72x72", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-76x76.png", "sizes": "76x76", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-114x114.png", "sizes": "114x114", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-120x120.png", "sizes": "120x120", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-144x144.png", "sizes": "144x144", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-152x152.png", "sizes": "152x152", "type": "image/png"},
+        {"src": "icons/apple-touch-icon-180x180.png", "sizes": "180x180", "type": "image/png"},
+        {"src": "icons/favicon-dark-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+      ]
+    }
+  }

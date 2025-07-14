@@ -77,7 +77,7 @@ class LostFoundController extends Controller
         if ($validator) {
             return response()->json([
                 'errors' => $validator,
-                'message' => 'Validation failed'
+                'message' => __('lang_v1.verification_failed')
             ], 422);
         }
 
@@ -98,12 +98,12 @@ class LostFoundController extends Controller
             $lostFound = LostFound::create($data);
 
             return response()->json([
-                'message' => 'Item successfully reported',
+                'message' => __('lang_v1.item_successfully_reported'),
                 'data' => $lostFound
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error creating item: ' . $e->getMessage()
+                'message' => __('lang_v1.process_failed'),
             ], 500);
         }
     }

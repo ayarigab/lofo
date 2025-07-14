@@ -14,7 +14,7 @@
                 <td class="px-6 py-3 whitespace-nowrap">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 h-10 w-10">
-                            <img class="h-10 w-10 rounded-full object-cover" src="{{ asset('storage/'.$item->lostFound->image) }}"
+                            <img class="h-10 w-10 rounded-full object-cover" src="{{ assetV('storage/'.$item->lostFound->image) }}"
                                 alt="">
                         </div>
                         <div class="ml-4">

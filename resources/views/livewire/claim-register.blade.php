@@ -28,9 +28,17 @@
             @error('location') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4" x-data
+            x-init="
+            flatpickr($refs.dateInput, {
+                altInput: true,
+                locale: '{{ (app()->getLocale() === 'zh-CN') ? 'zh' : app()->getLocale() }}',
+                altFormat: 'F j, Y',
+                dateFormat: 'Y-m-d',
+                maxDate: new Date(new Date().getFullYear() - 5, 11, 31)
+            })">
             <label for="dob" class="block text-sm font-medium text-gray-700">{{ __('lang_v1.dob') }}</label>
-            <input wire:model="dob" type="date" id="dob" required max="{{ now()->toDateString() }}"
+            <input wire:model="dob" x-ref="dateInput" type="text" id="dob" required placeholder="{{ __('lang_v1.select_your_date_of_birth') }}"
                 class="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             @error('dob') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
         </div>
@@ -50,100 +58,100 @@
         </div>
 
         <div x-data="{
-                        cropOpen: false,
-                        currentField: null,
-                        cropper: null,
-                        roundedCanvas: null,
+                cropOpen: false,
+                currentField: null,
+                cropper: null,
+                roundedCanvas: null,
 
-                        initCropper(imageId, fieldName) {
-                            this.currentField = fieldName;
-                            const image = document.getElementById(imageId);
-                            const imageToCrop = document.getElementById('imageToCrop');
+                initCropper(imageId, fieldName) {
+                    this.currentField = fieldName;
+                    const image = document.getElementById(imageId);
+                    const imageToCrop = document.getElementById('imageToCrop');
 
-                            imageToCrop.onload = () => {
-                                if (this.cropper) {
-                                    this.cropper.destroy();
-                                }
+                    imageToCrop.onload = () => {
+                        if (this.cropper) {
+                            this.cropper.destroy();
+                        }
 
-                                this.cropper = new Cropper(imageToCrop, {
-                                    aspectRatio: 1,
-                                    viewMode: 1,
-                                    autoCropArea: 1,
-                                    responsive: true,
-                                    guides: false,
-                                    movable: true,
-                                    zoomable: true,
-                                    rotatable: true,
-                                    scalable: true,
-                                    center: true
-                                });
-                            };
+                        this.cropper = new Cropper(imageToCrop, {
+                            aspectRatio: 1,
+                            viewMode: 1,
+                            autoCropArea: 1,
+                            responsive: true,
+                            guides: false,
+                            movable: true,
+                            zoomable: true,
+                            rotatable: true,
+                            scalable: true,
+                            center: true
+                        });
+                    };
 
-                            imageToCrop.src = image.src;
-                            this.cropOpen = true;
-                        },
+                    imageToCrop.src = image.src;
+                    this.cropOpen = true;
+                },
 
-                        closeCropper() {
-                            if (this.cropper) {
-                                this.cropper.destroy();
-                                this.cropper = null;
+                closeCropper() {
+                    if (this.cropper) {
+                        this.cropper.destroy();
+                        this.cropper = null;
+                    }
+                    this.cropOpen = false;
+                },
+
+                getRoundedCanvas(sourceCanvas) {
+                    var rnCanvas = document.createElement('canvas');
+                    var context = rnCanvas.getContext('2d');
+                    var width = sourceCanvas.width;
+                    var height = sourceCanvas.height;
+
+                    rnCanvas.width = width;
+                    rnCanvas.height = height;
+                    context.imageSmoothingEnabled = true;
+                    context.drawImage(sourceCanvas, 0, 0, width, height);
+                    context.globalCompositeOperation = 'destination-in';
+                    context.beginPath();
+                    context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+                    context.fill();
+                    return rnCanvas;
+                },
+
+                async cropButton() {
+                    if (this.cropper) {
+                        const canvas = this.cropper.getCroppedCanvas();
+
+                        this.roundedCanvas = this.getRoundedCanvas(canvas);
+
+                        this.roundedCanvas.toBlob((blob) => {
+                            const file = new File([blob], 'cropped-image.webp', {
+                                type: 'image/webp',
+                            });
+
+                            const dataTransfer = new DataTransfer();
+                            dataTransfer.items.add(file);
+
+                            let input;
+                            if (this.currentField === 'avatar') {
+                                input = document.getElementById('avatar');
                             }
-                            this.cropOpen = false;
-                        },
 
-                        getRoundedCanvas(sourceCanvas) {
-                            var rnCanvas = document.createElement('canvas');
-                            var context = rnCanvas.getContext('2d');
-                            var width = sourceCanvas.width;
-                            var height = sourceCanvas.height;
-
-                            rnCanvas.width = width;
-                            rnCanvas.height = height;
-                            context.imageSmoothingEnabled = true;
-                            context.drawImage(sourceCanvas, 0, 0, width, height);
-                            context.globalCompositeOperation = 'destination-in';
-                            context.beginPath();
-                            context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
-                            context.fill();
-                            return rnCanvas;
-                        },
-
-                        async cropButton() {
-                            if (this.cropper) {
-                                const canvas = this.cropper.getCroppedCanvas();
-
-                                this.roundedCanvas = this.getRoundedCanvas(canvas);
-
-                                this.roundedCanvas.toBlob((blob) => {
-                                    const file = new File([blob], 'cropped-image.webp', {
-                                        type: 'image/webp',
-                                    });
-
-                                    const dataTransfer = new DataTransfer();
-                                    dataTransfer.items.add(file);
-
-                                    let input;
-                                    if (this.currentField === 'avatar') {
-                                        input = document.getElementById('avatar');
-                                    }
-
-                                    if (input) {
-                                        input.files = dataTransfer.files;
-                                        const event = new Event('change', { bubbles: true });
-                                        input.dispatchEvent(event);
-                                    }
-
-                                    this.closeCropper();
-                                }, 'image/webp', 0.9);
+                            if (input) {
+                                input.files = dataTransfer.files;
+                                const event = new Event('change', { bubbles: true });
+                                input.dispatchEvent(event);
                             }
-                        },
-                    }">
+
+                            this.closeCropper();
+                        }, 'image/webp', 0.9);
+                    }
+                },
+            }">
             <div class="mb-6">
                 <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('lang_v1.user_photo') }}{{ __('lang_v1.required') }}</label>
                 <div class="flex items-center space-x-4">
                     <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center relative group overflow-hidden">
                         @if($previewAvatar)
-                        <img src="{{ $previewAvatar }}" class="w-full h-full object-cover" id="avatar-preview">
+                        <img src="{{ $previewAvatar }}" class="w-full h-full object-cover" id="avatar-preview" alt="{{ __('lang_v1.profile_picture') }}">
                         <div
                             x-data="{
                                 init() {
@@ -159,15 +167,12 @@
                                 <flux:icon name="trash" class="h-5 w-5" />
                             </button>
                         </div>
-                        <script>
-
-                        </script>
                         @else
                         <flux:icon name="image" class="w-10 h-10 text-gray-400 inline-block" />
                         @endif
                     </div>
                     <div class="flex-1">
-                        <input type="file" id="avatar" wire:model="avatar" accept="image/*" class="hidden">
+                        <input type="file" id="avatar" wire:model="avatar" accept=".png, .jpg, .jpeg, .gif, .webp, .svg" class="hidden">
                         <label for="avatar"
                             class="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-full text-sm hover-scale font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <flux:icon name="image-up" class="w-5 h-5 inline-block mr-2" />
@@ -197,7 +202,7 @@
                             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div class="sm:flex sm:items-start">
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Crop Image</h3>
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">{{ __('lang_v1.crop_image') }}</h3>
                                         <div class="mt-2">
                                             <div class="img-container">
                                                 <img id="imageToCrop" src="" style="max-width: 100%;">

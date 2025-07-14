@@ -3,7 +3,7 @@
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen">
     @include('partials.frontend.navbar')
     <section class="relative w-full px-6 pb-0 antialiased bg-white">
-        <img src="{{ asset('data-globe-hero@3x.png') }}" alt="Overlay Image"
+        <img src="{{ assetV('data-globe-hero@3x.png') }}" alt="Overlay Image"
             class="absolute inset-0 object-cover w-full h-full z-10">
         <div class="relative mx-auto max-w-7xl z-20">
             <div class="px-6 py-24 mx-auto max-w-7xl sm:px-10">

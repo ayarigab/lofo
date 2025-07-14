@@ -13,13 +13,12 @@ class RedirectIfNotClaimer
         if (!auth()->guard('claimer')->check()) {
             return redirect()->route('claimer-login')->with('toast', [
                 'type' => 'danger',
-                'message' => 'Oops! Access denied',
-                'description' => 'You need to be logged in to access this page.'
+                'message' => __('lang_v1.unauthorized_access'),
+                'description' => __('lang_v1.you_must_be_logged_in_to_perform_this_action')
             ]);
         }
 
         if (auth()->guard('web')->check()) {
-            // auth()->guard('web')->logout();
             return redirect()->route('claimer-login')->with('toast', [
                 'type' => 'error',
                 'message' => 'Please login as claimer',

@@ -99,7 +99,7 @@
     --cc-cookie-category-block-hover-border: #e9eff4;
     --cc-cookie-category-expanded-block-bg: transparent;
     --cc-cookie-category-expanded-block-hover-bg: #dee4e9;
-    --cc-overlay-bg: rgba(0, 0, 0, 0.65);
+    --cc-overlay-bg: rgba(255, 255, 255, 0.455);
     --cc-webkit-scrollbar-bg: var(--cc-section-category-border);
     --cc-webkit-scrollbar-hover-bg: var(--cc-btn-primary-hover-bg);
     --cc-footer-bg: var(--cc-btn-secondary-bg);
@@ -1298,6 +1298,7 @@ html.disable--interaction.show--consent body {
     top: 0;
     visibility: hidden;
     z-index: 1;
+    backdrop-filter: blur(5px);
 }
 #cc-main .cc--anim .pm,
 #cc-main .cc--anim .pm-overlay {

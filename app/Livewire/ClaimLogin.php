@@ -31,12 +31,12 @@ class ClaimLogin extends Component
             $claimer = Claimer::where('email', $this->email)->first();
 
             if (!$claimer) {
-                $this->addError('email', 'Please check your email and try again!');
+                $this->addError('email', __('lang_v1.please_check_your_email'));
                 return;
             }
 
             if (!Hash::check($this->password, $claimer->password)) {
-                $this->addError('password', 'Invalid password, please try again!');
+                $this->addError('password', __('lang_v1.incorrect_password'));
                 return;
             }
 
@@ -44,19 +44,19 @@ class ClaimLogin extends Component
 
             return redirect()->intended('/claimer/dashboard')->with('toast', [
                 'type' => 'success',
-                'message' => 'Login successful',
-                'description' => 'Welcome back!'
+                'message' => __('lang_v1.login_successful'),
+                'description' => __('lang_v1.welcome_to_your_dashboard')
             ]);
         } catch (\Throwable $th) {
             $this->dispatch('toast-show', [
                 'data' => [
                     'type' => 'danger',
-                    'message' => 'Login failed',
-                    'description' => 'The provided credentials are incorrect.'
+                    'message' => __('lang_v1.error'),
+                    'description' => __('auth.failed')
                 ]
             ]);
         }
 
-        $this->addError('email', 'Invalid credentials');
+        $this->addError('email', __('auth.failed'));
     }
 }

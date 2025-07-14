@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
-use App\Models\ClaimedItem;
 use Illuminate\Support\Str;
 
 class LostFound extends Model
@@ -70,17 +69,17 @@ class LostFound extends Model
 
     public function getImageUrlAttribute()
     {
-        return asset('storage/' . $this->image);
+        return assetV('storage/' . $this->image);
     }
 
     public function getImage2UrlAttribute()
     {
-        return $this->image2 ? asset('storage/' . $this->image2) : null;
+        return $this->image2 ? assetV('storage/' . $this->image2) : null;
     }
 
     public function getImage3UrlAttribute()
     {
-        return $this->image3 ? asset('storage/' . $this->image3) : null;
+        return $this->image3 ? assetV('storage/' . $this->image3) : null;
     }
 
     public function isClaimed()

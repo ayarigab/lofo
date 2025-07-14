@@ -1,0 +1,32 @@
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-16x16.png') }}" sizes="16x16" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-24x24.png') }}" sizes="24x24" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-32x32.png') }}" sizes="32x32" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-48x48.png') }}" sizes="48x48" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-64x64.png') }}" sizes="64x64" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-128x128.png') }}" sizes="128x128" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-256x256.png') }}" sizes="256x256" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-512x512.png') }}" sizes="512x512" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-1024x1024.png') }}" sizes="1024x1024" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-16x16.png') }}" sizes="16x16" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-24x24.png') }}" sizes="24x24" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-32x32.png') }}" sizes="32x32" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-48x48.png') }}" sizes="48x48" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-64x64.png') }}" sizes="64x64" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-128x128.png') }}" sizes="128x128" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-256x256.png') }}" sizes="256x256" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-512x512.png') }}" sizes="512x512" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" href="{{ assetV('icons/favicon-dark-1024x1024.png') }}" sizes="1024x1024" media="(prefers-color-scheme: dark)" />
+<link rel="apple-touch-icon" sizes="57x57" href="{{ assetV('icons/apple-touch-icon-57x57.png') }}" />
+<link rel="apple-touch-icon" sizes="72x72" href="{{ assetV('icons/apple-touch-icon-72x72.png') }}" />
+<link rel="apple-touch-icon" sizes="76x76" href="{{ assetV('icons/apple-touch-icon-76x76.png') }}" />
+<link rel="apple-touch-icon" sizes="114x114" href="{{ assetV('icons/apple-touch-icon-114x114.png') }}" />
+<link rel="apple-touch-icon" sizes="120x120" href="{{ assetV('icons/apple-touch-icon-120x120.png') }}" />
+<link rel="apple-touch-icon" sizes="144x144" href="{{ assetV('icons/apple-touch-icon-144x144.png') }}" />
+<link rel="apple-touch-icon" sizes="152x152" href="{{ assetV('icons/apple-touch-icon-152x152.png') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ assetV('icons/apple-touch-icon-180x180.png') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ assetV('icons/apple-touch-icon.png') }}" />
+<link rel="apple-touch-icon" sizes="192x192" href="{{ assetV('icons/apple-touch-icon-192x192.png') }}" />
+<link rel="apple-touch-icon" sizes="256x256" href="{{ assetV('icons/apple-touch-icon-256x256.png') }}" />
+<link rel="apple-touch-icon" sizes="512x512" href="{{ assetV('icons/apple-touch-icon-512x512.png') }}" />
+<link rel="manifest" href="{{ assetV('icons/site.webmanifest') }}" />
+<link rel="shortcut icon" href="{{ assetV('icons/favicon.ico') }}" />

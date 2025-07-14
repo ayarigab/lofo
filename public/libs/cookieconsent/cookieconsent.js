@@ -383,7 +383,9 @@
      * @param {any} [params]
      */
     const debug = (...params) => {
-        // console.log(...params);
+        if(globalObj._state._userConfig.debug) {
+            console.log(...params);
+        }
     };
 
     /**

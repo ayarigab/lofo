@@ -45,7 +45,7 @@ class LostReport extends Model
 
     public function getFormattedLostDateAttribute()
     {
-        return $this->lost_date ? \Carbon\Carbon::parse($this->lost_date)->format('F j, Y') : 'Unknown';
+        return $this->lost_date ? \Carbon\Carbon::parse($this->lost_date)->format('F j, Y') : __('lang_v1.unknown');
     }
 
     public function isComplete()

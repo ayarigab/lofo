@@ -8,6 +8,7 @@
 /vendor
 .env
 .translation_cache.json
+favicon_generator_errors.log
 .env.backup
 .env.production
 .phpactor.json

@@ -2,7 +2,7 @@
     @forelse($matches as $item)
     <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition">
         <div class="h-40 bg-gray-100 overflow-hidden">
-            <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+            <img src="{{ assetV($item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
         </div>
         <div class="p-4">
             <h3 class="font-medium text-gray-900 mb-1 truncate">{{ $item->title }}</h3>

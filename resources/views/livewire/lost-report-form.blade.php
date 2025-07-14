@@ -32,9 +32,17 @@
             @error('items_lost') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4" x-data
+            x-init="
+            flatpickr($refs.dateInput, {
+                altInput: true,
+                locale: '{{ (app()->getLocale() === 'zh-CN') ? 'zh' : app()->getLocale() }}',
+                altFormat: 'F j, Y',
+                dateFormat: 'Y-m-d',
+                maxDate: 'today'
+            })">
             <label for="lost_date" class="block mb-2 text-sm font-medium text-gray-700">{{ __('lang_v1.date_lost') }}{{ __('lang_v1.optional') }}</label>
-            <input type="date" id="lost_date" wire:model="lost_date" max="{{ now()->toDateString() }}"
+            <input type="text" id="lost_date" wire:model="lost_date" x-ref="dateInput" placeholder="{{ __('lang_v1.select_date_lost') }}"
                 class="w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-[#3B82F6] focus:border-[#3B82F6]" />
             @error('lost_date') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>

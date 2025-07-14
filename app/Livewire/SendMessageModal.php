@@ -47,8 +47,8 @@ class SendMessageModal extends Component
             $this->dispatch(
                 'toast-show',
                 type: 'success',
-                message: 'Message Sent',
-                description: 'Your message has been successfully submitted'
+                message: __('lang_v1.message_sent'),
+                description: __('lang_v1.your_message_has_been_sent_successfully')
             );
 
             $this->dispatch('close-message-modal');
@@ -57,8 +57,8 @@ class SendMessageModal extends Component
             $this->dispatch(
                 'toast-show',
                 type: 'danger',
-                message: 'Error',
-                description: 'Failed to send message. Please try again.'
+                message: __('lang_v1.error'),
+                description: __('lang_v1.process_failed')
             );
         }
     }

@@ -102,7 +102,7 @@
                             @if($item->image_url)
                             <img x-on:click="imageGallery.length > 0 ? imageGalleryOpen($event) : null" src="{{ $item->image_url }}"
                                 alt="{{ $item->title }}" data-index="1" x-ref="content"
-                                class="w-full h-full object-cover rounded-t-2xl transition-transform duration-500 hover:scale-105 cursor-pointer"
+                                class="w-full h-full object-cover rounded-t-2xl transition-transform duration-500 hover:scale-102 active:scale-108 cursor-pointer"
                                 :class="{'cursor-zoom-in': imageGallery.length > 0, 'cursor-default': imageGallery.length === 0}">
                             @endif
 

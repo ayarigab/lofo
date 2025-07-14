@@ -61,7 +61,7 @@ class Claimer extends Authenticatable
 
     public function getImageUrlAttribute()
     {
-        return asset("storage/$this->avatar");
+        return assetV("storage/$this->avatar");
     }
 
     public function initials(): string

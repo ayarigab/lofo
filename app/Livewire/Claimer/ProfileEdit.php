@@ -18,7 +18,7 @@ class ProfileEdit extends Component
     public $phone;
     public $avatar;
     public $avatarPreview;
-    public $email; // Display only
+    public $email;
 
     protected function rules()
     {
@@ -31,7 +31,7 @@ class ProfileEdit extends Component
                 'string',
                 Rule::unique('claimers')->ignore(Auth::guard('claimer')->id()),
             ],
-            'avatar' => 'nullable|image|max:2048', // 2MB max
+            'avatar' => 'nullable|image|max:2048',
         ];
     }
 
@@ -72,9 +72,14 @@ class ProfileEdit extends Component
 
         $claimer->update($data);
 
-        $this->dispatch('notify', type: 'success', message: 'Profile updated successfully!');
-        $this->avatarPreview = $claimer->fresh()->avatar;
-        $this->avatar = null;
+        $this->dispatch('toast-show', [
+            'data' => [
+                'type' => 'success',
+                'message' => __('lang_v1.profile_updated'),
+                'description' => __('lang_v1.your_profile_has_been_updated_successfully')
+            ]
+        ]);
+        $this->avatarPreview = auth('claimer')->user()->avatar;
     }
 
     public function render()

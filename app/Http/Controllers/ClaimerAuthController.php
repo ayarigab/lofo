@@ -15,8 +15,8 @@ class ClaimerAuthController extends Controller
 
         return redirect()->route('claimer-login')->with('toast', [
             'type' => 'info',
-            'message' => 'Logged out successfully.',
-            'description' => 'You are logged out successfully. To access dashboard, you have to login again'
+            'message' => __('lang_v1.logged_out_successfully'),
+            'description' => __('lang_v1.you_have_been_logged_out_successfully')
         ]);
     }
 }

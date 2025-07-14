@@ -1,4 +1,19 @@
 
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/de.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/fa.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/hi.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/it.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/zh.js"></script>
+@endpush
+
 @include('partials.frontend.header', ['title' => __('lang_v1.home')])
 <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen">
     <section class="w-full px-6 pb-0 antialiased bg-white particles-js" id="particles-js">
@@ -156,7 +171,7 @@
             <div class="grid gap-10 md:grid-cols-4 lg:grid-cols-4">
                 <div class="relative p-8 transition-all rounded-3xl shadow-lg">
                     <div class="absolute top-0 left-0 w-full h-full bg-white rounded-3xl opacity-10 z-10">
-                        <img src="{{ asset('rounds5.svg') }}" alt="Rounded Shapes">
+                        <img src="{{ assetV('rounds5.svg') }}" alt="Rounded Shapes">
                     </div>
                     <div class="z-20 relative">
                         <div class="flex items-center justify-center w-16 h-16 mb-6 text-2xl font-bold text-white bg-sky-900 rounded-full">
@@ -168,7 +183,7 @@
 
                 <div class="relative p-8 transition-all rounded-3xl shadow-lg">
                     <div class="absolute top-0 left-0 w-full h-full bg-white rounded-3xl opacity-10">
-                        <img src="{{ asset('rounds3.svg') }}" alt="Rounded Shapes">
+                        <img src="{{ assetV('rounds3.svg') }}" alt="Rounded Shapes">
                     </div>
                     <div class="z-20 relative">
                         <div
@@ -182,7 +197,7 @@
 
                 <div class="relative p-8 transition-all rounded-3xl shadow-lg">
                     <div class="absolute top-0 left-0 w-full h-full bg-white rounded-3xl opacity-10">
-                        <img src="{{ asset('rounds2.svg') }}" alt="Rounded Shapes">
+                        <img src="{{ assetV('rounds2.svg') }}" alt="Rounded Shapes">
                     </div>
                     <div class="z-20 relative">
                         <div
@@ -195,7 +210,7 @@
 
                 <div class="relative p-8 transition-all rounded-3xl shadow-lg">
                     <div class="absolute top-0 left-0 w-full h-full bg-white rounded-3xl opacity-10">
-                        <img src="{{ asset('rounds1.svg') }}" alt="Rounded Shapes">
+                        <img src="{{ assetV('rounds1.svg') }}" alt="Rounded Shapes">
                     </div>
                     <div class="z-20 relative">
                         <div
@@ -270,7 +285,7 @@
                             </div>
                         </div>
                         <h3 class="mb-2 text-xl font-bold text-gray-900">Reunited with my laptop</h3>
-                        <p class="text-gray-600">"I lost my back pack with my laptop in it which i couldnt find later. Thanks to Lost and Found systems who gave it back to me fully intact."</p>
+                        <p class="text-gray-600">"I lost my back pack with my laptop in it which i couldn't find later. Thanks to Lost and Found systems who gave it back to me fully intact."</p>
                     </div>
                 </div>
             </div>
@@ -383,7 +398,7 @@
     </section>
 
     <section class="relative py-20 bg-gray-50">
-        <img src="{{ asset('data-globe-hero@3x.png') }}" alt="Overlay Image"
+        <img src="{{ assetV('data-globe-hero@3x.png') }}" alt="Overlay Image"
             class="absolute inset-0 object-cover w-full h-full z-10">
         <div class="max-w-6xl px-6 mx-auto relative z-20">
             <div class="grid gap-12 md:grid-cols-2">

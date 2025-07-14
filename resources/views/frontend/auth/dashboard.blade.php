@@ -22,25 +22,25 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <livewire:claimer.stats-card title="Total Reports"
+            <livewire:claimer.stats-card title="{{ __('lang_v1.total_reports') }}"
                 :value="$lostReport"
                 border-color="border-blue-500"
                 color="text-blue-500"
                 icon="chart-no-axes-combined" />
 
-            <livewire:claimer.stats-card title="Items Claimed"
+            <livewire:claimer.stats-card title="{{ __('lang_v1.items_claimed') }}"
                 :value="$claimedItems"
                 border-color="border-green-500"
                 color="text-green-500"
                 icon="heart-handshake" />
 
-            <livewire:claimer.stats-card title="Pending Claims"
+            <livewire:claimer.stats-card title="{{ __('lang_v1.pending_claims') }}"
                 :value="$pendingClaims"
                 border-color="border-yellow-500"
                 color="text-yellow-500"
                 icon="calendar-heart" />
 
-            <livewire:claimer.stats-card title="Messages"
+            <livewire:claimer.stats-card title="{{ __('lang_v1.pending_claims') }}"
                 :value="$messages"
                 border-color="border-purple-500"
                 color="text-purple-500"
@@ -50,16 +50,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <div class="lg:col-span-2 bg-white rounded-3xl shadow-sm p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold text-gray-800">Your Recent Lost Reports</h2>
-                    <a href="/x" class="text-sm text-purple-500 hover:underline">View
-                        All</a>
+                    <h2 class="text-xl font-semibold text-gray-800">{{ __('lang_v1.your_recent_lost_reports') }}</h2>
+                    <a href="/x" class="text-sm text-purple-500 hover:underline">{{ __('lang_v1.view_all') }}</a>
                 </div>
 
                 <livewire:claimer.recent-lost-reports :limit="5" />
             </div>
 
             <div class="bg-white rounded-3xl shadow-sm p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6">Quick Messages</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">{{ __('lang_v1.quick_messages') }}</h2>
 
                 <div class="space-y-4">
                     @foreach($allMessages as $message)
@@ -75,7 +74,7 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-gray-800">Potential Matches for Your Reports</h2>
-                <a href="/s" class="text-sm text-[#4F46E5] hover:underline">Browse All</a>
+                <a href="/s" class="text-sm text-[#4F46E5] hover:underline">{{ __('lang_v1.browse_all') }}</a>
             </div>
 
             <livewire:claimer.potential-matches />
@@ -83,18 +82,16 @@
 
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-semibold text-gray-800">Your Claimed Items</h2>
-                <a href="#" class="text-sm text-[#4F46E5] hover:underline">View
-                    All</a>
+                <h2 class="text-xl font-semibold text-gray-800">{{ __('lang_v1.your_claimed_items') }}</h2>
+                <a href="#" class="text-sm text-[#4F46E5] hover:underline">{{ __('lang_v1.view_all') }}</a>
             </div>
 
             <livewire:claimer.claimed-items :limit="10" />
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-semibold text-gray-800">Your Claimed Items</h2>
-                <a href="#" class="text-sm text-[#4F46E5] hover:underline">View
-                    All</a>
+                <h2 class="text-xl font-semibold text-gray-800">{{ __('lang_v1.your_claimed_items') }}</h2>
+                <a href="#" class="text-sm text-[#4F46E5] hover:underline">{{ __('lang_v1.view_all') }}</a>
             </div>
 
             <div x-data="{

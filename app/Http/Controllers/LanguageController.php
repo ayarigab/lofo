@@ -12,7 +12,7 @@ class LanguageController extends Controller
     public function switch(Request $request, $locale): RedirectResponse
     {
         if (!in_array($locale, config('app.available_locales'))) {
-            abort(400, 'Invalid locale');
+            abort(400, __('lang_v1.invalid_local'));
         }
 
         App::setLocale($locale);

@@ -20,17 +20,17 @@ class EnsureTokenIsValid
         $token = $request->bearerToken();
 
         if (!$token) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => __('lang_v1.unauthorized_access')], 401);
         }
 
         $accessToken = PersonalAccessToken::findToken($token);
 
         if (!$accessToken) {
-            return response()->json(['message' => 'Invalid token'], 401);
+            return response()->json(['message' => __('lang_v1.invalid_token')], 401);
         }
 
         if ($accessToken->expires_at && $accessToken->expires_at->isPast()) {
-            return response()->json(['message' => 'Token expired'], 401);
+            return response()->json(['message' => __('lang_v1.token_expired')], 401);
         }
 
         return $next($request);

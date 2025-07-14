@@ -154,8 +154,8 @@ class PostLostForm extends Component
             $this->dispatch('toast-show', [
                 'data' => [
                     'type' => 'success',
-                    'message' => 'Success!',
-                    'description' => 'Item has been successfully reported.'
+                    'message' => __('lang_v1.action_successful'),
+                    'description' => __('lang_v1.item_successfully_reported')
                 ]
             ]);
 
@@ -164,8 +164,8 @@ class PostLostForm extends Component
             $this->dispatch('toast-show', [
                 'data' => [
                     'type' => 'danger',
-                    'message' => 'Error!',
-                    'description' => 'An error occurred: ' . $e->getMessage()
+                    'message' => __('lang_v1.error'),
+                    'description' => __('lang_v1.process_failed')
                 ]
             ]);
         }

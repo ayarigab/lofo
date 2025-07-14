@@ -61,9 +61,16 @@
             @error('found_location') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4" x-data x-init="
+            flatpickr($refs.dateInput, {
+                altInput: true,
+                locale: '{{ (app()->getLocale() === 'zh-CN') ? 'zh' : app()->getLocale() }}',
+                altFormat: 'F j, Y',
+                dateFormat: 'Y-m-d',
+                maxDate: 'today'
+            })">
             <label for="found_date" class="block mb-2 text-sm font-medium text-gray-700">{{ __('lang_v1.found_date') }}</label>
-            <input type="date" id="found_date" wire:model="found_date" max="{{ now()->toDateString() }}"
+            <input type="text" id="found_date" wire:model="found_date" x-ref="dateInput" placeholder="{{ __('lang_v1.select_date_found') }}"
                 class="w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-[#3B82F6] focus:border-[#3B82F6]">
             @error('found_date') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
         </div>
@@ -277,7 +284,7 @@
                             </div>
                             <div class="flex-1 flex items-center space-x-2">
                                 <input type="file" id="additional_image_{{ $index }}" wire:model="{{ $additionalImg['field'] }}"
-                                    accept="image/*" class="hidden">
+                                    accept=".png, .jpg, .jpeg, .gif, .webp, .svg" class="hidden">
                                 <label for="additional_image_{{ $index }}"
                                     class="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-full text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover-scale">
                                     <flux:icon name="image-up" class="w-5 h-5 inline-block mr-2" />
@@ -326,7 +333,7 @@
                             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div class="sm:flex sm:items-start">
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Crop Image</h3>
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">{{ __('lang_v1.crop_image') }}</h3>
                                         <div class="mt-2">
                                             <div class="img-container">
                                                 <img id="imageToCrop" src="" style="max-width: 100%;">
