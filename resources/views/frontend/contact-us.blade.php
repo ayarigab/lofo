@@ -11,6 +11,7 @@
 <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/zh.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/vn.js"></script>
 @endpush
 
 @include('partials.frontend.header', ['title' => __('lang_v1.contact_us')])

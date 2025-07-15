@@ -208,7 +208,7 @@
                             x-init="
                             flatpickr($refs.dateInput, {
                                 altInput: true,
-                                locale: '{{ (app()->getLocale() === 'zh-CN') ? 'zh' : app()->getLocale() }}',
+                                locale: '{{ langShort() }}',
                                 altFormat: 'F j, Y',
                                 dateFormat: 'Y-m-d',
                                 maxDate: new Date(new Date().getFullYear() - 5, 11, 31)

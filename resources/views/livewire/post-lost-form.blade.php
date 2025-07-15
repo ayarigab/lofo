@@ -64,7 +64,7 @@
         <div class="mb-4" x-data x-init="
             flatpickr($refs.dateInput, {
                 altInput: true,
-                locale: '{{ (app()->getLocale() === 'zh-CN') ? 'zh' : app()->getLocale() }}',
+                locale: '{{ langShort() }}',
                 altFormat: 'F j, Y',
                 dateFormat: 'Y-m-d',
                 maxDate: 'today'
