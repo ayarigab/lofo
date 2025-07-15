@@ -32,36 +32,32 @@
 
                     <div class="space-y-6">
                         <div class="flex">
-                            <div
-                                class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-white bg-sky-900 rounded-full">
+                            <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-white bg-sky-900 rounded-full">
                                 <flux:icon name="mail" class="w-6 h-6" />
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.email_address') }}</h3>
-                                <p class="mt-1 text-gray-400">support@lostandfound.com</p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_email') }}</p>
                             </div>
                         </div>
 
                         <div class="flex">
-                            <div
-                                class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-white bg-sky-900 rounded-full">
+                            <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-white bg-sky-900 rounded-full">
                                 <flux:icon name="phone" class="w-6 h-6" />
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.phone') }}</h3>
-                                <p class="mt-1 text-gray-400">(024) 109-2020</p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_phone') }}</p>
                             </div>
                         </div>
 
                         <div class="flex">
-                            <div
-                                class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-white bg-sky-900 rounded-full">
+                            <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-white bg-sky-900 rounded-full">
                                 <flux:icon name="map-pin" class="w-6 h-6" />
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.headquarters') }}</h3>
-                                <p class="mt-1 text-gray-400">123 Finder Street, Suite 100<br>San Francisco, CA 94107
-                                </p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_address') }}</p>
                             </div>
                         </div>
                     </div>

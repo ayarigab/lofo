@@ -8,14 +8,12 @@
                 <h3 class="mb-6 text-sm font-semibold text-gray-400 uppercase">{{ __('lang_v1.about_us') }}</h3>
                 <div class="flex space-x-6">
                     <p class="text-gray-600 text-sm text-justify">
-                        Lost and Found is a community-driven platform dedicated to reuniting lost items with their
-                        owners. Our mission is to make the process of finding lost belongings as simple and efficient as
-                        possible, leveraging the power of community and technology.
+                        {{ __('lang_v1.system_description') }}
                     </p>
                 </div>
             </div>
             <div>
-                <h3 class="mb-6 text-sm font-semibold uppercase text-gray-400">Company</h3>
+                <h3 class="mb-6 text-sm font-semibold uppercase text-gray-400">{{ __('lang_v1.company') }}</h3>
                 <ul class="space-y-2 hover:text-gray-500">
                     <li><a wire:navigate href="{{ route('about-us') }}" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.about_us') }}</a></li>
                     <li><a wire:navigate href="{{ route('contact-us') }}" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.contact_us') }}</a></li>
@@ -25,22 +23,21 @@
             </div>
 
             <div>
-                <h3 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Resources</h3>
+                <h3 class="mb-6 text-sm font-semibold text-gray-400 uppercase">{{ __('lang_v1.resources') }}</h3>
                 <ul class="space-y-2 hover:text-gray-500">
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">Help Center</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">Safety Tips</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">Community</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">Success Stories</a></li>
+                    <li><a href="{{ config('naaba.app_url') }}" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.support') }}</a></li>
+                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.faq') }}</a></li>
+                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.community') }}</a></li>
+                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.success_stories') }}</a></li>
                 </ul>
             </div>
 
             <div>
-                <h3 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Legal</h3>
+                <h3 class="mb-6 text-sm font-semibold text-gray-400 uppercase">{{ __('lang_v1.legal') }}</h3>
                 <ul class="space-y-2 hover:text-gray-500">
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">Privacy Policy</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">Terms of Service</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">Cookie Policy</a></li>
-                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">GDPR</a></li>
+                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.privacy_policies') }}</a></li>
+                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.terms_and_conditions') }}</a></li>
+                    <li><a wire:navigate href="#" class="hover:text-black hover:underline transition-all">{{ __('lang_v1.safety_tips') }}</a></li>
                 </ul>
             </div>
         </div>
@@ -80,7 +77,7 @@
 </footer>
 @include('partials.frontend.back-to-top')
 
-<script src="{{ assetV("libs/cookieconsent/cookieconsent.js") }}"></script>
+<script src="{{ asset("libs/cookieconsent/cookieconsent.js") }}"></script>
 @include('partials.frontend.cc-config')
 @livewireScripts
 

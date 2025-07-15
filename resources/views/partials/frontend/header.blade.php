@@ -5,7 +5,7 @@
     <!-- Basic Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>"{{ ($title ?? '') . (isset($title) ? ' | ' . config('app.name') : config('app.name')) }}"</title>
+    <title>{{ ($title ?? '') . (isset($title) ? ' | ' . config('app.name') : config('app.name')) }}</title>
 
     <!-- Language & Localization -->
     <meta name="language" content="{{ app()->getLocale() }}">
@@ -157,7 +157,6 @@
 
     <!-- Feeds & Canonical -->
     <link rel="alternate" type="application/rss+xml" title="{{ config('app.name') }} RSS Feed" href="/rss/">
-    <link rel="alternate" type="application/atom+xml" title="{{ config('app.name') }} Atom Feed" href="/atom/">
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Stack for Dynamic Meta Tags -->

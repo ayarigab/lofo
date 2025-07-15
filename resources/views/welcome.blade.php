@@ -128,7 +128,7 @@
                     </div>
                     <div class="flex flex-col items-start">
                         <div class="text-4xl font-bold text-sky-900">1,200+</div>
-                        <div class="mt-2 text-sm font-medium text-slate-500">Items Found</div>
+                        <div class="mt-2 text-sm font-medium text-slate-500">{{ __('lang_v1.items_claimed') }}</div>
                     </div>
                 </div>
                 <div class="flex space-x-2 items-center p-6 border-r border-gray-200">
@@ -137,7 +137,7 @@
                     </div>
                     <div class="flex flex-col items-start">
                         <div class="text-4xl font-bold text-sky-900">500+</div>
-                        <div class="mt-2 text-sm font-medium text-slate-500">Active Reports</div>
+                        <div class="mt-2 text-sm font-medium text-slate-500">{{ __('lang_v1.total_reports') }}</div>
                     </div>
                 </div>
                 <div class="flex space-x-2 items-center p-6 border-r border-gray-200">
@@ -146,7 +146,7 @@
                     </div>
                     <div class="flex flex-col items-start">
                         <div class="text-4xl font-bold text-sky-900">200+</div>
-                        <div class="mt-2 text-sm font-medium text-slate-500">Active searches</div>
+                        <div class="mt-2 text-sm font-medium text-slate-500">{{ __('lang_v1.active_searches') }}</div>
                     </div>
                 </div>
                 <div class="flex space-x-2 items-center p-6">
@@ -155,7 +155,7 @@
                     </div>
                     <div class="flex flex-col items-start">
                         <div class="text-4xl font-bold text-sky-900">98%</div>
-                        <div class="mt-2 text-sm font-medium text-slate-500">Satisfaction Rate</div>
+                        <div class="mt-2 text-sm font-medium text-slate-500">{{ __('lang_v1.satisfaction_rate') }}</div>
                     </div>
                 </div>
             </div>
@@ -165,8 +165,8 @@
     <section class="py-20 bg-white" id="about">
         <div class="max-w-6xl px-6 mx-auto">
             <div class="mb-16 text-center">
-                <h2 class="mb-4 text-3xl font-bold text-sky-900 sm:text-4xl">How It Works</h2>
-                <p class="max-w-2xl mx-auto text-lg text-gray-500">With our simple four-step process, we makes it easy for you to find your lost items. Follow the guides below to know how.</p>
+                <h2 class="mb-4 text-3xl font-bold text-sky-900 sm:text-4xl">{{ __('lang_v1.how_it_works') }}</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-500">{{ __('lang_v1.how_it_works_description') }}</p>
             </div>
 
             <div class="grid gap-10 md:grid-cols-4 lg:grid-cols-4">
@@ -177,8 +177,8 @@
                     <div class="z-20 relative">
                         <div class="flex items-center justify-center w-16 h-16 mb-6 text-2xl font-bold text-white bg-sky-900 rounded-full">
                             1</div>
-                        <h3 class="mb-3 text-xl font-bold text-gray-900">Search or found the items</h3>
-                        <p class="text-gray-600">Search or browse our database for the item(s) you've lost.</p>
+                        <h3 class="mb-3 text-xl font-bold text-gray-900">{{ __('lang_v1.search_or_found_the_items') }}</h3>
+                        <p class="text-gray-600">{{ __('lang_v1.search_or_browse_our_database_for_the_item') }}</p>
                     </div>
                 </div>
 
@@ -190,9 +190,8 @@
                         <div
                             class="flex items-center justify-center w-16 h-16 mb-6 text-2xl font-bold text-white bg-sky-900 rounded-full">
                             2</div>
-                        <h3 class="mb-3 text-xl font-bold text-gray-900">Send a retrieval Request</h3>
-                        <p class="text-gray-600">Login or sign up to send a request to the admin for item retrieval.
-                        </p>
+                        <h3 class="mb-3 text-xl font-bold text-gray-900">{{ __('lang_v1.send_a_retrieval_request') }}</h3>
+                        <p class="text-gray-600">{{ __('lang_v1.send_a_retrieval_request_description') }}</p>
                     </div>
                 </div>
 
@@ -204,8 +203,8 @@
                         <div
                             class="flex items-center justify-center w-16 h-16 mb-6 text-2xl font-bold text-white bg-sky-900 rounded-full">
                             3</div>
-                        <h3 class="mb-3 text-xl font-bold text-gray-900">Verification process</h3>
-                        <p class="text-gray-600">Admin schedules a meet up for full verifications process.</p>
+                        <h3 class="mb-3 text-xl font-bold text-gray-900">{{ __('lang_v1.verification_process') }}</h3>
+                        <p class="text-gray-600">{{ __('lang_v1.admin_schedules_a_meet_up_for_full_verifications_process') }}</p>
                     </div>
                 </div>
 
@@ -217,8 +216,8 @@
                         <div
                             class="flex items-center justify-center w-16 h-16 mb-6 text-2xl font-bold text-white bg-sky-900 rounded-full">
                             4</div>
-                        <h3 class="mb-3 text-xl font-bold text-gray-900">Done! You got your item back</h3>
-                        <p class="text-gray-600">Wow, you just received your treasure back at no cost at all.</p>
+                        <h3 class="mb-3 text-xl font-bold text-gray-900">{{ __('lang_v1.done_you_got_your_item_back') }}</h3>
+                        <p class="text-gray-600">{{ __('lang_v1.wow_you_just_received_your_treasure_back') }}</p>
                     </div>
                 </div>
             </div>
@@ -228,9 +227,8 @@
     <section class="py-20 bg-gray-50">
         <div class="max-w-6xl px-6 mx-auto">
             <div class="mb-16 text-center">
-                <h2 class="mb-4 text-3xl font-bold text-sky-900 sm:text-4xl">Recent success stories</h2>
-                <p class="max-w-2xl mx-auto text-lg text-gray-600">See how we're putting smiles on people's faces with their precious
-                belongings. You can also message US about your lost items and we will find it for you. </p>
+                <h2 class="mb-4 text-3xl font-bold text-sky-900 sm:text-4xl">{{ __('lang_v1.recent_success_stories') }}</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-600">{{ __('lang_v1.recent_success_stories_description') }}</p>
             </div>
 
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -292,7 +290,7 @@
             </div>
 
             <div class="mt-12 text-center">
-                <a wire:navigate href="#" class="px-6 py-3 font-medium text-blue-600 hover:text-blue-800">View More Stories →</a>
+                <a wire:navigate href="#" class="px-6 py-3 font-medium text-blue-600 hover:text-blue-800">{{ __('lang_v1.view_all') }} →</a>
             </div>
         </div>
     </section>
@@ -300,14 +298,12 @@
     <section class="relative py-20 bg-[url('https://github.blog/wp-content/uploads/2024/02/Enterprise-LightMode-2.png')] bg-cover bg-center-center bg-no-repeat">
         <div class="absolute inset-0 backdrop-blur-md bg-white/10 z-10"></div>
         <div class="max-w-4xl px-6 mx-auto text-center relative z-20">
-            <h2 class="mb-6 text-3xl font-bold text-blue-900 sm:text-4xl">Ready to Find Your Lost Item?</h2>
-            <p class="mb-8 text-xl text-gray-600">Join thousands of others who have successfully reunited with their
-                lost
-                belongings.</p>
+            <h2 class="mb-6 text-3xl font-bold text-blue-900 sm:text-4xl">{{ __('lang_v1.ready_to_find_your_lost_item') }}</h2>
+            <p class="mb-8 text-xl text-gray-600">{{ __('lang_v1.join_the_numbers') }}</p>
             <div class="flex flex-col justify-center gap-4 sm:flex-row sm:gap-6">
                 <a wire:navigate href="{{ route('claimer-register') }}"
                     class="px-8 py-4 text-base font-medium text-black bg-white/60 backdrop-blur-sm rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600 transition-all hover-scale">
-                    Get Started Now
+                    {{ __('lang_v1.get_started_now') }}
                 </a>
             </div>
         </div>
@@ -316,7 +312,7 @@
     <section class="py-20 bg-white">
         <div class="max-w-4xl px-6 mx-auto">
             <div class="mb-16 text-center">
-                <h2 class="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Frequently Asked Questions</h2>
+                <h2 class="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">{{ __('lang_v1.faq') }}</h2>
                 <p class="max-w-2xl mx-auto text-lg text-gray-600">Have questions? We've got answers.</p>
             </div>
 
@@ -414,7 +410,7 @@
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.email_address') }}</h3>
-                                <p class="mt-1 text-gray-400">support@lostandfound.com</p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_email') }}</p>
                             </div>
                         </div>
 
@@ -424,7 +420,7 @@
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.phone') }}</h3>
-                                <p class="mt-1 text-gray-400">(024) 109-2020</p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_phone') }}</p>
                             </div>
                         </div>
 
@@ -434,8 +430,7 @@
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.headquarters') }}</h3>
-                                <p class="mt-1 text-gray-400">123 Finder Street, Suite 100<br>San Francisco, CA 94107
-                                </p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_address') }}</p>
                             </div>
                         </div>
                     </div>

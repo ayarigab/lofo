@@ -18,7 +18,7 @@
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.email_address') }}</h3>
-                                <p class="mt-1 text-gray-400">support@lostandfound.com</p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_email') }}</p>
                             </div>
                         </div>
 
@@ -28,7 +28,7 @@
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.phone') }}</h3>
-                                <p class="mt-1 text-gray-400">(024) 109-2020</p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_phone') }}</p>
                             </div>
                         </div>
 
@@ -38,8 +38,7 @@
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-600">{{ __('lang_v1.headquarters') }}</h3>
-                                <p class="mt-1 text-gray-400">123 Finder Street, Suite 100<br>San Francisco, CA 94107
-                                </p>
+                                <p class="mt-1 text-gray-400">{{ config('naaba.author_address') }}</p>
                             </div>
                         </div>
                     </div>

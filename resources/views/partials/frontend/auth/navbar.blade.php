@@ -502,7 +502,7 @@
                                         <flux:icon name="github" class="w-4 h-4 mr-2" />
                                         <span>GitHub Repo</span>
                                     </a>
-                                    <a href="https://lofo.naabatechs.com" target="_blank" style="--animation-delay: 300ms"
+                                    <a href="{{ config('naaba.app_url') }}" target="_blank" style="--animation-delay: 300ms"
                                         class="relative flex cursor-default select-none animate-fade-in hover:bg-slate-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors active:bg-accent active:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                         <flux:icon name="lifebuoy" class="w-4 h-4 mr-2" />
                                         <span>{{ __('lang_v1.support') }}</span>
